@@ -97,7 +97,15 @@ public class Project {
 		return this.goal;
 	}
 	
-	public void setExpendedTime(int expendedTime) {
+	public void addExpendedTime(int expendedTime) {
+		if((this.expendedTime +  expendedTime) < 0) {
+			throw new IllegalArgumentException("Total expendedTime may be negative.");
+		}
+		this.expendedTime += expendedTime;
+	}
+	
+	//クエリオブジェクトからエンティティに変換するために設ける。
+	protected void setExpendedTime(int expendedTime) {
 		if(expendedTime < 0) {
 			throw new IllegalArgumentException("The expendedTime may be negative.");
 		}

@@ -3,7 +3,7 @@ package com.culnou.mumu.myway.infrastructure.query;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.culnou.mumu.myway.domain.model.PersonId;
-import com.culnou.mumu.myway.domain.model.Strategy;
+
 import com.culnou.mumu.myway.domain.model.VisionId;
 import com.culnou.mumu.myway.domain.model.VisionType;
 
@@ -18,6 +18,6 @@ public class VisionQueryDocument {
 	private VisionType visionType;
 	private String content;
 	private VisionId result;
-	private Strategy strategy;
+
 
 }

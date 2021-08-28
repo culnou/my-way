@@ -6,7 +6,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.culnou.mumu.myway.domain.model.Goal;
 
 public class GoalTest {
 

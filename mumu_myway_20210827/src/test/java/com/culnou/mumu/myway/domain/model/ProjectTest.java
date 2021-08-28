@@ -6,12 +6,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.culnou.mumu.myway.domain.model.Goal;
-import com.culnou.mumu.myway.domain.model.PersonId;
-import com.culnou.mumu.myway.domain.model.Project;
-import com.culnou.mumu.myway.domain.model.ProjectId;
-import com.culnou.mumu.myway.domain.model.ProjectType;
-import com.culnou.mumu.myway.domain.model.VisionId;
+
 
 public class ProjectTest {
 
@@ -92,7 +87,7 @@ public class ProjectTest {
 		String name = "111";
 		String description = "111";
 		Project project = new Project(personId, visionId, projectId, name, description, ProjectType.EXPERIMENT);
-		project.setExpendedTime(-1);
+		project.addExpendedTime(-1);
 		//実行されない。
 	    project.name();
 	}
@@ -152,33 +147,105 @@ public class ProjectTest {
 		assertEquals(experiment.description(), description);
 	}
 	
-	//測定の定義のテスト
+	//目標の定義のテスト
 	@Test
-	public void testDefineMeasurement() {
+	public void testDefineGoal() {
 		PersonId personId = new PersonId("111");
 		VisionId visionId = new VisionId("111");
-		ProjectId experimentId = new ProjectId("111");
+		ProjectId projectId = new ProjectId("111");
 		String name = "111";
 		String description = "111";
-		Project experiment = new Project(personId, visionId, experimentId, name, description, ProjectType.EXPERIMENT);
-		Goal measurement = new Goal("111", "111");
-		experiment.defineGoal(measurement);
+		Project project = new Project(personId, visionId, projectId, name, description, ProjectType.EXPERIMENT);
+		Goal goal = new Goal("111", "111");
+		project.defineGoal(goal);
 		//測定は値オブジェクトなので等価。
-		assertEquals(experiment.goal(), measurement);
+		assertEquals(project.goal(), goal);
 	}
 	
 	@Test(expected = IllegalArgumentException.class)
-	public void testDefineNoMeasurement() {
+	public void testDefineNoGoal() {
 		PersonId personId = new PersonId("111");
 		VisionId visionId = new VisionId("111");
-		ProjectId experimentId = new ProjectId("111");
+		ProjectId projectId = new ProjectId("111");
 		String name = "111";
 		String description = "111";
-		Project experiment = new Project(personId, visionId, experimentId, name, description, ProjectType.EXPERIMENT);
-		Goal measurement = null;
-		experiment.defineGoal(measurement);
+		Project project = new Project(personId, visionId, projectId, name, description, ProjectType.EXPERIMENT);
+		Goal goal = null;
+		project.defineGoal(goal);
 		//実行されない。
-		experiment.goal();
+		project.goal();
+	}
+	//ファクトリーメソッドのテスト
+	@Test
+	public void testDefineAction() throws Exception{
+		PersonId personId = new PersonId("111");
+		VisionId visionId = new VisionId("111");
+		ProjectId projectId = new ProjectId("111");
+		String name = "111";
+		String description = "111";
+		Project project = new Project(personId, visionId, projectId, name, description, ProjectType.EXPERIMENT);
+		ActionId actionId = new ActionId("111");
+		Action action = project.defineAction(actionId, name, description);
+		assertEquals(action.personId(), personId);
+		assertEquals(action.projectId(), projectId);
+		assertEquals(action.actionId(), actionId);
+		assertEquals(action.name(), name);
+		assertEquals(action.description(), description);
+	}
+	//識別子オブジェクトがNULLの場合のチェック
+	@Test(expected = IllegalArgumentException.class)
+	public void testDefineActionByNoActionId() throws Exception{
+		PersonId personId = new PersonId("111");
+		VisionId visionId = new VisionId("111");
+		ProjectId projectId = new ProjectId("111");
+		String name = "111";
+		String description = "111";
+		Project project = new Project(personId, visionId, projectId, name, description, ProjectType.EXPERIMENT);
+		ActionId actionId = null;
+		Action action = project.defineAction(actionId, name, description);
+		//実行されない。
+		action.actionId();
+	}
+	
+	//消費時間の加算のテスト
+	@Test
+	public void testAddExpendedTime() {
+		PersonId personId = new PersonId("111");
+		VisionId visionId = new VisionId("111");
+		ProjectId projectId = new ProjectId("111");
+		String name = "111";
+		String description = "111";
+		Project project = new Project(personId, visionId, projectId, name, description, ProjectType.EXPERIMENT);
+		project.addExpendedTime(1);
+		project.addExpendedTime(2);
+		assertEquals(project.expendedTime(), 3);
+	}
+	
+	@Test(expected = Exception.class)
+	public void testAddExpendedTimeByNegativeResult() {
+		PersonId personId = new PersonId("111");
+		VisionId visionId = new VisionId("111");
+		ProjectId projectId = new ProjectId("111");
+		String name = "111";
+		String description = "111";
+		Project project = new Project(personId, visionId, projectId, name, description, ProjectType.EXPERIMENT);
+		project.addExpendedTime(1);
+		System.out.println("*** action.expendedTime " + project.expendedTime());
+		project.addExpendedTime(-2);
+		//実行されない。
+		System.out.println("*** action.expendedTime " + project.expendedTime());
+	}
+	@Test(expected = IllegalArgumentException.class)
+	public void testSetExpendedTimeByNegative() {
+		PersonId personId = new PersonId("111");
+		VisionId visionId = new VisionId("111");
+		ProjectId projectId = new ProjectId("111");
+		String name = "111";
+		String description = "111";
+		Project project = new Project(personId, visionId, projectId, name, description, ProjectType.EXPERIMENT);
+		project.setExpendedTime(-2);
+		//実行されない。
+		System.out.println("*** action.expendedTime " + project.expendedTime());
 	}
 
 }

@@ -30,14 +30,14 @@ public class ProjectMongoRepository implements ProjectRepository {
 	@Override
 	public void save(Project project) throws Exception {
 		// TODO Auto-generated method stub
-		ProjectDocument doc = this.convertExperimentToExperimentDocument(project);
+		ProjectDocument doc = this.convertProjectToProjectDocument(project);
 		projectRepository.save(doc);
 	}
 
 	@Override
 	public void remove(Project project) throws Exception {
 		// TODO Auto-generated method stub
-		ProjectDocument doc = this.convertExperimentToExperimentDocument(project);
+		ProjectDocument doc = this.convertProjectToProjectDocument(project);
 		projectRepository.delete(doc);
 	}
 
@@ -48,7 +48,7 @@ public class ProjectMongoRepository implements ProjectRepository {
 		
 	}
 	
-	private ProjectDocument convertExperimentToExperimentDocument(Project project) {
+	private ProjectDocument convertProjectToProjectDocument(Project project) {
 		ProjectDocument doc = new ProjectDocument();
 		doc.setId(project.projectId().id());
 		doc.setPersonId(project.personId());
@@ -58,6 +58,7 @@ public class ProjectMongoRepository implements ProjectRepository {
 		doc.setDescription(project.description());
 		doc.setProjectType(project.projectType());
 		doc.setGoal(project.goal());
+		doc.setExpendedTime(project.expendedTime());
 		return doc;
 	}
 	

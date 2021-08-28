@@ -10,7 +10,7 @@ public class Action {
 	private int expendedTime;
 	
 	
-	public Action(PersonId personId, ProjectId projectId, ActionId actionId, String name, String description) {
+	protected Action(PersonId personId, ProjectId projectId, ActionId actionId, String name, String description) {
 		this.setPersonId(personId);
 		this.setProjectId(projectId);
 		this.setActionId(actionId);
@@ -73,12 +73,21 @@ public class Action {
 		return this.description;
 	}
 	
-	public void setExpendedTime(int expendedTime) {
+	public void addExpendedTime(int expendedTime) {
+		if((this.expendedTime +  expendedTime) < 0) {
+			throw new IllegalArgumentException("Total expendedTime may be negative.");
+		}
+		this.expendedTime += expendedTime;
+	}
+	
+	//クエリオブジェクトからエンティティに変換するために設ける。
+	protected void setExpendedTime(int expendedTime) {
 		if(expendedTime < 0) {
 			throw new IllegalArgumentException("The expendedTime may be negative.");
 		}
 		this.expendedTime = expendedTime;
 	}
+		
 	
 	public int expendedTime() {
 		return this.expendedTime;

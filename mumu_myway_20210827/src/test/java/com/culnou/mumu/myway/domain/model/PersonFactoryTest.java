@@ -8,9 +8,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.culnou.mumu.myway.domain.model.Person;
-import com.culnou.mumu.myway.domain.model.PersonFactory;
-import com.culnou.mumu.myway.domain.model.User;
+
 
 public class PersonFactoryTest {
 

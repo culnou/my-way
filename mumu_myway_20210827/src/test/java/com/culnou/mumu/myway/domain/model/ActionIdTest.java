@@ -6,7 +6,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.culnou.mumu.myway.domain.model.ActionId;
+
 
 
 public class ActionIdTest {

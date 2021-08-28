@@ -11,16 +11,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.culnou.mumu.myway.domain.model.Person;
-import com.culnou.mumu.myway.domain.model.PersonId;
-import com.culnou.mumu.myway.domain.model.Project;
-import com.culnou.mumu.myway.domain.model.ProjectId;
-import com.culnou.mumu.myway.domain.model.ProjectRepository;
-import com.culnou.mumu.myway.domain.model.ProjectType;
-import com.culnou.mumu.myway.domain.model.Vision;
-import com.culnou.mumu.myway.domain.model.VisionId;
-import com.culnou.mumu.myway.domain.model.VisionRepository;
-import com.culnou.mumu.myway.domain.model.VisionType;
+
 
 
 @RunWith(SpringRunner.class)

@@ -25,7 +25,12 @@ public abstract class AbstractProjectQuery implements ProjectQuery {
 	}
 	
 	protected Project convertFrom(ProjectQueryDocument doc) {
-		return new Project(doc.getPersonId(), doc.getVisionId(), doc.getProjectId(), doc.getName(), doc.getDescription(), doc.getProjectType());
+		Project project = new Project(doc.getPersonId(), doc.getVisionId(), doc.getProjectId(), doc.getName(), doc.getDescription(), doc.getProjectType());
+		project.setExpendedTime(doc.getExpendedTime());
+		if(doc.getGoal() != null) {
+			project.defineGoal(doc.getGoal());
+		}
+		return project;
 	}
 
 }

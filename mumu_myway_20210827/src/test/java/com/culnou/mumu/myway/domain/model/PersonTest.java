@@ -9,12 +9,7 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
-import com.culnou.mumu.myway.domain.model.Person;
-import com.culnou.mumu.myway.domain.model.PersonId;
-import com.culnou.mumu.myway.domain.model.Vision;
-import com.culnou.mumu.myway.domain.model.VisionId;
-import com.culnou.mumu.myway.domain.model.VisionRepository;
-import com.culnou.mumu.myway.domain.model.VisionType;
+
 
 public class PersonTest {
 	

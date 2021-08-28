@@ -2,25 +2,20 @@ package com.culnou.mumu.myway.infrastructure.persistence;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import com.culnou.mumu.myway.domain.model.Goal;
+import com.culnou.mumu.myway.domain.model.ActionId;
 import com.culnou.mumu.myway.domain.model.PersonId;
 import com.culnou.mumu.myway.domain.model.ProjectId;
-import com.culnou.mumu.myway.domain.model.ProjectType;
-import com.culnou.mumu.myway.domain.model.VisionId;
 
 import lombok.Data;
-
-@Document(collection = "projects")
+@Document(collection = "actions")
 @Data
-public class ProjectDocument {
+public class ActionDocument {
 	private String id;
 	private PersonId personId;
-	private VisionId visionId;
 	private ProjectId projectId;
+	private ActionId actionId;
 	private String name;
 	private String description;
-	private ProjectType projectType;
-	private Goal goal;
 	private int expendedTime;
 
 }

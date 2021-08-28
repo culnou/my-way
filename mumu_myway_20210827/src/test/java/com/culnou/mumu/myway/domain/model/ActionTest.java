@@ -6,11 +6,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.culnou.mumu.myway.domain.model.Action;
-import com.culnou.mumu.myway.domain.model.ActionId;
-import com.culnou.mumu.myway.domain.model.PersonId;
-import com.culnou.mumu.myway.domain.model.ProjectId;
-
 
 
 public class ActionTest {
@@ -87,7 +82,7 @@ public class ActionTest {
 		String name = "111";
 		String description = "111";
 		Action action = new Action(personId, projectId, actionId, name, description);
-		action.setExpendedTime(-1);
+		action.addExpendedTime(-1);
 		//実行されない。
 		action.name();
 	}
@@ -123,5 +118,46 @@ public class ActionTest {
 		Action action = new Action(personId, projectId, actionId, name, description);
 		assertEquals(action.actionId(), actionId);
 	}
+	
+	//消費時間の加算のテスト
+	@Test
+	public void testAddExpendedTime() {
+		PersonId personId = new PersonId("111");
+		ActionId actionId = new ActionId("111");
+		ProjectId projectId = new ProjectId("111");
+		String name = "111";
+		String description = "111";
+		Action action = new Action(personId, projectId, actionId, name, description);
+		action.addExpendedTime(1);
+		action.addExpendedTime(2);
+		assertEquals(action.expendedTime(), 3);
+	}
+	
+    @Test(expected = Exception.class)
+	public void testAddExpendedTimeByNegativeResult() {
+		PersonId personId = new PersonId("111");
+		ActionId actionId = new ActionId("111");
+		ProjectId projectId = new ProjectId("111");
+		String name = "111";
+		String description = "111";
+		Action action = new Action(personId, projectId, actionId, name, description);
+		action.addExpendedTime(1);
+		System.out.println("*** action.expendedTime " + action.expendedTime());
+		action.addExpendedTime(-2);
+		//実行されない。
+		System.out.println("*** action.expendedTime " + action.expendedTime());
+	}
+    @Test(expected = IllegalArgumentException.class)
+	public void testSetExpendedTimeByNegative() {
+    	PersonId personId = new PersonId("111");
+		ActionId actionId = new ActionId("111");
+		ProjectId projectId = new ProjectId("111");
+		String name = "111";
+		String description = "111";
+		Action action = new Action(personId, projectId, actionId, name, description);
+		action.setExpendedTime(-2);
+		//実行されない。
+		System.out.println("*** action.expendedTime " + action.expendedTime());
+    }
 
 }

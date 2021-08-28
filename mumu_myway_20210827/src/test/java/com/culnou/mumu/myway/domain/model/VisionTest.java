@@ -6,13 +6,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.culnou.mumu.myway.domain.model.PersonId;
-import com.culnou.mumu.myway.domain.model.Project;
-import com.culnou.mumu.myway.domain.model.ProjectId;
-import com.culnou.mumu.myway.domain.model.ProjectType;
-import com.culnou.mumu.myway.domain.model.Vision;
-import com.culnou.mumu.myway.domain.model.VisionId;
-import com.culnou.mumu.myway.domain.model.VisionType;
 
 public class VisionTest {
 
@@ -98,7 +91,7 @@ public class VisionTest {
 	
 	//ファクトリーメソッドのテスト
 	@Test
-	public void testLaunchExperiment() {
+	public void testLaunchProject() {
 		PersonId personId = new PersonId("111");
 		VisionId visionId = new VisionId("111");
 		VisionType visionType = VisionType.BUSINESS;
@@ -117,7 +110,7 @@ public class VisionTest {
 	}
 	
 	@Test(expected = IllegalArgumentException.class)
-	public void testLaunchExperimentByNoExperimentId() {
+	public void testLaunchProjectByNoProjectId() {
 		PersonId personId = new PersonId("111");
 		VisionId visionId = new VisionId("111");
 		VisionType visionType = VisionType.BUSINESS;
@@ -131,7 +124,7 @@ public class VisionTest {
 		experiment.name();
 	}
 	@Test(expected = IllegalArgumentException.class)
-	public void testLaunchExperimentByName() {
+	public void testLaunchProjectByName() {
 		PersonId personId = new PersonId("111");
 		VisionId visionId = new VisionId("111");
 		VisionType visionType = VisionType.BUSINESS;
@@ -145,7 +138,7 @@ public class VisionTest {
 		experiment.name();
 	}
 	@Test(expected = IllegalArgumentException.class)
-	public void testLaunchExperimentByDescription() {
+	public void testLaunchProjectByDescription() {
 		PersonId personId = new PersonId("111");
 		VisionId visionId = new VisionId("111");
 		VisionType visionType = VisionType.BUSINESS;

@@ -53,9 +53,6 @@ public class ProjectMongoQuery extends AbstractProjectQuery{
 	
 	private Project convertProjectQueryDocumentToProject(ProjectQueryDocument doc) {
 		Project experiment = this.convertFrom(doc);
-		if(doc.getGoal() != null) {
-			experiment.defineGoal(doc.getGoal());
-		}
 		return experiment;
 		
 	}
