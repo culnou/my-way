@@ -47,6 +47,7 @@ public class WorkQueryTest {
 		Action action = new Action(personId, projectId, actionId, name, description);
 		WorkId workId = new WorkId("work111");
 		Work work = action.defineWork(workId, "111", "111");
+		work.changeStatus(WorkStatus.DOING);
 		workRepository.save(work);
 		List<Work> works = workQuery.findWorksOfAction(actionId);
 		assertEquals(works.get(0).workId(), workId);

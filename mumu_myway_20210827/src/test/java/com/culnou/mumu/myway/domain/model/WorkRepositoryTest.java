@@ -44,6 +44,7 @@ public class WorkRepositoryTest {
 		String description = "111";
 		Action action = new Action(personId, projectId, actionId, name, description);
 		Work work = action.defineWork(new WorkId("work111"), "111", "111");
+		work.changeStatus(WorkStatus.DOING);
 		workRepository.save(work);
 		WorkId workId = new WorkId("work111");
 		Work readWork = workQuery.findById(workId);
@@ -52,6 +53,7 @@ public class WorkRepositoryTest {
 		assertEquals(readWork.actionId(), actionId);
 		assertEquals(readWork.name(), "111");
 		assertEquals(readWork.description(), "111");
+		assertEquals(readWork.status(), WorkStatus.DOING);
 		
 	}
 

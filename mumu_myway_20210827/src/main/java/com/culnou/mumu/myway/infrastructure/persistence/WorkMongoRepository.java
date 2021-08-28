@@ -56,6 +56,7 @@ public class WorkMongoRepository implements WorkRepository {
 		doc.setWorkId(work.workId());
 		doc.setName(work.name());
 		doc.setDescription(work.description());
+		doc.setWorkStatus(work.status());
 		doc.setExpendedTime(work.expendedTime());
 		return doc;
 	}
