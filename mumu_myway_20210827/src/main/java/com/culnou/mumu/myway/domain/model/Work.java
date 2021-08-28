@@ -1,18 +1,18 @@
 package com.culnou.mumu.myway.domain.model;
 
-public class Action {
+public class Work {
 	
 	private PersonId personId;
-	private ProjectId projectId;
 	private ActionId actionId;
+	private WorkId workId;
 	private String name;
 	private String description;
+	private WorkStatus workStatus;
 	private int expendedTime;
 	
-	
-	protected Action(PersonId personId, ProjectId projectId, ActionId actionId, String name, String description) {
+	protected Work(PersonId personId, ActionId actionId, WorkId workId, String name, String description) {
 		this.setPersonId(personId);
-		this.setProjectId(projectId);
+		this.setWorkId(workId);
 		this.setActionId(actionId);
 		this.setName(name);
 		this.setDescription(description);
@@ -29,17 +29,6 @@ public class Action {
 		return this.personId;
 	}
 	
-	protected void setProjectId(ProjectId projectId) {
-		if(projectId == null) {
-			throw new IllegalArgumentException("The projectId may not be set to null.");
-		}
-		this.projectId = projectId;
-	}
-	
-	public ProjectId projectId() {
-		return this.projectId;
-	}
-	
 	protected void setActionId(ActionId actionId) {
 		if(actionId == null) {
 			throw new IllegalArgumentException("The actionId may not be set to null.");
@@ -49,6 +38,17 @@ public class Action {
 	
 	public ActionId actionId() {
 		return this.actionId;
+	}
+	
+	protected void setWorkId(WorkId workId) {
+		if(workId == null) {
+			throw new IllegalArgumentException("The workId may not be set to null.");
+		}
+		this.workId = workId;
+	}
+	
+	public WorkId workId() {
+		return this.workId;
 	}
 	
 	public void setName(String name) {
@@ -73,6 +73,17 @@ public class Action {
 		return this.description;
 	}
 	
+	public void changeStatus(WorkStatus workStatus) {
+		if(workStatus == null) {
+			throw new IllegalArgumentException("The workStatus may not be set to null.");
+		}
+		this.workStatus = workStatus;
+	}
+	
+	public WorkStatus status() {
+		return this.workStatus;
+	}
+	
 	public void addExpendedTime(int expendedTime) {
 		if((this.expendedTime +  expendedTime) < 0) {
 			throw new IllegalArgumentException("Total expendedTime may be negative.");
@@ -91,20 +102,6 @@ public class Action {
 	
 	public int expendedTime() {
 		return this.expendedTime;
-	}
-	
-	//ファクトリーメソッド
-	public Work defineWork(WorkId workId, String name, String description) throws Exception{
-		if(workId == null) {
-			throw new IllegalArgumentException("The workId may not be set to null.");
-		}
-		if(name == null) {
-			throw new IllegalArgumentException("The name may not be set to null.");
-		}
-		if(description == null) {
-			throw new IllegalArgumentException("The description may not be set to null.");
-		}
-		return new Work(this.personId, this.actionId, workId, name, description);
 	}
 
 }

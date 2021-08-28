@@ -159,5 +159,22 @@ public class ActionTest {
 		//実行されない。
 		System.out.println("*** action.expendedTime " + action.expendedTime());
     }
+    //ファクトリーメソッドのテスト
+    @Test
+    public void testDefineWOrk() throws Exception{
+    	PersonId personId = new PersonId("111");
+		ActionId actionId = new ActionId("111");
+		ProjectId projectId = new ProjectId("111");
+		String name = "111";
+		String description = "111";
+		Action action = new Action(personId, projectId, actionId, name, description);
+		WorkId workId = new WorkId("111");
+		Work work = action.defineWork(workId, name, description);
+		assertEquals(work.personId(), personId);
+		assertEquals(work.workId(), workId);
+		assertEquals(work.actionId(), actionId);
+		assertEquals(work.name(), name);
+		assertEquals(work.description(), description);
+    }
 
 }
