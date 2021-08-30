@@ -84,8 +84,6 @@ public class VisionMongoRepository extends AbstractVisionRepository {
 	public List<Vision> visionsOfPerson(PersonId personId) throws Exception {
 		// TODO Auto-generated method stub
 		List<VisionDocument> docs = visionRepository.findVisionsByPersonId(personId);
-		//検証用
-		System.out.println("******* person " + docs.get(0).getPersonId().id());
 		return convertVisionDocumentsToVisions(docs);
 	}
 
@@ -93,8 +91,6 @@ public class VisionMongoRepository extends AbstractVisionRepository {
 	public List<Vision> visionsOfVisionType(VisionType visionType) throws Exception {
 		// TODO Auto-generated method stub
 		List<VisionDocument> docs = visionRepository.findVisionsByVisionType(visionType);
-		//検証用
-		System.out.println("******* visionType " + docs.get(0).getVisionType());
 		return convertVisionDocumentsToVisions(docs);
 	}
 	

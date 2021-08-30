@@ -2,6 +2,9 @@ package com.culnou.mumu.myway.domain.model;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -22,13 +25,13 @@ public class ProjectRepositoryTest {
 	@Autowired
 	private ProjectRepository projectRepository;
 	
-	@Qualifier("projectMongoQuery")
-	@Autowired
-	private ProjectQuery projectQuery;
 
 	@Qualifier("visionMongoRepository")
 	@Autowired
 	private VisionRepository visionRepository;
+	
+	//テスト用エンティティ
+	private List<Project> testProjects = new ArrayList<>();
 	
 	@Before
 	public void setUp() throws Exception {
@@ -36,7 +39,7 @@ public class ProjectRepositoryTest {
 
 	@After
 	public void tearDown() throws Exception {
-		//projectRepository.removeAll();
+		projectRepository.removeAll(testProjects);
 	}
 
 	@Test
@@ -57,14 +60,79 @@ public class ProjectRepositoryTest {
 		Project project = vision.launchProject(projectId, projectName, description, ProjectType.EXPERIMENT);
 		
 		projectRepository.save(project);
-		Project readproject = projectQuery.findById(projectId);
+		testProjects.add(project);
+		
+		Project readproject = projectRepository.projectOfId(projectId);
 		assertEquals(readproject.personId(), personId);
 		assertEquals(readproject.visionId(), visionId);
 		assertEquals(readproject.projectId(), projectId);
 		assertEquals(readproject.name(), projectName);
 		assertEquals(readproject.description(), description);
 		assertEquals(readproject.projectType(), ProjectType.EXPERIMENT);
+	}
+	
+	@Test
+	public void testProjectsOfVision() throws Exception{
 		
+		String name = "111";
+		PersonId personId = new PersonId("111");
+		Person person = new Person(personId, name);
+		
+		VisionId visionId = new VisionId("Vision001");
+		VisionType visionType = VisionType.BUSINESS;
+		String content = "111";
+		
+		Vision vision = person.createVision(visionId, visionType, content);
+		
+		ProjectId projectId = new ProjectId("Project001");
+		String projectName = "111";
+		String description = "111";
+		Project project = vision.launchProject(projectId, projectName, description, ProjectType.EXPERIMENT);
+		Goal goal = new Goal("111", "111");
+		project.defineGoal(goal);
+		projectRepository.save(project);
+		testProjects.add(project);
+		ProjectId projectId2 = new ProjectId("Project002");
+		Project project2 = vision.launchProject(projectId2, projectName, description, ProjectType.EXPERIMENT);
+		project2.defineGoal(goal);
+		projectRepository.save(project2);
+		testProjects.add(project2);
+		List<Project> projects = projectRepository.projectsOfVision(visionId);
+		assertEquals(projects.size(), 2);
+		assertEquals(projects.get(0).goal(), goal);
+		assertEquals(projects.get(0).visionId(), visionId);
+	}
+	
+	@Test
+	public void testProjectsOfProjectType() throws Exception{
+		
+		String name = "111";
+		PersonId personId = new PersonId("222");
+		Person person = new Person(personId, name);
+		
+		VisionId visionId = new VisionId("Vision002");
+		VisionType visionType = VisionType.BUSINESS;
+		String content = "111";
+		
+		Vision vision = person.createVision(visionId, visionType, content);
+		
+		ProjectId projectId = new ProjectId("Project003");
+		String projectName = "111";
+		String description = "111";
+		Project project = vision.launchProject(projectId, projectName, description, ProjectType.PRACTICE);
+		Goal goal = new Goal("111", "111");
+		project.defineGoal(goal);
+		projectRepository.save(project);
+		testProjects.add(project);
+		ProjectId projectId2 = new ProjectId("Project004");
+		Project project2 = vision.launchProject(projectId2, projectName, description, ProjectType.PRACTICE);
+		project2.defineGoal(goal);
+		projectRepository.save(project2);
+		testProjects.add(project2);
+		List<Project> projects = projectRepository.projectsOfProjectType(ProjectType.PRACTICE);
+		assertEquals(projects.size(), 2);
+		assertEquals(projects.get(0).projectType(), ProjectType.PRACTICE);
+		assertEquals(projects.get(0).visionId(), visionId);
 	}
 
 }
