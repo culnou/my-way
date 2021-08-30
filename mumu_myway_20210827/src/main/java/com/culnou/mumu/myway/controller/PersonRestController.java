@@ -32,7 +32,7 @@ public class PersonRestController {
 	}
 	@DeleteMapping("/persons")
 	public void removePerson() throws Exception{
-		this.personService.removeAllPerson();
+		//this.personService.removeAllPerson();
 	}
 	
 

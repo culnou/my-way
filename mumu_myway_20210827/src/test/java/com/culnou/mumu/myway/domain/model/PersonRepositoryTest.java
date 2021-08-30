@@ -2,6 +2,8 @@ package com.culnou.mumu.myway.domain.model;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import org.junit.After;
@@ -23,9 +25,8 @@ public class PersonRepositoryTest {
 	@Qualifier("personMongoRepository")
 	@Autowired
 	private PersonRepository personRepository;
-	@Qualifier("personMongoQuery")
-	@Autowired
-	private PersonQuery personQuery;
+	
+	private List<Person> testPersons = new ArrayList<>();
 		
 
 	@Before
@@ -34,7 +35,7 @@ public class PersonRepositoryTest {
 
 	@After
 	public void tearDown() throws Exception {
-		personRepository.removeAll();
+		personRepository.removeAll(this.testPersons);
 	}
 
 	@Test
@@ -45,7 +46,8 @@ public class PersonRepositoryTest {
         User user = new User(str, "user1");
         Person person = PersonFactory.creatPerson(user);
 		personRepository.save(person);
-		Person readPerson = personQuery.findById(person.personId());
+		this.testPersons.add(person);
+		Person readPerson = personRepository.personOfId(person.personId());
 		assertNotNull(readPerson);
 		assertEquals(readPerson.personId(), person.personId());
 		assertEquals(readPerson.name(), person.name());

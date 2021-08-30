@@ -12,7 +12,7 @@ import com.culnou.mumu.myway.controller.UserDto;
 import com.culnou.mumu.myway.domain.model.Person;
 import com.culnou.mumu.myway.domain.model.PersonFactory;
 import com.culnou.mumu.myway.domain.model.PersonId;
-import com.culnou.mumu.myway.domain.model.PersonQuery;
+
 import com.culnou.mumu.myway.domain.model.PersonRepository;
 import com.culnou.mumu.myway.domain.model.User;
 @Service("personServiceImpl")
@@ -22,9 +22,7 @@ public class PersonServiceImpl implements PersonService {
 	@Qualifier("personMongoRepository")
 	@Autowired
 	private PersonRepository personRepository;
-	@Qualifier("personMongoQuery")
-	@Autowired
-	private PersonQuery personQuery;
+	
 
 	@Override
 	public void assignPerson(Dto user) throws Exception {
@@ -39,16 +37,11 @@ public class PersonServiceImpl implements PersonService {
 	public Dto findPersonById(String id) throws Exception {
 		// TODO Auto-generated method stub
 		PersonId personId = new PersonId(id);
-		Person person = personQuery.findById(personId);
+		Person person = personRepository.personOfId(personId);
 		PersonDto personDto = new PersonDto(person.personId().id(), person.name());
 		return personDto;
 	}
 
-	@Override
-	public void removeAllPerson() throws Exception {
-		// TODO Auto-generated method stub
-		personRepository.removeAll();
-		
-	}
+	
 
 }
