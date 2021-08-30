@@ -63,6 +63,7 @@ public class VisionRepositoryTest {
 	
 	@Test
 	public void testVisionsOfPerson() throws Exception{
+		List<Vision> saveVisions = new ArrayList<>();
 		
 		String name = "111";
 		PersonId personId = new PersonId("Person001");
@@ -73,14 +74,14 @@ public class VisionRepositoryTest {
 		String content = "111";
 		
 		Vision vision = person.createVision(visionId, visionType, content);
-		visionRepository.save(vision);
+		saveVisions.add(vision);
 		testVisions.add(vision);
 		
 		VisionId visionId2 = visionRepository.nextIdentity();
 		Vision vision2 = person.createVision(visionId2, visionType, content);
-		visionRepository.save(vision2);
+		saveVisions.add(vision2);
 		testVisions.add(vision2);
-		
+		visionRepository.saveAll(saveVisions);
 		List<Vision> visions = visionRepository.visionsOfPerson(personId);
 		assertEquals(visions.size(), 2);
 		assertEquals(visions.get(0).personId(), personId);

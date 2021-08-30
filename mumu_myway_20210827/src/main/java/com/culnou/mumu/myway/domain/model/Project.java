@@ -43,6 +43,9 @@ public class Project {
 	}
 	
 	protected void setProjectId(ProjectId projectId) {
+		if(this.projectId != null) {
+			throw new IllegalStateException();
+		}
 		if(projectId == null) {
 			throw new IllegalArgumentException("The projectId may not be set to null.");
 		}

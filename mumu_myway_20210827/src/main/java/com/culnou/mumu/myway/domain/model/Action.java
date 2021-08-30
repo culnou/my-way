@@ -41,6 +41,9 @@ public class Action {
 	}
 	
 	protected void setActionId(ActionId actionId) {
+		if(this.actionId != null) {
+			throw new IllegalStateException();
+		}
 		if(actionId == null) {
 			throw new IllegalArgumentException("The actionId may not be set to null.");
 		}

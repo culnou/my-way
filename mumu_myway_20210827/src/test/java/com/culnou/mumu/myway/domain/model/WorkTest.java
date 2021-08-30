@@ -49,6 +49,23 @@ public class WorkTest {
 		//実行されない。
 		work.name();
 	}
+	
+	//識別子の不変性が保持されるか検証する
+	@Test(expected = IllegalStateException.class)
+	public void testInvariantOfIdentifier() {
+		PersonId personId = new PersonId("111");
+		ActionId actionId = new ActionId("111");
+		WorkId workId = new WorkId("111");
+		String name = "111";
+		String description = "111";
+		Work work = new Work(personId, actionId, workId, name, description);
+		//識別子は再度設定できない。
+		WorkId workId2 = new WorkId("222");
+		work.setWorkId(workId2);
+		//実行されない。
+		work.name();
+	}
+	
 	@Test
 	public void testInitialize() {
 		PersonId personId = new PersonId("111");

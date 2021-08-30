@@ -25,8 +25,13 @@ public class Vision {
 	public PersonId personId() {
 		return this.personId;
 	}
-	
+	//識別子の不変性を保持するため、識別子のセッターは、protectedにしてクライアントから設定できないようにする。
 	protected void setVisionId(VisionId visionId) {
+		//識別子の不変性を保持するため、識別子が既に設定されているときは例外を発生させて設定させないようにする。
+		//DDD p180参考。
+		if(this.visionId != null) {
+			throw new IllegalStateException();
+		}
 		if(visionId == null) {
 			throw new IllegalArgumentException("The visionId may not be set to null.");
 		}

@@ -43,6 +43,19 @@ public class PersonTest {
 		person.name();
 	}
 	
+	//識別子の不変性が保持されるか検証する
+	@Test(expected = IllegalStateException.class)
+	public void testInvariantOfIdentifier() {
+		String name = "111";
+		PersonId personId1 = new PersonId("111");
+		Person person = new Person(personId1, name);
+		PersonId personId2 = new PersonId("222");
+		//識別子は再度設定できない。
+		person.setPersonId(personId2);
+		//実行されない。
+		person.name();
+	}
+	
 	//識別子オブジェクトが正しく設定される
 	@Test
 	public void testPersonId() {

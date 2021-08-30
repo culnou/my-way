@@ -17,6 +17,7 @@ public class VisionTest {
 	public void tearDown() throws Exception {
 	}
 
+	//バリデーションテスト
 	//NULLを防いで正しく初期化できる（セッターのテストも兼ねる）
 	@Test(expected = IllegalArgumentException.class)
 	public void testInitializeByPersonId() {
@@ -55,7 +56,20 @@ public class VisionTest {
 		vision.content();
 	}
 	
-	
+	//識別子の不変性が保持されるか検証する
+	@Test(expected = IllegalStateException.class)
+	public void testInvariantOfIdentifier() {
+		PersonId personId = new PersonId("111");
+		VisionId visionId = new VisionId("111");
+		VisionType visionType = VisionType.BUSINESS;
+		String content = "111";
+		Vision vision = new Vision(personId, visionId, visionType, content);
+		//識別子は再度設定できない。
+		VisionId visionId2 = new VisionId("222");
+		vision.setVisionId(visionId2);
+		//実行されない。
+		vision.content();
+	}
 	//識別子オブジェクトが正しく設定される
 	@Test
 	public void testPersonId() {

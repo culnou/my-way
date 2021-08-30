@@ -91,16 +91,32 @@ public class ProjectTest {
 		//実行されない。
 	    project.name();
 	}
+	//識別子の不変性が保持されるか検証する
+	@Test(expected = IllegalStateException.class)
+	public void testInvariantOfIdentifier() {
+		PersonId personId = new PersonId("111");
+		VisionId visionId = new VisionId("111");
+		ProjectId projectId = new ProjectId("111");
+		String name = "111";
+		String description = "111";
+		Project project = new Project(personId, visionId, projectId, name, description, ProjectType.EXPERIMENT);
+		//識別子は再度設定できない。
+		ProjectId projectId2 = new ProjectId("222");
+		project.setProjectId(projectId2);
+		//実行されない。
+		project.name();
+	}
+	
 	//識別子オブジェクトが正しく設定される
 	@Test
 	public void testPersonId() {
 		PersonId personId = new PersonId("111");
 		VisionId visionId = new VisionId("111");
-		ProjectId experimentId = new ProjectId("111");
+		ProjectId projectId = new ProjectId("111");
 		String name = "111";
 		String description = "111";
-		Project experiment = new Project(personId, visionId, experimentId, name, description, ProjectType.EXPERIMENT);
-		assertEquals(experiment.personId(), personId);
+		Project project = new Project(personId, visionId, projectId, name, description, ProjectType.EXPERIMENT);
+		assertEquals(project.personId(), personId);
 	}
 	
 	@Test

@@ -13,6 +13,11 @@ public class Person {
 	}
 	
 	protected void setPersonId(PersonId personId) {
+		//識別子の不変性を保持するため、識別子が既に設定されているときは例外を発生させて設定させないようにする。
+		//DDD p180参考。
+		if(this.personId != null) {
+			throw new IllegalStateException();
+		}
 		if(personId == null) {
 			throw new IllegalArgumentException("The personId may not be set to null.");
 		}

@@ -41,6 +41,9 @@ public class Work {
 	}
 	
 	protected void setWorkId(WorkId workId) {
+		if(this.workId != null) {
+			throw new IllegalStateException();
+		}
 		if(workId == null) {
 			throw new IllegalArgumentException("The workId may not be set to null.");
 		}
