@@ -24,8 +24,6 @@ public class PersonMongoRepository implements PersonRepository {
 		// TODO Auto-generated method stub
 		PersonDocument doc = this.convertPersonToPersonDocument(person);
 		personRepository.save(doc);
-		
-
 	}
 
 	@Override
