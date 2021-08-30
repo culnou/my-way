@@ -2,6 +2,9 @@ package com.culnou.mumu.myway.domain.model;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -18,14 +21,13 @@ public class ActionRepositoryTest {
 	@Autowired
 	private ActionRepository actionRepository;
 	
-	@Qualifier("actionMongoQuery")
-	@Autowired
-	private ActionQuery actionQuery;
-
+	
 	@Qualifier("projectMongoRepository")
 	@Autowired
 	private ProjectRepository projectRepository;
 	
+	//テスト用エンティティ
+	private List<Action> testActions = new ArrayList<>();
 
 	@Before
 	public void setUp() throws Exception {
@@ -33,7 +35,7 @@ public class ActionRepositoryTest {
 
 	@After
 	public void tearDown() throws Exception {
-		actionRepository.removeAll();
+		actionRepository.removeAll(this.testActions);
 	}
 
 	@Test
@@ -46,14 +48,36 @@ public class ActionRepositoryTest {
 		Project project = new Project(personId, visionId, projectId, name, description, ProjectType.EXPERIMENT);
 		Action action = project.defineAction(new ActionId("action111"), "111", "111");
 		actionRepository.save(action);
+		this.testActions.add(action);
 		ActionId actionId = new ActionId("action111");
-		Action readAction = actionQuery.findById(actionId);
+		Action readAction = actionRepository.actionOfId(actionId);
 		assertEquals(readAction.personId(), personId);
 		assertEquals(readAction.projectId(), projectId);
 		assertEquals(readAction.actionId(), actionId);
 		assertEquals(readAction.name(), "111");
 		assertEquals(readAction.description(), "111");
 		
+	}
+	
+	@Test
+	public void testActionsOfProject() throws Exception{
+		PersonId personId = new PersonId("111");
+		VisionId visionId = new VisionId("111");
+		ProjectId projectId = new ProjectId("Project001");
+		String name = "111";
+		String description = "111";
+		Project project = new Project(personId, visionId, projectId, name, description, ProjectType.EXPERIMENT);
+		ActionId actionId = new ActionId("action001");
+		Action action = project.defineAction(actionId, "111", "111");
+		actionRepository.save(action);
+		this.testActions.add(action);
+		ActionId actionId2 = new ActionId("action002");
+		Action action2 = project.defineAction(actionId2, "111", "111");
+		actionRepository.save(action2);
+		this.testActions.add(action2);
+		List<Action> actions = actionRepository.actionsOfProject(projectId);
+		assertEquals(actions.size(), 2);
+		assertEquals(actions.get(0).actionId(), actionId);
 	}
 
 }

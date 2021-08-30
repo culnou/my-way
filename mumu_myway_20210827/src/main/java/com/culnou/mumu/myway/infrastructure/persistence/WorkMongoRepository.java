@@ -1,17 +1,22 @@
 package com.culnou.mumu.myway.infrastructure.persistence;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.culnou.mumu.myway.domain.model.AbstractWorkRepository;
+import com.culnou.mumu.myway.domain.model.ActionId;
 import com.culnou.mumu.myway.domain.model.Work;
 import com.culnou.mumu.myway.domain.model.WorkId;
-import com.culnou.mumu.myway.domain.model.WorkRepository;
+
 @Service("workMongoRepository")
 @Transactional
-public class WorkMongoRepository implements WorkRepository {
+public class WorkMongoRepository extends AbstractWorkRepository {
 
 	@Autowired
 	private WorkMongoDataRepository workRepository;
@@ -42,10 +47,39 @@ public class WorkMongoRepository implements WorkRepository {
 	}
 
 	@Override
-	public void removeAll() throws Exception {
+	public void saveAll(List<Work> works) throws Exception {
 		// TODO Auto-generated method stub
-		workRepository.deleteAll();
+		for(Work work : works) {
+			this.save(work);
+		}
+		
+	}
 
+	@Override
+	public void removeAll(List<Work> works) throws Exception {
+		// TODO Auto-generated method stub
+		for(Work work : works) {
+			this.remove(work);
+		}
+	}
+
+	@Override
+	public Work workOfId(WorkId workId) throws Exception {
+		// TODO Auto-generated method stub
+		Optional<WorkDocument> readDoc = workRepository.findById(workId.id());
+		if (readDoc.isPresent()){
+			WorkDocument doc = readDoc.get();
+			return this.convertDocumentToWork(doc);
+		}else {
+			return null;
+		}
+	}
+
+	@Override
+	public List<Work> worksOfAction(ActionId actionId) throws Exception {
+		// TODO Auto-generated method stub
+		List<WorkDocument> docs = workRepository.findWorksByActionId(actionId);
+		return convertWorkDocumentsToWorks(docs);
 	}
 	
 	private WorkDocument convertWorkToWorkDocument(Work work) {
@@ -60,5 +94,22 @@ public class WorkMongoRepository implements WorkRepository {
 		doc.setExpendedTime(work.expendedTime());
 		return doc;
 	}
+	
+	private Work convertDocumentToWork(WorkDocument doc) {
+		Work work = this.convertFrom(doc);
+		return work;
+		
+	}
+	
+	private List<Work> convertWorkDocumentsToWorks(List<WorkDocument> docs) {
+		List<Work> works = new ArrayList<>();
+		for(WorkDocument doc : docs) {
+			Work work = convertDocumentToWork(doc);
+			works.add(work);
+		}
+		return works;
+	}
+
+	
 
 }
