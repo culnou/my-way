@@ -63,6 +63,7 @@ public class WorkRepositoryTest {
 	
 	@Test
 	public void testWorksOfAction() throws Exception{
+		List<Work> saveWorks = new ArrayList<>();
 		PersonId personId = new PersonId("111");
 		ActionId actionId = new ActionId("Action001");
 		ProjectId projectId = new ProjectId("111");
@@ -72,12 +73,13 @@ public class WorkRepositoryTest {
 		WorkId workId = new WorkId("work001");
 		Work work = action.defineWork(workId, "111", "111");
 		work.changeStatus(WorkStatus.DOING);
-		workRepository.save(work);
+		saveWorks.add(work);
 		this.testWorks.add(work);
 		WorkId workId2 = new WorkId("work002");
 		Work work2 = action.defineWork(workId2, "111", "111");
-		workRepository.save(work2);
+		saveWorks.add(work2);
 		this.testWorks.add(work2);
+		workRepository.saveAll(saveWorks);
 		List<Work> works = workRepository.worksOfAction(actionId);
 		assertEquals(works.size(), 2);
 		assertEquals(works.get(0).workId(), workId);

@@ -42,6 +42,16 @@ public class PersonServiceImpl implements PersonService {
 		return personDto;
 	}
 
+	@Override
+	public void deletePerson(String id) throws Exception {
+		// TODO Auto-generated method stub
+		PersonId personId = new PersonId(id);
+		Person person = personRepository.personOfId(personId);
+		personRepository.remove(person);
+		
+		
+	}
+
 	
 
 }

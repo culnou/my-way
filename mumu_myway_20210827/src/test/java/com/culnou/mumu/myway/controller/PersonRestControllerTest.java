@@ -62,6 +62,9 @@ public class PersonRestControllerTest {
 		assertNotNull(personDto);
 		assertEquals(personDto.getId(), str);
 		assertEquals(personDto.getName(), name);
+		//個人の削除
+		String deleteUrl = "http://localhost:" + port + "/persons/"  + str;
+		template.delete(deleteUrl, String.class);
 	}
 
 }

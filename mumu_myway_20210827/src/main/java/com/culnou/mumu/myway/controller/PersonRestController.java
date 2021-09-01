@@ -30,9 +30,9 @@ public class PersonRestController {
 		return ResponseEntity.ok().body((PersonDto)this.personService.findPersonById(id));
 		
 	}
-	@DeleteMapping("/persons")
-	public void removePerson() throws Exception{
-		//this.personService.removeAllPerson();
+	@DeleteMapping("/persons/{id}")
+	public void deletePerson(@PathVariable String id) throws Exception{
+		this.personService.deletePerson(id);
 	}
 	
 

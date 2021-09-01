@@ -73,6 +73,7 @@ public class ProjectRepositoryTest {
 	
 	@Test
 	public void testProjectsOfVision() throws Exception{
+		List<Project> saveProjects = new ArrayList<>();
 		
 		String name = "111";
 		PersonId personId = new PersonId("111");
@@ -90,13 +91,14 @@ public class ProjectRepositoryTest {
 		Project project = vision.launchProject(projectId, projectName, description, ProjectType.EXPERIMENT);
 		Goal goal = new Goal("111", "111");
 		project.defineGoal(goal);
-		projectRepository.save(project);
+		saveProjects.add(project);
 		testProjects.add(project);
 		ProjectId projectId2 = new ProjectId("Project002");
 		Project project2 = vision.launchProject(projectId2, projectName, description, ProjectType.EXPERIMENT);
 		project2.defineGoal(goal);
-		projectRepository.save(project2);
+		saveProjects.add(project2);
 		testProjects.add(project2);
+		projectRepository.saveAll(saveProjects);
 		List<Project> projects = projectRepository.projectsOfVision(visionId);
 		assertEquals(projects.size(), 2);
 		assertEquals(projects.get(0).goal(), goal);

@@ -7,5 +7,7 @@ public interface PersonService {
 	public Dto findPersonById(String id) throws Exception;
 	
 	//public void removeAllPerson() throws Exception;
+	
+	public void deletePerson(String id) throws Exception;
 
 }
