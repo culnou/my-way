@@ -53,7 +53,7 @@ public class Vision {
 		return this.visionType;
 	}
 	
-	protected void setContent(String content) {
+	public void setContent(String content) {
 		if(content == null) {
 			throw new IllegalArgumentException("The content may not be set to null.");
 		}

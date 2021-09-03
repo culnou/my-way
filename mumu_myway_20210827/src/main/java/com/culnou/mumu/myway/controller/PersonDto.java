@@ -1,10 +1,10 @@
 package com.culnou.mumu.myway.controller;
 
-import com.culnou.mumu.myway.application.Dto;
+
 
 import lombok.Data;
 @Data
-public class PersonDto implements Dto {
+public class PersonDto{
 	
 	String id;
 	String name;

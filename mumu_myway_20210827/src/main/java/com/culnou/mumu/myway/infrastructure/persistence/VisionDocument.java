@@ -18,7 +18,7 @@ public class VisionDocument {
 	private VisionId visionId;
 	private VisionType visionType;
 	private String content;
-	private VisionId result;
+	
 	
 
 }
