@@ -91,19 +91,15 @@ public class ProjectRepositoryTest {
 		String projectName = "111";
 		String description = "111";
 		Project project = vision.launchProject(projectId, projectName, description, ProjectType.EXPERIMENT);
-		Goal goal = new Goal("111", "111");
-		project.defineGoal(goal);
 		saveProjects.add(project);
 		testProjects.add(project);
 		ProjectId projectId2 = new ProjectId("Project002");
 		Project project2 = vision.launchProject(projectId2, projectName, description, ProjectType.EXPERIMENT);
-		project2.defineGoal(goal);
 		saveProjects.add(project2);
 		testProjects.add(project2);
 		projectRepository.saveAll(saveProjects);
 		List<Project> projects = projectRepository.projectsOfVision(visionId);
 		assertEquals(projects.size(), 2);
-		assertEquals(projects.get(0).goal(), goal);
 		assertEquals(projects.get(0).visionId(), visionId);
 	}
 	
@@ -125,13 +121,10 @@ public class ProjectRepositoryTest {
 		String projectName = "111";
 		String description = "111";
 		Project project = vision.launchProject(projectId, projectName, description, ProjectType.PRACTICE);
-		Goal goal = new Goal("111", "111");
-		project.defineGoal(goal);
 		projectRepository.save(project);
 		testProjects.add(project);
 		ProjectId projectId2 = new ProjectId("Project004");
 		Project project2 = vision.launchProject(projectId2, projectName, description, ProjectType.PRACTICE);
-		project2.defineGoal(goal);
 		projectRepository.save(project2);
 		testProjects.add(project2);
 		List<Project> projects = projectRepository.projectsOfProjectType(ProjectType.PRACTICE);

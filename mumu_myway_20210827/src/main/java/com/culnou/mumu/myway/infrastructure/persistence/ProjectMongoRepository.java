@@ -102,7 +102,10 @@ public class ProjectMongoRepository extends AbstractProjectRepository {
 		doc.setName(project.name());
 		doc.setDescription(project.description());
 		doc.setProjectType(project.projectType());
-		doc.setGoal(project.goal());
+		doc.setDeadline(project.deadline());
+		doc.setTerm(project.term());
+		doc.setIndicator(project.indicator());
+		doc.setCriteria(project.criteria());
 		doc.setExpendedTime(project.expendedTime());
 		return doc;
 	}

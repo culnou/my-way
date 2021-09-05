@@ -163,34 +163,9 @@ public class ProjectTest {
 		assertEquals(experiment.description(), description);
 	}
 	
-	//目標の定義のテスト
-	@Test
-	public void testDefineGoal() {
-		PersonId personId = new PersonId("111");
-		VisionId visionId = new VisionId("111");
-		ProjectId projectId = new ProjectId("111");
-		String name = "111";
-		String description = "111";
-		Project project = new Project(personId, visionId, projectId, name, description, ProjectType.EXPERIMENT);
-		Goal goal = new Goal("111", "111");
-		project.defineGoal(goal);
-		//測定は値オブジェクトなので等価。
-		assertEquals(project.goal(), goal);
-	}
 	
-	@Test(expected = IllegalArgumentException.class)
-	public void testDefineNoGoal() {
-		PersonId personId = new PersonId("111");
-		VisionId visionId = new VisionId("111");
-		ProjectId projectId = new ProjectId("111");
-		String name = "111";
-		String description = "111";
-		Project project = new Project(personId, visionId, projectId, name, description, ProjectType.EXPERIMENT);
-		Goal goal = null;
-		project.defineGoal(goal);
-		//実行されない。
-		project.goal();
-	}
+	
+	
 	//ファクトリーメソッドのテスト
 	@Test
 	public void testDefineAction() throws Exception{

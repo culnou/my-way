@@ -1,8 +1,9 @@
 package com.culnou.mumu.myway.infrastructure.persistence;
 
+import java.util.Date;
+
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import com.culnou.mumu.myway.domain.model.Goal;
 import com.culnou.mumu.myway.domain.model.PersonId;
 import com.culnou.mumu.myway.domain.model.ProjectId;
 import com.culnou.mumu.myway.domain.model.ProjectType;
@@ -20,7 +21,10 @@ public class ProjectDocument {
 	private String name;
 	private String description;
 	private ProjectType projectType;
-	private Goal goal;
+	private Date deadline;
+	private int term;
+	private String indicator;
+	private String criteria;
 	private int expendedTime;
 
 }

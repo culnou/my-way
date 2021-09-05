@@ -1,5 +1,7 @@
 package com.culnou.mumu.myway.domain.model;
 
+import java.util.Date;
+
 public class Project {
 	
 	private PersonId personId;
@@ -8,8 +10,12 @@ public class Project {
 	private String name;
 	private String description;
 	private ProjectType projectType;
-	private Goal goal;
+	private Date deadline;
+	private int term;
+	private String indicator;
+	private String criteria;
 	private int expendedTime;
+	
 	//ファクトリーメソッドのみ生成することができるようプロテクトする。
 	protected Project(PersonId personId, VisionId visionId, ProjectId experimentId, String name, String description, ProjectType projectType) {
 		this.setPersonId(personId);
@@ -89,16 +95,50 @@ public class Project {
 		return this.projectType;
 	}
 	
-	public void defineGoal(Goal goal) {
-		if(goal == null) {
-			throw new IllegalArgumentException("The measurement may not be set to null.");
+	public void setDeadline(Date deadline) {
+		if(deadline == null) {
+			throw new IllegalArgumentException("The deadline may not be set to null.");
 		}
-		this.goal = goal;
+		this.deadline = deadline;
 	}
 	
-	public Goal goal() {
-		return this.goal;
+	public Date deadline() {
+		return this.deadline;
 	}
+	
+	public void setTerm(int term) {
+		if(term < 0) {
+			throw new IllegalArgumentException("The term may be negative.");
+		}
+		this.term = term;
+	}
+	
+	public int term() {
+		return this.term;
+	}
+	
+	public void setIndicator(String indicator) {
+		if(indicator == null) {
+			throw new IllegalArgumentException("The indicator may not be set to null.");
+		}
+		this.indicator = indicator;
+	}
+	
+	public String indicator() {
+		return this.indicator;
+	}
+	
+	public void setCriteria(String criteria) {
+		if(criteria == null) {
+			throw new IllegalArgumentException("The criteria may not be set to null.");
+		}
+		this.criteria =criteria;
+	}
+	
+	public String criteria() {
+		return this.criteria;
+	}
+	
 	
 	public void addExpendedTime(int expendedTime) {
 		if((this.expendedTime +  expendedTime) < 0) {
