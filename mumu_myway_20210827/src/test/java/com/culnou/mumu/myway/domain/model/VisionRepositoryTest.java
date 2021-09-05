@@ -40,9 +40,10 @@ public class VisionRepositoryTest {
 
 	@Test
 	public void testSaveAndFindOneVision() throws Exception{
-		String name = "111";
 		PersonId personId = new PersonId("111");
-		Person person = new Person(personId, name);
+		FullName fullName = new FullName("taro", "yamada");
+		Email email = new Email("ss@ss.com");
+		Person person = new Person(personId, fullName, email);
 		
 		VisionId visionId = visionRepository.nextIdentity();
 		VisionType visionType = VisionType.BUSINESS;
@@ -65,9 +66,10 @@ public class VisionRepositoryTest {
 	public void testVisionsOfPerson() throws Exception{
 		List<Vision> saveVisions = new ArrayList<>();
 		
-		String name = "111";
-		PersonId personId = new PersonId("Person001");
-		Person person = new Person(personId, name);
+		PersonId personId = new PersonId("111");
+		FullName fullName = new FullName("taro", "yamada");
+		Email email = new Email("ss@ss.com");
+		Person person = new Person(personId, fullName, email);
 		
 		VisionId visionId = visionRepository.nextIdentity();
 		VisionType visionType = VisionType.BUSINESS;
@@ -90,9 +92,10 @@ public class VisionRepositoryTest {
 	@Test
 	public void testVisionsOfVisionType() throws Exception{
 		
-		String name = "111";
-		PersonId personId = new PersonId("Person002");
-		Person person = new Person(personId, name);
+		PersonId personId = new PersonId("111");
+		FullName fullName = new FullName("taro", "yamada");
+		Email email = new Email("ss@ss.com");
+		Person person = new Person(personId, fullName, email);
 		
 		VisionId visionId = visionRepository.nextIdentity();
 		VisionType visionType = VisionType.CAPABILITY;

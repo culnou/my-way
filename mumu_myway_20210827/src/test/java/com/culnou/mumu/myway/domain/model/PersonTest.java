@@ -28,40 +28,54 @@ public class PersonTest {
 
 	//NULLを防いで正しく初期化できる（セッターのテストも兼ねる）
 	@Test(expected = IllegalArgumentException.class)
-	public void testInitializeByName() {
-		String name = "111";
-		Person person = new Person(null, name);
+	public void testInitializeByNullPersonId() {
+		PersonId personId = null;
+		FullName fullName = new FullName("taro", "yamada");
+		Email email = new Email("ss@ss.com");
+		Person person = new Person(personId, fullName, email);
 		//実行されない。
-		person.name();
+		person.fullName();
 	}
 	
 	@Test(expected = IllegalArgumentException.class)
-	public void testInitializeByUserId() {
+	public void testInitializeByNullFullName() {
 		PersonId personId = new PersonId("111");
-		Person person = new Person(personId, null);
+		FullName fullName = null;
+		Email email = new Email("ss@ss.com");
+		Person person = new Person(personId, fullName, email);
 		//実行されない。
-		person.name();
+		person.fullName();
 	}
-	
+	@Test(expected = IllegalArgumentException.class)
+	public void testInitializeByNullEmail() {
+		PersonId personId = new PersonId("111");
+		FullName fullName = new FullName("taro", "yamada");
+		Email email = null;
+		Person person = new Person(personId, fullName, email);
+		//実行されない。
+		person.fullName();
+	}
 	//識別子の不変性が保持されるか検証する
 	@Test(expected = IllegalStateException.class)
 	public void testInvariantOfIdentifier() {
-		String name = "111";
-		PersonId personId1 = new PersonId("111");
-		Person person = new Person(personId1, name);
+		PersonId personId = new PersonId("111");
+		FullName fullName = new FullName("taro", "yamada");
+		Email email = new Email("ss@ss.com");
+		Person person = new Person(personId, fullName, email);
 		PersonId personId2 = new PersonId("222");
 		//識別子は再度設定できない。
 		person.setPersonId(personId2);
 		//実行されない。
-		person.name();
+		person.fullName();
 	}
 	
 	//識別子オブジェクトが正しく設定される
 	@Test
 	public void testPersonId() {
-		String name = "111";
 		PersonId personId1 = new PersonId("111");
-		Person person = new Person(personId1, name);
+		FullName fullName = new FullName("taro", "yamada");
+		Email email = new Email("ss@ss.com");
+		Person person = new Person(personId1, fullName, email);
 		PersonId personId2 = person.personId();
 		assertEquals(personId1, personId2);
 	}
@@ -69,9 +83,10 @@ public class PersonTest {
 	//ファクトリのテスト
 	@Test(expected = IllegalArgumentException.class)
 	public void testCreateVisionByNullVisionType() throws Exception{
-		String name = "111";
-		PersonId personId = new PersonId("111");
-		Person person = new Person(personId, name);
+		PersonId personId1 = new PersonId("111");
+		FullName fullName = new FullName("taro", "yamada");
+		Email email = new Email("ss@ss.com");
+		Person person = new Person(personId1, fullName, email);
 		VisionId visionId = new VisionId("111");
 		String content = "111";
 		Vision vision = person.createVision(visionId, null, content);
@@ -80,9 +95,10 @@ public class PersonTest {
 	}
 	@Test(expected = IllegalArgumentException.class)
 	public void testCreateVisionByNullContent() throws Exception{
-		String name = "111";
-		PersonId personId = new PersonId("111");
-		Person person = new Person(personId, name);
+		PersonId personId1 = new PersonId("111");
+		FullName fullName = new FullName("taro", "yamada");
+		Email email = new Email("ss@ss.com");
+		Person person = new Person(personId1, fullName, email);
 		VisionId visionId = new VisionId("111");
 		VisionType visionType = VisionType.BUSINESS;
 		Vision vision = person.createVision(visionId, visionType, null);
@@ -92,9 +108,10 @@ public class PersonTest {
 	
 	@Test(expected = IllegalArgumentException.class)
 	public void testCreateVisionByNullVisonId() throws Exception{
-		String name = "111";
-		PersonId personId = new PersonId("111");
-		Person person = new Person(personId, name);
+		PersonId personId1 = new PersonId("111");
+		FullName fullName = new FullName("taro", "yamada");
+		Email email = new Email("ss@ss.com");
+		Person person = new Person(personId1, fullName, email);
 		VisionType visionType = VisionType.BUSINESS;
 		String content = "111";
 		Vision vision = person.createVision(null, visionType, content);
@@ -104,9 +121,10 @@ public class PersonTest {
 	
 	@Test
 	public void testCreateVision() throws Exception{
-		String name = "111";
 		PersonId personId = new PersonId("111");
-		Person person = new Person(personId, name);
+		FullName fullName = new FullName("taro", "yamada");
+		Email email = new Email("ss@ss.com");
+		Person person = new Person(personId, fullName, email);
 		VisionId visionId = new VisionId("111");
 		VisionType visionType = VisionType.BUSINESS;
 		String content = "111";

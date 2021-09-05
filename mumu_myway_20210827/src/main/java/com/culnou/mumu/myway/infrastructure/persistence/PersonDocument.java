@@ -2,6 +2,8 @@ package com.culnou.mumu.myway.infrastructure.persistence;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.culnou.mumu.myway.domain.model.Email;
+import com.culnou.mumu.myway.domain.model.FullName;
 import com.culnou.mumu.myway.domain.model.PersonId;
 
 import lombok.Data;
@@ -11,6 +13,7 @@ import lombok.Data;
 public class PersonDocument {
 	private String id;
 	private PersonId personId;
-	private String name;
+	private FullName fullName;
+	private Email email;
 
 }

@@ -33,7 +33,7 @@ public class PersonServiceTest {
 	public void setUp() throws Exception {
 		UUID uuid = UUID.randomUUID();
         String id = uuid.toString();
-        UserDto userDto = new UserDto(id, "personTest001");
+        UserDto userDto = new UserDto(id, "personTest001","personTest001","personTest001","ss@ss.com");
 		personService.assignPerson(userDto);
 		testPerson = (PersonDto)personService.findPersonById(id);
 	}
@@ -47,12 +47,12 @@ public class PersonServiceTest {
 	public void testAssignPerson() throws Exception{
 		UUID uuid = UUID.randomUUID();
         String str = uuid.toString();
-        UserDto userDto = new UserDto(str, "personTest001");
+        UserDto userDto = new UserDto(str, "personTest001","personTest001","personTest001","ss@ss.com");
 		personService.assignPerson(userDto);
 		PersonDto personDto = (PersonDto)personService.findPersonById(str);
 		assertNotNull(personDto);
 		assertEquals(personDto.getId(), userDto.getId());
-		assertEquals(personDto.getName(), userDto.getName());
+		assertEquals(personDto.getFirstName(), userDto.getFirstName());
 		personService.deletePerson(str);
 	}
 	//正常テスト

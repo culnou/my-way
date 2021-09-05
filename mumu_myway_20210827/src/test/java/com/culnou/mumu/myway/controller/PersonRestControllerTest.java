@@ -52,9 +52,15 @@ public class PersonRestControllerTest {
 		JSONObject user = new JSONObject();
 		UUID uuid = UUID.randomUUID();
         String str = uuid.toString();
+        String firstName = "taro";
+        String lastName = "yamada";
         String name = "test name";
+        String email = "ss@ss.com";
 		user.put("id", str);
+		user.put("firstName", firstName);
+		user.put("lastName", lastName);
 		user.put("name", name);
+		user.put("email", email);
 		//個人の割り当て
         String postUrl = "http://localhost:" + port + "/persons";
 		HttpEntity<String> request = 
@@ -66,7 +72,7 @@ public class PersonRestControllerTest {
 				template.getForObject(getUrl, PersonDto.class);
 		assertNotNull(personDto);
 		assertEquals(personDto.getId(), str);
-		assertEquals(personDto.getName(), name);
+		assertEquals(personDto.getFirstName(), firstName);
 		//個人の削除
 		String deleteUrl = "http://localhost:" + port + "/persons/"  + str;
 		template.delete(deleteUrl, String.class);
@@ -76,9 +82,15 @@ public class PersonRestControllerTest {
 		JSONObject user = new JSONObject();
 		UUID uuid = UUID.randomUUID();
         String str = uuid.toString();
+        String firstName = "taro";
+        String lastName = "yamada";
         String name = "test name";
+        String email = "ss@ss.com";
 		user.put("id", str);
+		user.put("firstName", firstName);
+		user.put("lastName", lastName);
 		user.put("name", name);
+		user.put("email", email);
 		//個人の割り当て
         String postUrl = "http://localhost:" + port + "/persons";
 		HttpEntity<String> request = 

@@ -3,11 +3,18 @@ package com.culnou.mumu.myway.domain.model;
 public class User {
 	
 	private String id;
-	private String name;
+	private String firstName;
+	private String lastName;
+	private String fullName;
+	private String email;
 	
-	public User(String id, String name) {
+	
+	public User(String id, String firstName, String lastName, String name, String email) {
 		this.setId(id);
-		this.setName(name);
+		this.setFirstName(firstName);
+		this.setLastName(lastName);
+		this.setFullName(name);
+		this.setEmail(email);
 	}
 	
 	protected void setId(String id) {
@@ -21,15 +28,48 @@ public class User {
 		return this.id;
 	}
 	
-	protected void setName(String name) {
+	protected void setFirstName(String firstName) {
+		if(firstName == null) {
+			throw new IllegalArgumentException("The firstName may not be set to null.");
+		}
+		this.firstName = firstName;
+	}
+	
+	public String frstName() {
+		return this.firstName;
+	}
+	
+	protected void setLastName(String lastName) {
+		if(lastName == null) {
+			throw new IllegalArgumentException("The lastName may not be set to null.");
+		}
+		this.lastName = lastName;
+	}
+	
+	public String lastName() {
+		return this.lastName;
+	}
+	
+	protected void setFullName(String name) {
 		if(name == null) {
 			throw new IllegalArgumentException("The name may not be set to null.");
 		}
-		this.name = name;
+		this.fullName = name;
 	}
 	
-	public String name() {
-		return this.name;
+	public String fullName() {
+		return this.fullName;
+	}
+	
+	protected void setEmail(String email) {
+		if(email == null) {
+			throw new IllegalArgumentException("The email may not be set to null.");
+		}
+		this.email = email;
+	}
+	
+	public String email() {
+		return this.email;
 	}
 
 }

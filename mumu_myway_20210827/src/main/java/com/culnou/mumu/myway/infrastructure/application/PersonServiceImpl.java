@@ -38,7 +38,7 @@ public class PersonServiceImpl implements PersonService {
 	public void assignPerson(UserDto user) throws Exception {
 		// TODO Auto-generated method stub
 		UserDto userDto = (UserDto)user;
-		User usr = new User(userDto.getId(), userDto.getName());
+		User usr = new User(userDto.getId(), userDto.getFirstName(), userDto.getLastName(), userDto.getFullName(), userDto.getEmail());
 		Person person = PersonFactory.creatPerson(usr);
         personRepository.save(person);
 	}
@@ -48,7 +48,7 @@ public class PersonServiceImpl implements PersonService {
 		// TODO Auto-generated method stub
 		PersonId personId = new PersonId(id);
 		Person person = personRepository.personOfId(personId);
-		PersonDto personDto = new PersonDto(person.personId().id(), person.name());
+		PersonDto personDto = new PersonDto(person.personId().id(), person.fullName().firstName(), person.fullName().lastName(), person.email().address());
 		return personDto;
 	}
 

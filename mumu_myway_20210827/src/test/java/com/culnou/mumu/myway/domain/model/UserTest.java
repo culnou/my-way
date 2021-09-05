@@ -21,16 +21,22 @@ public class UserTest {
 	@Test(expected = IllegalArgumentException.class)
 	public void testInitializeByName() {
 		String name = "111";
-		User user = new User(null, name);
+		String firstName = "111";
+		String lastName = "111";
+		String email = "111";
+		User user = new User(null, firstName, lastName, name, email);
 		//実行されない。
-		user.name();
+		user.fullName();
 	}
 	@Test(expected = IllegalArgumentException.class)
 	public void testInitializeById() {
 		String id = "111";
-		User user = new User(id, null);
+		String firstName = "111";
+		String lastName = "111";
+		String email = "111";
+		User user = new User(id, firstName, lastName, null, email);
 		//実行されない。
-		user.name();
+		user.fullName();
 	}
 
 }

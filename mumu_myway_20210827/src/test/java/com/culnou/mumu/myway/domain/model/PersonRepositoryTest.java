@@ -35,7 +35,7 @@ public class PersonRepositoryTest {
 
 	@After
 	public void tearDown() throws Exception {
-		personRepository.removeAll(this.testPersons);
+		//personRepository.removeAll(this.testPersons);
 	}
 
 	@Test
@@ -43,14 +43,14 @@ public class PersonRepositoryTest {
 	
 		UUID uuid = UUID.randomUUID();
         String str = uuid.toString();
-        User user = new User(str, "user1");
+        User user = new User(str, "user1","user1","user1","ss@ss.com");
         Person person = PersonFactory.creatPerson(user);
 		personRepository.save(person);
 		this.testPersons.add(person);
 		Person readPerson = personRepository.personOfId(person.personId());
 		assertNotNull(readPerson);
 		assertEquals(readPerson.personId(), person.personId());
-		assertEquals(readPerson.name(), person.name());
+		assertEquals(readPerson.fullName(), person.fullName());
 	}
 
 }

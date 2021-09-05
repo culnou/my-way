@@ -3,13 +3,16 @@ package com.culnou.mumu.myway.domain.model;
 public class Person {
 	
 	private PersonId personId;
-	private String name;
+	private FullName fullName;
+	private Email email;
+	
 	
 	//ファクトリーメソッドのみ生成することができるようプロテクトする。
-	protected Person(PersonId personId, String name) {
+	protected Person(PersonId personId, FullName fullName, Email email) {
 		//自己カプセル化
 		this.setPersonId(personId);
-		this.setName(name);
+		this.setFullName(fullName);
+		this.setEmail(email);
 	}
 	
 	protected void setPersonId(PersonId personId) {
@@ -28,16 +31,29 @@ public class Person {
 		return this.personId;
 	}
 	
-	protected void setName(String name) {
-		if(name == null) {
-			throw new IllegalArgumentException("The name may not be set to null.");
+	protected void setFullName(FullName fullName) {
+		if(fullName == null) {
+			throw new IllegalArgumentException("The fullName may not be set to null.");
 		}
-		this.name = name;
+		this.fullName = fullName;
 	}
 	
-	public String name() {
-		return this.name;
+	public FullName fullName() {
+		return this.fullName;
 	}
+	
+	protected void setEmail(Email email) {
+		if(email == null) {
+			throw new IllegalArgumentException("The email may not be set to null.");
+		}
+		this.email = email;
+	}
+	
+	public Email email() {
+		return this.email;
+	}
+	
+	
 	
 	//ファクトリーメソッド
 	public Vision createVision(VisionId visionId, VisionType visionType, String content) throws Exception{

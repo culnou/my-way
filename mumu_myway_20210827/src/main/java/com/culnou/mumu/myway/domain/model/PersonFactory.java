@@ -6,10 +6,17 @@ public class PersonFactory {
 		if(user.id() == null) {
 			throw new IllegalArgumentException("The id may not be set to null.");
 		}
-		if(user.name() == null) {
-			throw new IllegalArgumentException("The name may not be set to null.");
+		if(user.frstName() == null) {
+			throw new IllegalArgumentException("The frstName may not be set to null.");
 		}
-		return new Person(new PersonId(user.id()), user.name());
+		if(user.lastName() == null) {
+			throw new IllegalArgumentException("The lastName may not be set to null.");
+		}
+		if(user.email() == null) {
+			throw new IllegalArgumentException("The email may not be set to null.");
+		}
+		
+		return new Person(new PersonId(user.id()), new FullName(user.frstName(), user.lastName()), new Email(user.email()));
 	}
 
 }

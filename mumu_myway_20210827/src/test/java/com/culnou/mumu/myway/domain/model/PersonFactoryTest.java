@@ -23,31 +23,31 @@ public class PersonFactoryTest {
 	//id NULLチェックのテスト
 	@Test(expected = IllegalArgumentException.class)
 	public void createPersonByIdNullTest() {
-		User user = new User(null, "user1");
+		User user = new User(null, "user1","user1","user1","ss@ss.com");
         Person person = PersonFactory.creatPerson(user);
         assertNotNull(person);
         assertEquals(person.personId().id(), user.id());
-        assertEquals(person.name(), user.name());
+        assertEquals(person.fullName().firstName(), user.frstName());
 	}
 	//name NULLチェックのテスト
 	@Test(expected = IllegalArgumentException.class)
 	public void createPersonByNameNullTest() {
 		UUID uuid = UUID.randomUUID();
         String str = uuid.toString();
-        User user = new User(str, null);
+        User user = new User(str, null,"user1","user1","ss@ss.com");
         Person person = PersonFactory.creatPerson(user);
         assertNotNull(person);
         assertEquals(person.personId().id(), user.id());
-        assertEquals(person.name(), user.name());
+        assertEquals(person.fullName().firstName(), user.frstName());
 	}
 	//NULLチェックのテスト
 	@Test(expected = IllegalArgumentException.class)
 	public void createPersonByNullTest() {
-        User user = new User(null, null);
+        User user = new User(null, null,"user1","user1","ss@ss.com");
         Person person = PersonFactory.creatPerson(user);
         assertNotNull(person);
         assertEquals(person.personId().id(), user.id());
-        assertEquals(person.name(), user.name());
+        assertEquals(person.fullName().firstName(), user.frstName());
 	}
 		
 
@@ -55,11 +55,11 @@ public class PersonFactoryTest {
 	public void createPersonTest() {
 		UUID uuid = UUID.randomUUID();
         String str = uuid.toString();
-        User user = new User(str, "user1");
+        User user = new User(str, "user1","user1","user1","ss@ss.com");
         Person person = PersonFactory.creatPerson(user);
         assertNotNull(person);
         assertEquals(person.personId().id(), user.id());
-        assertEquals(person.name(), user.name());
+        assertEquals(person.fullName().firstName(), user.frstName());
 	}
 
 }

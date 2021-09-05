@@ -7,11 +7,15 @@ import lombok.Data;
 public class PersonDto{
 	
 	String id;
-	String name;
+	private String firstName;
+	private String lastName;
+	private String email;
 	
-	public PersonDto(String id, String name) {
+	public PersonDto(String id, String firstName, String lastName, String email) {
 		this.setId(id);
-		this.setName(name);
+		this.setFirstName(firstName);
+		this.setLastName(lastName);
+		this.setEmail(email);
 	}
 	
 	protected void setId(String id) {
@@ -23,13 +27,26 @@ public class PersonDto{
 	
 	
 	
-	protected void setName(String name) {
-		if(name == null) {
-			throw new IllegalArgumentException("The name may not be set to null.");
+	protected void setFirstName(String firstName) {
+		if(firstName == null) {
+			throw new IllegalArgumentException("The firstName may not be set to null.");
 		}
-		this.name = name;
+		this.firstName = firstName;
 	}
 	
+	protected void setLastName(String lastName) {
+		if(lastName == null) {
+			throw new IllegalArgumentException("The lastName may not be set to null.");
+		}
+		this.lastName = lastName;
+	}
+	
+	protected void setEmail(String email) {
+		if(email == null) {
+			throw new IllegalArgumentException("The email may not be set to null.");
+		}
+		this.email = email;
+	}
 	
 
 }

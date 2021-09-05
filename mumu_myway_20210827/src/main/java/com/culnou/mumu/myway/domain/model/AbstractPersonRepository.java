@@ -8,7 +8,7 @@ public abstract class AbstractPersonRepository implements PersonRepository {
 
 	
 	protected Person convertFrom(PersonDocument doc){
-		return new Person(doc.getPersonId(), doc.getName());
+		return new Person(doc.getPersonId(), doc.getFullName(), doc.getEmail());
 	}
 
 }

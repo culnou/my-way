@@ -44,9 +44,10 @@ public class ProjectRepositoryTest {
 
 	@Test
 	public void testSaveAndFindOneproject() throws Exception{
-		String name = "111";
 		PersonId personId = new PersonId("111");
-		Person person = new Person(personId, name);
+		FullName fullName = new FullName("taro", "yamada");
+		Email email = new Email("ss@ss.com");
+		Person person = new Person(personId, fullName, email);
 		
 		VisionId visionId = visionRepository.nextIdentity();
 		VisionType visionType = VisionType.BUSINESS;
@@ -75,9 +76,10 @@ public class ProjectRepositoryTest {
 	public void testProjectsOfVision() throws Exception{
 		List<Project> saveProjects = new ArrayList<>();
 		
-		String name = "111";
 		PersonId personId = new PersonId("111");
-		Person person = new Person(personId, name);
+		FullName fullName = new FullName("taro", "yamada");
+		Email email = new Email("ss@ss.com");
+		Person person = new Person(personId, fullName, email);
 		
 		VisionId visionId = new VisionId("Vision001");
 		VisionType visionType = VisionType.BUSINESS;
@@ -108,9 +110,10 @@ public class ProjectRepositoryTest {
 	@Test
 	public void testProjectsOfProjectType() throws Exception{
 		
-		String name = "111";
-		PersonId personId = new PersonId("222");
-		Person person = new Person(personId, name);
+		PersonId personId = new PersonId("111");
+		FullName fullName = new FullName("taro", "yamada");
+		Email email = new Email("ss@ss.com");
+		Person person = new Person(personId, fullName, email);
 		
 		VisionId visionId = new VisionId("Vision002");
 		VisionType visionType = VisionType.BUSINESS;
