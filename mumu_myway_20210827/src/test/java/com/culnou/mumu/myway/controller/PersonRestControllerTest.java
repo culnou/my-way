@@ -47,8 +47,10 @@ public class PersonRestControllerTest {
 		template.delete(deleteurl);
 	}
 
+	//PersonDtoを返すcreatePersonを作成したので不要になりました。2021/9/7
+	/*
 	@Test
-	public void testPerson() throws Exception{
+	public void testAssignPerson() throws Exception{
 		JSONObject user = new JSONObject();
 		UUID uuid = UUID.randomUUID();
         String str = uuid.toString();
@@ -59,7 +61,7 @@ public class PersonRestControllerTest {
 		user.put("id", str);
 		user.put("firstName", firstName);
 		user.put("lastName", lastName);
-		user.put("name", name);
+		user.put("fullName", name);
 		user.put("email", email);
 		//個人の割り当て
         String postUrl = "http://localhost:" + port + "/persons";
@@ -77,6 +79,42 @@ public class PersonRestControllerTest {
 		String deleteUrl = "http://localhost:" + port + "/persons/"  + str;
 		template.delete(deleteUrl, String.class);
 	}
+	*/
+	
+	@Test
+	public void testCreatePerson() throws Exception{
+		JSONObject user = new JSONObject();
+		UUID uuid = UUID.randomUUID();
+        String str = uuid.toString();
+        String firstName = "taro";
+        String lastName = "yamada";
+        String name = "test name";
+        String email = "ss@ss.com";
+		user.put("id", str);
+		user.put("firstName", firstName);
+		user.put("lastName", lastName);
+		user.put("fullName", name);
+		user.put("email", email);
+		//個人の割り当て
+        String postUrl = "http://localhost:" + port + "/persons";
+		HttpEntity<String> request = 
+			      new HttpEntity<String>(user.toString(), httpHeaders);
+		PersonDto personDto = template.postForObject(postUrl, request, PersonDto.class);
+		System.out.println("***** create person " + personDto.getEmail());
+		//個人の取得
+		/*
+		String getUrl = "http://localhost:" + port + "/persons/"  + str;
+		PersonDto personDto = 
+				template.getForObject(getUrl, PersonDto.class);
+		*/
+		assertNotNull(personDto);
+		assertEquals(personDto.getId(), str);
+		assertEquals(personDto.getFirstName(), firstName);
+		//個人の削除
+		String deleteUrl = "http://localhost:" + port + "/persons/"  + str;
+		template.delete(deleteUrl, String.class);
+	}
+	
 	@Test
 	public void testVision() throws Exception{
 		JSONObject user = new JSONObject();
@@ -89,7 +127,7 @@ public class PersonRestControllerTest {
 		user.put("id", str);
 		user.put("firstName", firstName);
 		user.put("lastName", lastName);
-		user.put("name", name);
+		user.put("fullName", name);
 		user.put("email", email);
 		//個人の割り当て
         String postUrl = "http://localhost:" + port + "/persons";

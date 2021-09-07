@@ -28,9 +28,17 @@ public class PersonRestController {
 	 * Person
 	 */
 	
+	//PersonDtoを返すcreatePersonを作成したので不要になりました。2021/9/7
+	/*
 	@PostMapping("/persons")
 	public void assignPerson(@RequestBody UserDto userDto) throws Exception{
 		this.personService.assignPerson(userDto);
+	}
+	*/
+	
+	@PostMapping("/persons")
+	public ResponseEntity<PersonDto> createPerson(@RequestBody UserDto userDto) throws Exception{
+		return ResponseEntity.ok().body((PersonDto)this.personService.createPerson(userDto));
 	}
 	
 	@GetMapping("/persons/{id}")

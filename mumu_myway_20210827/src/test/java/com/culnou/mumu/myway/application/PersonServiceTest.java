@@ -55,6 +55,18 @@ public class PersonServiceTest {
 		assertEquals(personDto.getFirstName(), userDto.getFirstName());
 		personService.deletePerson(str);
 	}
+	@Test
+	public void testCreatePerson() throws Exception{
+		UUID uuid = UUID.randomUUID();
+        String str = uuid.toString();
+        UserDto userDto = new UserDto(str, "personTest001","personTest001","personTest001","ss@ss.com");
+        PersonDto personDto = personService.createPerson(userDto);
+		assertNotNull(personDto);
+		assertEquals(personDto.getId(), userDto.getId());
+		assertEquals(personDto.getFirstName(), userDto.getFirstName());
+		personService.deletePerson(str);
+	}
+	
 	//正常テスト
 	@Test
 	public void testAddVison() throws Exception{

@@ -9,11 +9,11 @@ public class User {
 	private String email;
 	
 	
-	public User(String id, String firstName, String lastName, String name, String email) {
+	public User(String id, String firstName, String lastName, String fullName, String email) {
 		this.setId(id);
 		this.setFirstName(firstName);
 		this.setLastName(lastName);
-		this.setFullName(name);
+		this.setFullName(fullName);
 		this.setEmail(email);
 	}
 	
@@ -50,11 +50,11 @@ public class User {
 		return this.lastName;
 	}
 	
-	protected void setFullName(String name) {
-		if(name == null) {
+	protected void setFullName(String fullName) {
+		if(fullName == null) {
 			throw new IllegalArgumentException("The name may not be set to null.");
 		}
-		this.fullName = name;
+		this.fullName = fullName;
 	}
 	
 	public String fullName() {

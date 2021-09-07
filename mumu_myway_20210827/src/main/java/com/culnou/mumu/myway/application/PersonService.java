@@ -11,6 +11,8 @@ public interface PersonService {
 	
 	public void assignPerson(UserDto user) throws Exception;
 	
+	public PersonDto createPerson(UserDto user) throws Exception;
+	
 	public PersonDto findPersonById(String id) throws Exception;
 	
 	public void deletePerson(String id) throws Exception;

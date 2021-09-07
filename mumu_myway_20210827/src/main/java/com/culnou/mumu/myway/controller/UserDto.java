@@ -13,11 +13,11 @@ public class UserDto{
 	private String email;
 	
 	
-	public UserDto(String id, String firstName, String lastName, String name, String email) {
+	public UserDto(String id, String firstName, String lastName, String fullName, String email) {
 		this.setId(id);
 		this.setFirstName(firstName);
 		this.setLastName(lastName);
-		this.setFullName(name);
+		this.setFullName(fullName);
 		this.setEmail(email);
 	}
 	
@@ -42,11 +42,11 @@ public class UserDto{
 		this.lastName = lastName;
 	}
 	
-	protected void setFullName(String name) {
-		if(name == null) {
-			throw new IllegalArgumentException("The name may not be set to null.");
+	protected void setFullName(String fullName) {
+		if(fullName == null) {
+			throw new IllegalArgumentException("The fullName may not be set to null.");
 		}
-		this.fullName = name;
+		this.fullName = fullName;
 	}
 	
 	protected void setEmail(String email) {
