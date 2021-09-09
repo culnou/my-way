@@ -46,11 +46,14 @@ public class PersonServiceImpl implements PersonService {
 	@Override
 	public PersonDto createPerson(UserDto user) throws Exception {
 		// TODO Auto-generated method stub
+		
 		UserDto userDto = (UserDto)user;
 		User usr = new User(userDto.getId(), userDto.getFirstName(), userDto.getLastName(), userDto.getFullName(), userDto.getEmail());
 		Person person = PersonFactory.creatPerson(usr);
         personRepository.save(person);
 		return new PersonDto(person.personId().id(), person.fullName().firstName(), person.fullName().lastName(), person.email().address());
+		
+		
 	}
 	
 	@Override

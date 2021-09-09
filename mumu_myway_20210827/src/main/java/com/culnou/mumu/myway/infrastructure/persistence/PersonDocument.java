@@ -15,5 +15,8 @@ public class PersonDocument {
 	private PersonId personId;
 	private FullName fullName;
 	private Email email;
+	private String philosophy;
+	private String purpose;
+	private String actionGuideline;
 
 }

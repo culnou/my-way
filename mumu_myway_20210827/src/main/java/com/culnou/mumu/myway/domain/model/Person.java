@@ -5,7 +5,9 @@ public class Person {
 	private PersonId personId;
 	private FullName fullName;
 	private Email email;
-	
+	private String philosophy;
+	private String purpose;
+	private String actionGuideline;
 	
 	//ファクトリーメソッドのみ生成することができるようプロテクトする。
 	protected Person(PersonId personId, FullName fullName, Email email) {
@@ -53,7 +55,37 @@ public class Person {
 		return this.email;
 	}
 	
+	public void setPhilosophy(String philosophy) {
+		if(philosophy == null) {
+			throw new IllegalArgumentException("The philosophy may not be set to null.");
+		}
+		this.philosophy = philosophy;
+	}
 	
+	public String philosophy() {
+		return this.philosophy;
+	}
+	
+	public void setPurpose(String purpose) {
+		if(purpose == null) {
+			throw new IllegalArgumentException("The purpose may not be set to null.");
+		}
+		this.purpose = purpose;
+	}
+	
+	public String purpose() {
+		return this.purpose;
+	}
+	public void setActionGuideline(String actionGuideline) {
+		if(actionGuideline == null) {
+			throw new IllegalArgumentException("The actionGuideline may not be set to null.");
+		}
+		this.actionGuideline = actionGuideline;
+	}
+	
+	public String actionGuideline() {
+		return this.actionGuideline;
+	}
 	
 	//ファクトリーメソッド
 	public Vision createVision(VisionId visionId, VisionType visionType, String content) throws Exception{

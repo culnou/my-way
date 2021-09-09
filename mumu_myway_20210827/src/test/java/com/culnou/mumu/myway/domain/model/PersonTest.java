@@ -26,6 +26,7 @@ public class PersonTest {
 	public void tearDown() throws Exception {
 	}
 
+	//バリデーション
 	//NULLを防いで正しく初期化できる（セッターのテストも兼ねる）
 	@Test(expected = IllegalArgumentException.class)
 	public void testInitializeByNullPersonId() {
@@ -55,6 +56,39 @@ public class PersonTest {
 		//実行されない。
 		person.fullName();
 	}
+	@Test(expected = IllegalArgumentException.class)
+	public void testSetPhilosophy() {
+		PersonId personId = new PersonId("111");
+		FullName fullName = new FullName("taro", "yamada");
+		Email email = new Email("ss@ss.com");
+		Person person = new Person(personId, fullName, email);
+		person.setPhilosophy(null);
+		//実行されない。
+		person.philosophy();
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testSetPurpose() {
+		PersonId personId = new PersonId("111");
+		FullName fullName = new FullName("taro", "yamada");
+		Email email = new Email("ss@ss.com");
+		Person person = new Person(personId, fullName, email);
+		person.setPurpose(null);
+		//実行されない。
+		person.purpose();
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testSetActionGuideline() {
+		PersonId personId = new PersonId("111");
+		FullName fullName = new FullName("taro", "yamada");
+		Email email = new Email("ss@ss.com");
+		Person person = new Person(personId, fullName, email);
+		person.setActionGuideline(null);
+		//実行されない。
+		person.actionGuideline();
+	}
+	
 	//識別子の不変性が保持されるか検証する
 	@Test(expected = IllegalStateException.class)
 	public void testInvariantOfIdentifier() {

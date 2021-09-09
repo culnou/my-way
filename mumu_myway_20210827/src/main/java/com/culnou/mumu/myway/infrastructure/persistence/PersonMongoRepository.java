@@ -76,6 +76,9 @@ public class PersonMongoRepository extends AbstractPersonRepository {
 		doc.setPersonId(person.personId());
 		doc.setFullName(person.fullName());
 		doc.setEmail(person.email());
+		doc.setPhilosophy(person.philosophy());
+		doc.setPurpose(person.purpose());
+		doc.setActionGuideline(person.actionGuideline());
 		return doc;
 	}
 	
