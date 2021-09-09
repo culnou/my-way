@@ -13,6 +13,8 @@ public interface PersonService {
 	
 	public PersonDto createPerson(UserDto user) throws Exception;
 	
+	public void updatePerson(PersonDto person) throws Exception;
+	
 	public PersonDto findPersonById(String id) throws Exception;
 	
 	public void deletePerson(String id) throws Exception;

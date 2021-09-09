@@ -67,6 +67,22 @@ public class PersonServiceTest {
 		personService.deletePerson(str);
 	}
 	
+	@Test
+	public void testUpdatePerson() throws Exception{
+		UUID uuid = UUID.randomUUID();
+        String str = uuid.toString();
+        UserDto userDto = new UserDto(str, "personTest001","personTest001","personTest001","ss@ss.com");
+        PersonDto personDto = personService.createPerson(userDto);
+        personDto.setPhilosophy("Philosophy1");
+        personDto.setPurpose("Purpose1");
+        personDto.setActionGuideline("ActionGuideline1");
+        personService.updatePerson(personDto);
+        PersonDto readPerson = personService.findPersonById(personDto.getId());
+        assertEquals(readPerson.getPhilosophy(), "Philosophy1");
+        assertEquals(readPerson.getPurpose(), "Purpose1");
+        assertEquals(readPerson.getActionGuideline(), "ActionGuideline1");
+        personService.deletePerson(str);
+	}
 	//正常テスト
 	@Test
 	public void testAddVison() throws Exception{

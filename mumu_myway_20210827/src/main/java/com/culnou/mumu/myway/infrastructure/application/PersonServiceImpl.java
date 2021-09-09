@@ -55,6 +55,16 @@ public class PersonServiceImpl implements PersonService {
 		
 		
 	}
+	@Override
+	public void updatePerson(PersonDto person) throws Exception {
+		// TODO Auto-generated method stub
+		PersonId personId = new PersonId(person.getId());
+		Person readPerson = personRepository.personOfId(personId);
+		readPerson.setPhilosophy(person.getPhilosophy());
+		readPerson.setPurpose(person.getPurpose());
+		readPerson.setActionGuideline(person.getActionGuideline());
+		personRepository.save(readPerson);
+	}
 	
 	@Override
 	public PersonDto findPersonById(String id) throws Exception {
@@ -62,6 +72,9 @@ public class PersonServiceImpl implements PersonService {
 		PersonId personId = new PersonId(id);
 		Person person = personRepository.personOfId(personId);
 		PersonDto personDto = new PersonDto(person.personId().id(), person.fullName().firstName(), person.fullName().lastName(), person.email().address());
+		personDto.setPhilosophy(person.philosophy());
+		personDto.setPurpose(person.purpose());
+		personDto.setActionGuideline(person.actionGuideline());
 		return personDto;
 	}
 
@@ -156,6 +169,8 @@ public class PersonServiceImpl implements PersonService {
 		visionRepository.remove(readVision);
 		
 	}
+
+	
 
 	
 

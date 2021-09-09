@@ -41,6 +41,12 @@ public class PersonRestController {
 		return ResponseEntity.ok().body((PersonDto)this.personService.createPerson(userDto));
 	}
 	
+	@PutMapping("/persons")
+	public HttpStatus updatePerson(@RequestBody PersonDto personDto) throws Exception{
+		this.personService.updatePerson(personDto);
+		return HttpStatus.OK;
+	}
+	
 	@GetMapping("/persons/{id}")
 	public ResponseEntity<PersonDto> findPersonById(@PathVariable String id) throws Exception{
 		return ResponseEntity.ok().body((PersonDto)this.personService.findPersonById(id));

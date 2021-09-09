@@ -82,7 +82,7 @@ public class PersonRestControllerTest {
 	*/
 	
 	@Test
-	public void testCreatePerson() throws Exception{
+	public void testPerson() throws Exception{
 		JSONObject user = new JSONObject();
 		UUID uuid = UUID.randomUUID();
         String str = uuid.toString();
@@ -101,15 +101,35 @@ public class PersonRestControllerTest {
 			      new HttpEntity<String>(user.toString(), httpHeaders);
 		PersonDto personDto = template.postForObject(postUrl, request, PersonDto.class);
 		System.out.println("***** create person " + personDto.getEmail());
-		//個人の取得
-		/*
-		String getUrl = "http://localhost:" + port + "/persons/"  + str;
-		PersonDto personDto = 
-				template.getForObject(getUrl, PersonDto.class);
-		*/
+		
 		assertNotNull(personDto);
 		assertEquals(personDto.getId(), str);
 		assertEquals(personDto.getFirstName(), firstName);
+		
+		//個人の更新
+		JSONObject updatePerson = new JSONObject();
+		updatePerson.put("id", str);
+		updatePerson.put("firstName", firstName);
+		updatePerson.put("lastName", lastName);
+		updatePerson.put("fullName", name);
+		updatePerson.put("email", email);
+		updatePerson.put("philosophy", "PhilosophySS");
+		updatePerson.put("purpose", "PurposeSS");
+		updatePerson.put("actionGuideline", "ActionGuidelineSS");
+		String putUrl = "http://localhost:" + port + "/persons";
+		HttpEntity<String> request4 = 
+			      new HttpEntity<String>(updatePerson.toString(), httpHeaders);
+		template.exchange(putUrl, HttpMethod.PUT, request4, Void.class);
+		
+		//個人の取得
+		String getUrl = "http://localhost:" + port + "/persons/"  + str;
+		PersonDto readPerson = 
+				template.getForObject(getUrl, PersonDto.class);
+		assertNotNull(readPerson);
+		assertEquals(readPerson.getPhilosophy(), "PhilosophySS");
+		assertEquals(readPerson.getPurpose(), "PurposeSS");
+		assertEquals(readPerson.getActionGuideline(), "ActionGuidelineSS");
+		
 		//個人の削除
 		String deleteUrl = "http://localhost:" + port + "/persons/"  + str;
 		template.delete(deleteUrl, String.class);
