@@ -160,6 +160,7 @@ public class PersonRestControllerTest {
 		JSONObject vision = new JSONObject();
 		vision.put("personId", str);
 		vision.put("visionType", "BUSINESS");
+		vision.put("title", "test title");
 		vision.put("content", "test content");
 		String postUrl1 = "http://localhost:" + port + "/visions";
 		HttpEntity<String> request2 = 
@@ -170,6 +171,7 @@ public class PersonRestControllerTest {
 		JSONObject vision2 = new JSONObject();
 		vision2.put("personId", str);
 		vision2.put("visionType", "BUSINESS");
+		vision2.put("title", "test title2");
 		vision2.put("content", "test content2");
 		String postUrl2 = "http://localhost:" + port + "/visions";
 		HttpEntity<String> request3 = 
@@ -180,11 +182,13 @@ public class PersonRestControllerTest {
 		
 		//ビジョンの更新
 		String content = "更新されたコンテンツ";
+		String title = "更新されたタイトル";
 		String visionId = visionDto2.getVisionId();
 		JSONObject vision3 = new JSONObject();
 		vision3.put("visionId", visionId);
 		vision3.put("personId", str);
 		vision3.put("visionType", "BUSINESS");
+		vision3.put("title", title);
 		vision3.put("content", content);
 		String putUrl = "http://localhost:" + port + "/visions";
 		HttpEntity<String> request4 = 

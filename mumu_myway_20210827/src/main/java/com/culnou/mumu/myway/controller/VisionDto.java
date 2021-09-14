@@ -9,5 +9,6 @@ public class VisionDto {
 	private String personId;
 	private String visionId;
 	private VisionType visionType;
+	private String title;
 	private String content;
 }

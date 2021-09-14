@@ -72,9 +72,15 @@ public class PersonServiceImpl implements PersonService {
 		PersonId personId = new PersonId(id);
 		Person person = personRepository.personOfId(personId);
 		PersonDto personDto = new PersonDto(person.personId().id(), person.fullName().firstName(), person.fullName().lastName(), person.email().address());
-		personDto.setPhilosophy(person.philosophy());
-		personDto.setPurpose(person.purpose());
-		personDto.setActionGuideline(person.actionGuideline());
+		if(person.philosophy() != null) {
+			personDto.setPhilosophy(person.philosophy());
+		}
+		if(person.purpose() != null) {
+			personDto.setPurpose(person.purpose());
+		}
+		if(person.actionGuideline() != null) {
+			personDto.setActionGuideline(person.actionGuideline());
+		}
 		return personDto;
 	}
 
@@ -100,6 +106,7 @@ public class PersonServiceImpl implements PersonService {
 			dto.setPersonId(vision.personId().id());
 			dto.setVisionId(vision.visionId().id());
 			dto.setVisionType(vision.visionType());
+			dto.setTitle(vision.title());
 			dto.setContent(vision.content());
 			visionDtos.add(dto);
 		}
@@ -116,6 +123,7 @@ public class PersonServiceImpl implements PersonService {
 		dto.setPersonId(vision.personId().id());
 		dto.setVisionId(vision.visionId().id());
 		dto.setVisionType(vision.visionType());
+		dto.setTitle(vision.title());
 		dto.setContent(vision.content());
 		return dto;
 	}
@@ -137,7 +145,7 @@ public class PersonServiceImpl implements PersonService {
 		//識別子オブジェクトの生成
 		VisionId visionId = visionRepository.nextIdentity();
 		//ビジョンの生成
-		Vision vision = person.createVision(visionId, visionDto.getVisionType(), visionDto.getContent());
+		Vision vision = person.createVision(visionId, visionDto.getVisionType(), visionDto.getTitle(), visionDto.getContent());
 		//ビジョンの保存
 		visionRepository.save(vision);
 		

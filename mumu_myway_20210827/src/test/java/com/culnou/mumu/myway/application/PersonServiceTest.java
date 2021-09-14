@@ -88,6 +88,7 @@ public class PersonServiceTest {
 	public void testAddVison() throws Exception{
 		VisionDto visionDto = new VisionDto();
 		visionDto.setContent("vision001");
+		visionDto.setTitle("vision001");
 		visionDto.setPersonId(testPerson.getId());
 		visionDto.setVisionType(VisionType.BUSINESS);
 		VisionDto resultDto = personService.addVision(visionDto);
@@ -100,6 +101,7 @@ public class PersonServiceTest {
 	public void testAddVisonByNoPersonExist() throws Exception{
 		VisionDto visionDto = new VisionDto();
 		visionDto.setContent("vision001");
+		visionDto.setTitle("vision001");
 		visionDto.setPersonId("");
 		visionDto.setVisionType(VisionType.BUSINESS);
 		VisionDto resultDto = personService.addVision(visionDto);
@@ -111,6 +113,7 @@ public class PersonServiceTest {
 	public void testAddVisionByNoVisionTypeExist() throws Exception{
 		VisionDto visionDto = new VisionDto();
 		visionDto.setContent("vision001");
+		visionDto.setTitle("vision001");
 		visionDto.setPersonId(testPerson.getId());
 		VisionDto resultDto = personService.addVision(visionDto);
 		//実行されない。
@@ -120,9 +123,11 @@ public class PersonServiceTest {
 	public void testUpdateVision() throws Exception{
 		VisionDto visionDto = new VisionDto();
 		visionDto.setContent("vision001");
+		visionDto.setTitle("vision001");
 		visionDto.setPersonId(testPerson.getId());
 		visionDto.setVisionType(VisionType.BUSINESS);
 		VisionDto resultDto = personService.addVision(visionDto);
+		visionDto.setTitle("vision002");
 		resultDto.setContent("Vision002");
 		personService.updateVision(resultDto);
 		VisionDto readVision = personService.findVisionById(resultDto.getId());
@@ -140,11 +145,13 @@ public class PersonServiceTest {
 	public void testFindVisionsByPersonId() throws Exception{
 		VisionDto visionDto = new VisionDto();
 		visionDto.setContent("vision001");
+		visionDto.setTitle("vision001");
 		visionDto.setPersonId(testPerson.getId());
 		visionDto.setVisionType(VisionType.BUSINESS);
 		personService.addVision(visionDto);
 		VisionDto visionDto2 = new VisionDto();
 		visionDto2.setContent("vision001");
+		visionDto2.setTitle("vision001");
 		visionDto2.setPersonId(testPerson.getId());
 		visionDto2.setVisionType(VisionType.BUSINESS);
 		personService.addVision(visionDto2);

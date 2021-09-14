@@ -100,6 +100,7 @@ public class VisionMongoRepository extends AbstractVisionRepository {
 		doc.setPersonId(vision.personId());
 		doc.setVisionId(vision.visionId());
 		doc.setVisionType(vision.visionType());
+		doc.setTitle(vision.title());
 		doc.setContent(vision.content());
 		return doc;
 	}

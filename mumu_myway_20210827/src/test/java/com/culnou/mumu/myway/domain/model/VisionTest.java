@@ -24,7 +24,8 @@ public class VisionTest {
 		VisionId visionId = new VisionId("111");
 		VisionType visionType = VisionType.BUSINESS;
 		String content = "111";
-		Vision vision = new Vision(null, visionId, visionType, content);
+		String title = "111";
+		Vision vision = new Vision(null, visionId, visionType, title, content);
 		//実行されない。
 		vision.content();
 	}
@@ -33,7 +34,8 @@ public class VisionTest {
 		PersonId personId = new PersonId("111");
 		VisionType visionType = VisionType.BUSINESS;
 		String content = "111";
-		Vision vision = new Vision(personId, null, visionType, content);
+		String title = "111";
+		Vision vision = new Vision(personId, null, visionType, title, content);
 		//実行されない。
 		vision.content();
 	}
@@ -42,7 +44,8 @@ public class VisionTest {
 		PersonId personId = new PersonId("111");
 		VisionId visionId = new VisionId("111");
 		String content = "111";
-		Vision vision = new Vision(personId, visionId, null, content);
+		String title = "111";
+		Vision vision = new Vision(personId, visionId, null, title, content);
 		//実行されない。
 		vision.content();
 	}
@@ -51,7 +54,18 @@ public class VisionTest {
 		PersonId personId = new PersonId("111");
 		VisionId visionId = new VisionId("111");
 		VisionType visionType = VisionType.BUSINESS;
-		Vision vision = new Vision(personId, visionId, visionType, null);
+		String title = "111";
+		Vision vision = new Vision(personId, visionId, visionType, title, null);
+		//実行されない。
+		vision.content();
+	}
+	@Test(expected = IllegalArgumentException.class)
+	public void testInitializeByTitle() {
+		PersonId personId = new PersonId("111");
+		VisionId visionId = new VisionId("111");
+		VisionType visionType = VisionType.BUSINESS;
+		String content = "111";
+		Vision vision = new Vision(personId, visionId, visionType, null, content);
 		//実行されない。
 		vision.content();
 	}
@@ -63,7 +77,8 @@ public class VisionTest {
 		VisionId visionId = new VisionId("111");
 		VisionType visionType = VisionType.BUSINESS;
 		String content = "111";
-		Vision vision = new Vision(personId, visionId, visionType, content);
+		String title = "111";
+		Vision vision = new Vision(personId, visionId, visionType, title, content);
 		//識別子は再度設定できない。
 		VisionId visionId2 = new VisionId("222");
 		vision.setVisionId(visionId2);
@@ -77,7 +92,8 @@ public class VisionTest {
 		VisionId visionId = new VisionId("111");
 		VisionType visionType = VisionType.BUSINESS;
 		String content = "111";
-		Vision vision = new Vision(personId, visionId, visionType, content);
+		String title = "111";
+		Vision vision = new Vision(personId, visionId, visionType, title, content);
 		assertEquals(vision.personId(), personId);
 	}
 	
@@ -87,7 +103,8 @@ public class VisionTest {
 		VisionId visionId = new VisionId("111");
 		VisionType visionType = VisionType.BUSINESS;
 		String content = "111";
-		Vision vision = new Vision(personId, visionId, visionType, content);
+		String title = "111";
+		Vision vision = new Vision(personId, visionId, visionType, title, content);
 		assertEquals(vision.visionId(), visionId);
 	}
 	
@@ -99,7 +116,8 @@ public class VisionTest {
 		VisionId visionId = new VisionId("111");
 		VisionType visionType = VisionType.BUSINESS;
 		String content = "111";
-		Vision vision = new Vision(personId, visionId, visionType, content);
+		String title = "111";
+		Vision vision = new Vision(personId, visionId, visionType, title, content);
 		assertEquals(vision.visionType(), VisionType.BUSINESS);
 	}
 	
@@ -110,7 +128,8 @@ public class VisionTest {
 		VisionId visionId = new VisionId("111");
 		VisionType visionType = VisionType.BUSINESS;
 		String content = "111";
-		Vision vision = new Vision(personId, visionId, visionType, content);
+		String title = "111";
+		Vision vision = new Vision(personId, visionId, visionType, title, content);
 		ProjectId experimentId = new ProjectId("111");
 		String name = "111";
 		String description = "111";
@@ -129,7 +148,8 @@ public class VisionTest {
 		VisionId visionId = new VisionId("111");
 		VisionType visionType = VisionType.BUSINESS;
 		String content = "111";
-		Vision vision = new Vision(personId, visionId, visionType, content);
+		String title = "111";
+		Vision vision = new Vision(personId, visionId, visionType, title, content);
 		ProjectId experimentId = null;
 		String name = "111";
 		String description = "111";
@@ -143,7 +163,8 @@ public class VisionTest {
 		VisionId visionId = new VisionId("111");
 		VisionType visionType = VisionType.BUSINESS;
 		String content = "111";
-		Vision vision = new Vision(personId, visionId, visionType, content);
+		String title = "111";
+		Vision vision = new Vision(personId, visionId, visionType, title, content);
 		ProjectId experimentId = new ProjectId("111");
 		String name = null;
 		String description = "111";
@@ -157,7 +178,8 @@ public class VisionTest {
 		VisionId visionId = new VisionId("111");
 		VisionType visionType = VisionType.BUSINESS;
 		String content = "111";
-		Vision vision = new Vision(personId, visionId, visionType, content);
+		String title = "111";
+		Vision vision = new Vision(personId, visionId, visionType, title, content);
 		ProjectId experimentId = new ProjectId("111");
 		String name = "111";
 		String description = null;

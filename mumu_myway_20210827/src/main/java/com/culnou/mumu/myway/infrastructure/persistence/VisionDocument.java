@@ -17,6 +17,7 @@ public class VisionDocument {
 	private PersonId personId;
 	private VisionId visionId;
 	private VisionType visionType;
+	private String title;
 	private String content;
 	
 	

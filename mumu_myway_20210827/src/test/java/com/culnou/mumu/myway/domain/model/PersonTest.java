@@ -123,7 +123,8 @@ public class PersonTest {
 		Person person = new Person(personId1, fullName, email);
 		VisionId visionId = new VisionId("111");
 		String content = "111";
-		Vision vision = person.createVision(visionId, null, content);
+		String title = "111";
+		Vision vision = person.createVision(visionId, null, title, content);
 		//実行されない。
 		vision.content();
 	}
@@ -135,7 +136,21 @@ public class PersonTest {
 		Person person = new Person(personId1, fullName, email);
 		VisionId visionId = new VisionId("111");
 		VisionType visionType = VisionType.BUSINESS;
-		Vision vision = person.createVision(visionId, visionType, null);
+		String title = "111";
+		Vision vision = person.createVision(visionId, visionType, title, null);
+		//実行されない。
+		vision.content();
+	}
+	@Test(expected = IllegalArgumentException.class)
+	public void testCreateVisionByNullTitle() throws Exception{
+		PersonId personId1 = new PersonId("111");
+		FullName fullName = new FullName("taro", "yamada");
+		Email email = new Email("ss@ss.com");
+		Person person = new Person(personId1, fullName, email);
+		VisionId visionId = new VisionId("111");
+		VisionType visionType = VisionType.BUSINESS;
+		String content = "111";
+		Vision vision = person.createVision(visionId, visionType, null, content);
 		//実行されない。
 		vision.content();
 	}
@@ -148,7 +163,8 @@ public class PersonTest {
 		Person person = new Person(personId1, fullName, email);
 		VisionType visionType = VisionType.BUSINESS;
 		String content = "111";
-		Vision vision = person.createVision(null, visionType, content);
+		String title = "111";
+		Vision vision = person.createVision(null, visionType, title, content);
 		//実行されない。
 		vision.content();
 	}
@@ -162,7 +178,8 @@ public class PersonTest {
 		VisionId visionId = new VisionId("111");
 		VisionType visionType = VisionType.BUSINESS;
 		String content = "111";
-		Vision vision = person.createVision(visionId, visionType, content);
+		String title = "111";
+		Vision vision = person.createVision(visionId, visionType, title, content);
 		assertNotNull(vision);
 		assertEquals(vision.personId(), personId);
 		assertEquals(vision.visionId(), visionId);

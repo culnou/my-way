@@ -10,9 +10,9 @@ public class PersonDto{
 	private String firstName;
 	private String lastName;
 	private String email;
-	private String philosophy;
-	private String purpose;
-	private String actionGuideline;
+	private String philosophy = "";
+	private String purpose = "";
+	private String actionGuideline = "";
 	
 	public PersonDto(String id, String firstName, String lastName, String email) {
 		this.setId(id);

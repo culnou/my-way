@@ -5,13 +5,15 @@ public class Vision {
 	private PersonId personId;
 	private VisionId visionId;
 	private VisionType visionType;
+	private String title;
 	private String content;
 	
 	//ファクトリーメソッドのみ生成することができるようプロテクトする。
-	protected Vision(PersonId personId, VisionId visionId, VisionType visionType, String content) {
+	protected Vision(PersonId personId, VisionId visionId, VisionType visionType, String title, String content) {
 		this.setPersonId(personId);
 		this.setVisionId(visionId);
 		this.setVisionType(visionType);
+		this.setTitle(title);
 		this.setContent(content);
 	}
 	
@@ -51,6 +53,17 @@ public class Vision {
 	
 	public VisionType visionType() {
 		return this.visionType;
+	}
+	
+	public void setTitle(String title) {
+		if(title == null) {
+			throw new IllegalArgumentException("The title may not be set to null.");
+		}
+		this.title = title;
+	}
+	
+	public String title() {
+		return this.title;
 	}
 	
 	public void setContent(String content) {

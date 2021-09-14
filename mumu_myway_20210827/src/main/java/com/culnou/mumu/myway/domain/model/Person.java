@@ -88,7 +88,7 @@ public class Person {
 	}
 	
 	//ファクトリーメソッド
-	public Vision createVision(VisionId visionId, VisionType visionType, String content) throws Exception{
+	public Vision createVision(VisionId visionId, VisionType visionType, String title, String content) throws Exception{
 		if(visionId == null) {
 			throw new IllegalArgumentException("The visionId may not be set to null.");
 		}
@@ -98,7 +98,10 @@ public class Person {
 		if(content == null) {
 			throw new IllegalArgumentException("The content may not be set to null.");
 		}
-		return new Vision(this.personId, visionId, visionType, content);
+		if(title == null) {
+			throw new IllegalArgumentException("The title may not be set to null.");
+		}
+		return new Vision(this.personId, visionId, visionType, title, content);
 	}
 
 }

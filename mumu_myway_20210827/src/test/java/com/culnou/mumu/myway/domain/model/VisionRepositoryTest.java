@@ -48,8 +48,8 @@ public class VisionRepositoryTest {
 		VisionId visionId = visionRepository.nextIdentity();
 		VisionType visionType = VisionType.BUSINESS;
 		String content = "111";
-		
-		Vision vision = person.createVision(visionId, visionType, content);
+		String title = "111";
+		Vision vision = person.createVision(visionId, visionType, title, content);
 		visionRepository.save(vision);
 		
 		this.testVisions.add(vision);
@@ -74,13 +74,13 @@ public class VisionRepositoryTest {
 		VisionId visionId = visionRepository.nextIdentity();
 		VisionType visionType = VisionType.BUSINESS;
 		String content = "111";
-		
-		Vision vision = person.createVision(visionId, visionType, content);
+		String title = "111";
+		Vision vision = person.createVision(visionId, visionType, title, content);
 		saveVisions.add(vision);
 		testVisions.add(vision);
 		
 		VisionId visionId2 = visionRepository.nextIdentity();
-		Vision vision2 = person.createVision(visionId2, visionType, content);
+		Vision vision2 = person.createVision(visionId2, visionType, title, content);
 		saveVisions.add(vision2);
 		testVisions.add(vision2);
 		visionRepository.saveAll(saveVisions);
@@ -100,13 +100,13 @@ public class VisionRepositoryTest {
 		VisionId visionId = visionRepository.nextIdentity();
 		VisionType visionType = VisionType.CAPABILITY;
 		String content = "111";
-		
-		Vision vision = person.createVision(visionId, visionType, content);
+		String title = "111";
+		Vision vision = person.createVision(visionId, visionType, title, content);
 		visionRepository.save(vision);
 		testVisions.add(vision);
 		
 		VisionId visionId2 = visionRepository.nextIdentity();
-		Vision vision2 = person.createVision(visionId2, visionType, content);
+		Vision vision2 = person.createVision(visionId2, visionType, title, content);
 		visionRepository.save(vision2);
 		testVisions.add(vision2);
 		

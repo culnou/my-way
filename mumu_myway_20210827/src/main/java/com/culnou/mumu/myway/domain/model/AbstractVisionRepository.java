@@ -9,7 +9,7 @@ public abstract class AbstractVisionRepository implements VisionRepository {
 	
 	
 	protected Vision convertFrom(VisionDocument doc){
-		return new Vision(doc.getPersonId(), doc.getVisionId(), doc.getVisionType(), doc.getContent());
+		return new Vision(doc.getPersonId(), doc.getVisionId(), doc.getVisionType(), doc.getTitle(), doc.getContent());
 		
 	}
 

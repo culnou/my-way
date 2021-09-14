@@ -52,8 +52,8 @@ public class ProjectRepositoryTest {
 		VisionId visionId = visionRepository.nextIdentity();
 		VisionType visionType = VisionType.BUSINESS;
 		String content = "111";
-		
-		Vision vision = person.createVision(visionId, visionType, content);
+		String title = "111";
+		Vision vision = person.createVision(visionId, visionType, title, content);
 		
 		ProjectId projectId = new ProjectId("111");
 		String projectName = "111";
@@ -84,8 +84,8 @@ public class ProjectRepositoryTest {
 		VisionId visionId = new VisionId("Vision001");
 		VisionType visionType = VisionType.BUSINESS;
 		String content = "111";
-		
-		Vision vision = person.createVision(visionId, visionType, content);
+		String title = "111";
+		Vision vision = person.createVision(visionId, visionType, title, content);
 		
 		ProjectId projectId = new ProjectId("Project001");
 		String projectName = "111";
@@ -114,8 +114,8 @@ public class ProjectRepositoryTest {
 		VisionId visionId = new VisionId("Vision002");
 		VisionType visionType = VisionType.BUSINESS;
 		String content = "111";
-		
-		Vision vision = person.createVision(visionId, visionType, content);
+		String title = "111";
+		Vision vision = person.createVision(visionId, visionType, title, content);
 		
 		ProjectId projectId = new ProjectId("Project003");
 		String projectName = "111";
