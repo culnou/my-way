@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.culnou.mumu.myway.application.PersonService;
 import com.culnou.mumu.myway.controller.PersonDto;
+import com.culnou.mumu.myway.controller.ProjectDto;
 import com.culnou.mumu.myway.controller.UserDto;
 import com.culnou.mumu.myway.controller.VisionDto;
 import com.culnou.mumu.myway.domain.model.Person;
@@ -17,6 +18,10 @@ import com.culnou.mumu.myway.domain.model.PersonFactory;
 import com.culnou.mumu.myway.domain.model.PersonId;
 
 import com.culnou.mumu.myway.domain.model.PersonRepository;
+import com.culnou.mumu.myway.domain.model.Project;
+import com.culnou.mumu.myway.domain.model.ProjectId;
+import com.culnou.mumu.myway.domain.model.ProjectRepository;
+import com.culnou.mumu.myway.domain.model.ProjectType;
 import com.culnou.mumu.myway.domain.model.User;
 import com.culnou.mumu.myway.domain.model.Vision;
 import com.culnou.mumu.myway.domain.model.VisionId;
@@ -32,7 +37,9 @@ public class PersonServiceImpl implements PersonService {
 	@Qualifier("visionMongoRepository")
 	@Autowired
 	private VisionRepository visionRepository;
-	
+	@Qualifier("projectMongoRepository")
+	@Autowired
+	private ProjectRepository projectRepository;
 
 	@Override
 	public void assignPerson(UserDto user) throws Exception {
@@ -118,6 +125,9 @@ public class PersonServiceImpl implements PersonService {
 		// TODO Auto-generated method stub
 		VisionId visionId = new VisionId(id);
 		Vision vision = visionRepository.visionOfId(visionId);
+		if(vision == null) {
+			throw new Exception("The vision may not exist.");
+		}
 		VisionDto dto = new VisionDto();
 		dto.setId(vision.visionId().id());
 		dto.setPersonId(vision.personId().id());
@@ -176,6 +186,116 @@ public class PersonServiceImpl implements PersonService {
 		}
 		visionRepository.remove(readVision);
 		
+	}
+
+	@Override
+	public void updateProject(ProjectDto projectDto) throws Exception {
+		// TODO Auto-generated method stub
+		ProjectId projectId = new ProjectId(projectDto.getProjectId());
+		Project readProject = projectRepository.projectOfId(projectId);
+		if(readProject == null) {
+			throw new Exception("The project may not exist.");
+		}
+		readProject.setName(projectDto.getName());
+		readProject.setDescription(projectDto.getDescription());
+		readProject.setCriteria(projectDto.getCriteria());
+		readProject.setDeadline(projectDto.getDeadline());
+		readProject.setIndicator(projectDto.getIndicator());
+		readProject.setTerm(projectDto.getTerm());
+		readProject.addExpendedTime(projectDto.getExpendedTime());
+		projectRepository.save(readProject);
+	}
+
+	@Override
+	public void deleteProject(String id) throws Exception {
+		// TODO Auto-generated method stub
+		ProjectId projectId = new ProjectId(id);
+		Project readProject = projectRepository.projectOfId(projectId);
+		if(readProject == null) {
+			throw new Exception("The project may not exist.");
+		}
+		projectRepository.remove(readProject);
+	}
+
+	@Override
+	public ProjectDto addProject(ProjectDto projectDto) throws Exception {
+		// TODO Auto-generated method stub
+		//ビジョンの取得
+		VisionId visionId = new VisionId(projectDto.getVisionId());
+		Vision vision = visionRepository.visionOfId(visionId);
+		//ビジョンの存在チェック
+		if(vision == null) {
+			throw new Exception("The vision may not exist.");
+		}
+		//プロジェクトタイプのチェック
+		if(projectDto.getProjectType() == null) {
+			throw new Exception("The projectType may not exist.");
+		}
+		//識別子オブジェクトの生成
+		ProjectId projectId = projectRepository.nextIdentity();
+		//プロジェクトの生成
+		Project project = vision.launchProject(projectId, projectDto.getName(), projectDto.getDescription(), projectDto.getProjectType());
+		project.setCriteria(projectDto.getCriteria());
+		project.setDeadline(projectDto.getDeadline());
+		project.setIndicator(projectDto.getIndicator());
+		project.setTerm(projectDto.getTerm());
+		project.addExpendedTime(projectDto.getExpendedTime());
+		//プロジェクトの保存
+		projectRepository.save(project);
+		
+		projectDto.setId(projectId.id());
+		projectDto.setProjectId(projectId.id());
+		projectDto.setPersonId(project.personId().id());
+		return projectDto;
+	}
+
+	@Override
+	public ProjectDto findProjectById(String id) throws Exception {
+		// TODO Auto-generated method stub
+		ProjectId projectId = new ProjectId(id);
+		Project readProject = projectRepository.projectOfId(projectId);
+		if(readProject == null) {
+			throw new Exception("The project may not exist.");
+		}
+		ProjectDto doc = new ProjectDto();
+		doc.setId(readProject.projectId().id());
+		doc.setProjectId(readProject.projectId().id());
+		doc.setVisionId(readProject.visionId().id());
+		doc.setPersonId(readProject.personId().id());
+		doc.setProjectType(readProject.projectType());
+		doc.setName(readProject.name());
+		doc.setDescription(readProject.description());
+		doc.setDeadline(readProject.deadline());
+		doc.setIndicator(readProject.indicator());
+		doc.setTerm(readProject.term());
+		doc.setExpendedTime(readProject.expendedTime());
+		doc.setCriteria(readProject.criteria());
+		return doc;
+	}
+
+	@Override
+	public List<ProjectDto> findProjectsByVisionIdAndProjectType(String visionId, ProjectType projectType)
+			throws Exception {
+		// TODO Auto-generated method stub
+		List<Project> projects = projectRepository.projectsOfVisionAndProjectType(new VisionId(visionId), projectType);
+		List<ProjectDto> docs = new ArrayList<>();
+		for(Project readProject : projects) {
+			ProjectDto doc = new ProjectDto();
+			doc.setId(readProject.projectId().id());
+			doc.setProjectId(readProject.projectId().id());
+			doc.setVisionId(readProject.visionId().id());
+			doc.setPersonId(readProject.personId().id());
+			doc.setProjectType(readProject.projectType());
+			doc.setName(readProject.name());
+			doc.setDescription(readProject.description());
+			doc.setDeadline(readProject.deadline());
+			doc.setIndicator(readProject.indicator());
+			doc.setTerm(readProject.term());
+			doc.setExpendedTime(readProject.expendedTime());
+			doc.setCriteria(readProject.criteria());
+			docs.add(doc);
+		}
+		return docs;
 	}
 
 	

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 import com.culnou.mumu.myway.application.PersonService;
+import com.culnou.mumu.myway.domain.model.ProjectType;
 
 @RestController
 public class PersonRestController {
@@ -88,6 +89,35 @@ public class PersonRestController {
 		return HttpStatus.OK;
 	}
 	
+	/*
+	 * Project
+	 */
+	@GetMapping("/projects/vision/{visionId}/project_type/{projectType}")
+	public ResponseEntity<List<ProjectDto>> findProjectsByVisionId(@PathVariable String visionId, @PathVariable ProjectType projectType) throws Exception{
+		return ResponseEntity.ok().body((List<ProjectDto>)this.personService.findProjectsByVisionIdAndProjectType(visionId, projectType));
+	}
+	
+	@GetMapping("/projects/{id}")
+	public ResponseEntity<ProjectDto> findProjectById(@PathVariable String id) throws Exception{
+		return ResponseEntity.ok().body((ProjectDto)this.personService.findProjectById(id));
+	}
+	
+	@PostMapping("/projects")
+	public ResponseEntity<ProjectDto> addProject(@RequestBody ProjectDto projectDto) throws Exception{
+		return ResponseEntity.ok().body((ProjectDto)this.personService.addProject(projectDto));
+	}
+	
+	@PutMapping("/projects")
+	public HttpStatus updateProject(@RequestBody ProjectDto projectDto) throws Exception{
+		this.personService.updateProject(projectDto);
+		return HttpStatus.OK;
+	}
+	
+	@DeleteMapping("/projects/{id}")
+	public HttpStatus deleteProject(@PathVariable String id) throws Exception{
+		this.personService.deleteProject(id);
+		return HttpStatus.OK;
+	}
 	
 	
 

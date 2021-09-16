@@ -2,6 +2,7 @@ package com.culnou.mumu.myway.application;
 
 import static org.junit.Assert.*;
 
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -15,8 +16,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.culnou.mumu.myway.controller.PersonDto;
+import com.culnou.mumu.myway.controller.ProjectDto;
 import com.culnou.mumu.myway.controller.UserDto;
 import com.culnou.mumu.myway.controller.VisionDto;
+import com.culnou.mumu.myway.domain.model.ProjectType;
 import com.culnou.mumu.myway.domain.model.VisionType;
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -159,6 +162,39 @@ public class PersonServiceTest {
 		assertEquals(visions.size(), 2);
 		personService.deleteVision(visionDto.getId());
 		personService.deleteVision(visionDto2.getId());
+	}
+	
+	@Test
+	public void testProject() throws Exception{
+		VisionDto visionDto = new VisionDto();
+		visionDto.setContent("vision001");
+		visionDto.setTitle("vision001");
+		visionDto.setPersonId(testPerson.getId());
+		visionDto.setVisionType(VisionType.BUSINESS);
+		VisionDto vision = personService.addVision(visionDto);
+		ProjectDto project = new ProjectDto();
+		project.setVisionId(vision.getVisionId());
+		project.setName("project01");
+		project.setDescription("project01");
+		project.setCriteria("project01");
+		project.setIndicator("project01");
+		project.setDeadline(new Date());
+		project.setExpendedTime(10);
+		project.setTerm(10);
+		project.setProjectType(ProjectType.EXPERIMENT);
+		ProjectDto readProject = personService.addProject(project);
+		assertEquals(readProject.getPersonId(), testPerson.getId());
+		assertEquals(readProject.getVisionId(), vision.getId());
+		assertEquals(readProject.getProjectType(), ProjectType.EXPERIMENT);
+		assertEquals(readProject.getName(), "project01");
+		readProject.setName("project02");
+		personService.updateProject(readProject);
+		ProjectDto foudProject = personService.findProjectById(project.getId());
+		assertEquals(foudProject.getName(), "project02");
+		List<ProjectDto> projects = personService.findProjectsByVisionIdAndProjectType(readProject.getVisionId(), readProject.getProjectType());
+		assertEquals(projects.size(), 1);
+		//personService.deleteProject(foudProject.getId());
+		personService.deleteVision(visionDto.getId());
 	}
 
 }

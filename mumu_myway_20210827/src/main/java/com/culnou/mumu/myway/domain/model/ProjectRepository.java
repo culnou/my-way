@@ -23,5 +23,8 @@ public interface ProjectRepository {
     public List<Project> projectsOfVision(VisionId visionId) throws Exception;
 	
 	public List<Project> projectsOfProjectType(ProjectType projectType) throws Exception;
+	
+	public List<Project> projectsOfVisionAndProjectType(VisionId visionId, ProjectType projectType) throws Exception;
+	
 
 }

@@ -92,7 +92,12 @@ public class ProjectMongoRepository extends AbstractProjectRepository {
 		return convertProjectDocumentsToProjects(docs);
 	}
 	
-	
+	@Override
+	public List<Project> projectsOfVisionAndProjectType(VisionId visionId, ProjectType projectType) throws Exception {
+		// TODO Auto-generated method stub
+		List<ProjectDocument> docs = projectRepository.findProjectsByVisionIdAndProjectType(visionId, projectType);
+		return convertProjectDocumentsToProjects(docs);
+	}
 	private ProjectDocument convertProjectToProjectDocument(Project project) {
 		ProjectDocument doc = new ProjectDocument();
 		doc.setId(project.projectId().id());
@@ -124,6 +129,8 @@ public class ProjectMongoRepository extends AbstractProjectRepository {
 		}
 		return projects;
 	}
+
+	
 	
 	
 }

@@ -132,5 +132,37 @@ public class ProjectRepositoryTest {
 		assertEquals(projects.get(0).projectType(), ProjectType.PRACTICE);
 		assertEquals(projects.get(0).visionId(), visionId);
 	}
+	
+	@Test
+	public void testProjectsOfVisionAndProjectType() throws Exception{
+		PersonId personId = new PersonId("111");
+		FullName fullName = new FullName("taro", "yamada");
+		Email email = new Email("ss@ss.com");
+		Person person = new Person(personId, fullName, email);
+		
+		VisionId visionId = new VisionId("Vision002");
+		VisionType visionType = VisionType.BUSINESS;
+		String content = "111";
+		String title = "111";
+		Vision vision = person.createVision(visionId, visionType, title, content);
+		
+		ProjectId projectId = new ProjectId("Project003");
+		String projectName1 = "Experiment Project";
+		String description = "111";
+		Project project = vision.launchProject(projectId, projectName1, description, ProjectType.EXPERIMENT);
+		projectRepository.save(project);
+		testProjects.add(project);
+		ProjectId projectId2 = new ProjectId("Project004");
+		String projectName2 = "Practice Project";
+		Project project2 = vision.launchProject(projectId2, projectName2, description, ProjectType.PRACTICE);
+		projectRepository.save(project2);
+		testProjects.add(project2);
+		List<Project> projects1 = projectRepository.projectsOfVisionAndProjectType(visionId, ProjectType.EXPERIMENT);
+		assertEquals(projects1.size(), 1);
+		assertEquals(projects1.get(0).name(), projectName1);
+		List<Project> projects2 = projectRepository.projectsOfVisionAndProjectType(visionId, ProjectType.PRACTICE);
+		assertEquals(projects2.size(), 1);
+		assertEquals(projects2.get(0).name(), projectName2);
+	}
 
 }

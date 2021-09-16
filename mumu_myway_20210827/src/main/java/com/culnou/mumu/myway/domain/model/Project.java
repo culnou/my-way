@@ -139,7 +139,7 @@ public class Project {
 		return this.criteria;
 	}
 	
-	
+	//負の数字はNG。
 	public void addExpendedTime(int expendedTime) {
 		if((this.expendedTime +  expendedTime) < 0) {
 			throw new IllegalArgumentException("Total expendedTime may be negative.");
