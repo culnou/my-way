@@ -34,6 +34,8 @@ import com.culnou.mumu.myway.domain.model.VisionRepository;
 import com.culnou.mumu.myway.domain.model.Work;
 import com.culnou.mumu.myway.domain.model.WorkId;
 import com.culnou.mumu.myway.domain.model.WorkRepository;
+import com.culnou.mumu.myway.domain.model.WorkSaved;
+import com.culnou.mumu.myway.domain.model.WorkSavedSender;
 
 
 @Service("personServiceImpl")
@@ -55,6 +57,8 @@ public class PersonServiceImpl implements PersonService {
 	@Qualifier("workMongoRepository")
 	@Autowired
 	private WorkRepository workRepository;
+	@Autowired
+	private WorkSavedSender workSavedSender;
 
 	@Override
 	public void assignPerson(UserDto user) throws Exception {
@@ -507,6 +511,16 @@ public class PersonServiceImpl implements PersonService {
 		//work.addExpendedTime(workDto.getExpendedTime());
 		work.setExpendedTime(workDto.getExpendedTime());
 		workRepository.save(work);
+		
+		//JMS
+		WorkSaved workSaved = new WorkSaved();
+		workSaved.setActionId(work.actionId().id());
+		workSaved.setPersonId(work.personId().id());
+		workSaved.setProjectId(action.projectId().id());
+		workSaved.setExpendedTime(work.expendedTime());
+		System.out.println("***** PersonService send WorkSaved *****");		
+		workSavedSender.sendWorkSaved(workSaved);
+		
 		
 		workDto.setId(work.workId().id());
 		workDto.setWorkId(work.workId().id());

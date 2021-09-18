@@ -2,6 +2,8 @@ package com.culnou.mumu.myway.domain.model;
 
 import java.util.Date;
 
+
+
 public class Work {
 	
 	private PersonId personId;
@@ -131,6 +133,7 @@ public class Work {
 			throw new IllegalArgumentException("The expendedTime may be negative.");
 		}
 		this.expendedTime = expendedTime;
+		
 	}
 		
 	
