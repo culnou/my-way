@@ -9,10 +9,15 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.culnou.mumu.myway.application.PersonService;
+import com.culnou.mumu.myway.controller.ActionDto;
 import com.culnou.mumu.myway.controller.PersonDto;
 import com.culnou.mumu.myway.controller.ProjectDto;
 import com.culnou.mumu.myway.controller.UserDto;
 import com.culnou.mumu.myway.controller.VisionDto;
+import com.culnou.mumu.myway.controller.WorkDto;
+import com.culnou.mumu.myway.domain.model.Action;
+import com.culnou.mumu.myway.domain.model.ActionId;
+import com.culnou.mumu.myway.domain.model.ActionRepository;
 import com.culnou.mumu.myway.domain.model.Person;
 import com.culnou.mumu.myway.domain.model.PersonFactory;
 import com.culnou.mumu.myway.domain.model.PersonId;
@@ -26,6 +31,10 @@ import com.culnou.mumu.myway.domain.model.User;
 import com.culnou.mumu.myway.domain.model.Vision;
 import com.culnou.mumu.myway.domain.model.VisionId;
 import com.culnou.mumu.myway.domain.model.VisionRepository;
+import com.culnou.mumu.myway.domain.model.Work;
+import com.culnou.mumu.myway.domain.model.WorkId;
+import com.culnou.mumu.myway.domain.model.WorkRepository;
+
 
 @Service("personServiceImpl")
 @Transactional
@@ -40,6 +49,12 @@ public class PersonServiceImpl implements PersonService {
 	@Qualifier("projectMongoRepository")
 	@Autowired
 	private ProjectRepository projectRepository;
+	@Qualifier("actionMongoRepository")
+	@Autowired
+	private ActionRepository actionRepository;
+	@Qualifier("workMongoRepository")
+	@Autowired
+	private WorkRepository workRepository;
 
 	@Override
 	public void assignPerson(UserDto user) throws Exception {
@@ -220,6 +235,12 @@ public class PersonServiceImpl implements PersonService {
 	@Override
 	public ProjectDto addProject(ProjectDto projectDto) throws Exception {
 		// TODO Auto-generated method stub
+		//個人の取得
+		PersonId personId = new PersonId(projectDto.getPersonId());
+		Person person = personRepository.personOfId(personId);
+		if(person == null) {
+			throw new Exception("The person may not exist.");
+		}
 		//ビジョンの取得
 		VisionId visionId = new VisionId(projectDto.getVisionId());
 		Vision vision = visionRepository.visionOfId(visionId);
@@ -296,6 +317,201 @@ public class PersonServiceImpl implements PersonService {
 			docs.add(doc);
 		}
 		return docs;
+	}
+
+	@Override
+	public void updateAction(ActionDto actionDto) throws Exception {
+		// TODO Auto-generated method stub
+		ActionId actionId = new ActionId(actionDto.getId());
+		Action action = actionRepository.actionOfId(actionId);
+		if(action == null) {
+			throw new Exception("The action may not exist.");
+		}
+		action.setName(actionDto.getName());
+		action.setDescription(actionDto.getDescription());
+		action.addExpendedTime(actionDto.getExpendedTime());
+		actionRepository.save(action);
+	}
+
+	@Override
+	public void deleteAction(String id) throws Exception {
+		// TODO Auto-generated method stub
+		ActionId actionId = new ActionId(id);
+		Action action = actionRepository.actionOfId(actionId);
+		if(action == null) {
+			throw new Exception("The action may not exist.");
+		}
+		actionRepository.remove(action);
+	}
+
+	@Override
+	public ActionDto findActionById(String id) throws Exception {
+		// TODO Auto-generated method stub
+		ActionId actionId = new ActionId(id);
+		Action action = actionRepository.actionOfId(actionId);
+		if(action == null) {
+			throw new Exception("The action may not exist.");
+		}
+		ActionDto doc = new ActionDto();
+		doc.setId(action.actionId().id());
+		doc.setActionId(action.actionId().id());
+		doc.setPersonId(action.personId().id());
+		doc.setProjectId(action.projectId().id());
+		doc.setName(action.name());
+		doc.setDescription(action.description());
+		doc.setExpendedTime(action.expendedTime());
+		return doc;
+	}
+
+	@Override
+	public List<ActionDto> findActionsByProjectId(String projectId) throws Exception {
+		// TODO Auto-generated method stub
+		List<Action> actions = actionRepository.actionsOfProject(new ProjectId(projectId));
+		List<ActionDto> docs = new ArrayList<>();
+		for(Action action: actions) {
+			ActionDto doc = new ActionDto();
+			doc.setId(action.actionId().id());
+			doc.setActionId(action.actionId().id());
+			doc.setPersonId(action.personId().id());
+			doc.setProjectId(action.projectId().id());
+			doc.setName(action.name());
+			doc.setDescription(action.description());
+			doc.setExpendedTime(action.expendedTime());
+			docs.add(doc);
+		}
+		return docs;
+	}
+
+	@Override
+	public void updateWork(WorkDto workDto) throws Exception {
+		// TODO Auto-generated method stub
+		Work work = workRepository.workOfId(new WorkId(workDto.getId()));
+		if(work == null) {
+			throw new Exception("The work may not exist.");
+		}
+		work.setName(workDto.getName());
+		work.setDescription(workDto.getDescription());
+		work.setStartTime(workDto.getStartTime());
+		work.setEndTime(workDto.getEndTime());
+		work.changeStatus(workDto.getWorkStatus());
+		//work.addExpendedTime(workDto.getExpendedTime());
+		work.setExpendedTime(workDto.getExpendedTime());
+		workRepository.save(work);
+	}
+
+	@Override
+	public void deleteWork(String id) throws Exception {
+		// TODO Auto-generated method stub
+		WorkId workId = new WorkId(id);
+		Work work = workRepository.workOfId(workId);
+		if(work == null) {
+			throw new Exception("The work may not exist.");
+		}
+		workRepository.remove(work);
+	}
+
+	@Override
+	public WorkDto findWorkById(String id) throws Exception {
+		// TODO Auto-generated method stub
+		WorkId workId = new WorkId(id);
+		Work work = workRepository.workOfId(workId);
+		if(work == null) {
+			throw new Exception("The work may not exist.");
+		}
+		WorkDto doc = new WorkDto();
+		doc.setId(work.workId().id());
+		doc.setPersonId(work.personId().id());
+		doc.setActionId(work.actionId().id());
+		doc.setWorkId(work.workId().id());
+		doc.setName(work.name());
+		doc.setDescription(work.description());
+		doc.setStartTime(work.startTime());
+		doc.setEndTime(work.endTime());
+		doc.setWorkStatus(work.status());
+		doc.setExpendedTime(work.expendedTime());
+		return doc;
+	}
+
+	@Override
+	public List<WorkDto> findWorksByActionId(String actionId) throws Exception {
+		// TODO Auto-generated method stub
+		List<Work> works = workRepository.worksOfAction(new ActionId(actionId));
+		List<WorkDto> docs = new ArrayList<>();
+		for(Work work : works) {
+			WorkDto doc = new WorkDto();
+			doc.setId(work.workId().id());
+			doc.setPersonId(work.personId().id());
+			doc.setActionId(work.actionId().id());
+			doc.setWorkId(work.workId().id());
+			doc.setName(work.name());
+			doc.setDescription(work.description());
+			doc.setStartTime(work.startTime());
+			doc.setEndTime(work.endTime());
+			doc.setWorkStatus(work.status());
+			doc.setExpendedTime(work.expendedTime());
+			docs.add(doc);
+		}
+		return docs;
+	}
+
+	@Override
+	public ActionDto addAction(ActionDto actionDto) throws Exception {
+		// TODO Auto-generated method stub
+		//個人の取得
+		PersonId personId = new PersonId(actionDto.getPersonId());
+		Person person = personRepository.personOfId(personId);
+		if(person == null) {
+			throw new Exception("The person may not exist.");
+		}
+		//プロジェクトの取得
+		ProjectId projectId = new ProjectId(actionDto.getProjectId());
+		Project project = projectRepository.projectOfId(projectId);
+		//プロジェクトの存在チェック
+		if(project == null) {
+			throw new Exception("The project may not exist.");
+		}
+		//識別子オブジェクトの生成
+		ActionId actionId = actionRepository.nextIdentity();
+		//アクションの生成
+		Action action = project.defineAction(actionId, actionDto.getName(), actionDto.getDescription());
+		action.addExpendedTime(actionDto.getExpendedTime());
+		actionRepository.save(action);
+		
+		actionDto.setId(action.actionId().id());
+		actionDto.setActionId(action.actionId().id());
+		actionDto.setPersonId(action.personId().id());
+		return actionDto;
+	}
+
+	@Override
+	public WorkDto addWork(WorkDto workDto) throws Exception {
+		// TODO Auto-generated method stub
+		//個人の取得
+		PersonId personId = new PersonId(workDto.getPersonId());
+		Person person = personRepository.personOfId(personId);
+		if(person == null) {
+			throw new Exception("The person may not exist.");
+		}
+		//アクションの取得
+		ActionId actionId = new ActionId(workDto.getActionId());
+		Action action = actionRepository.actionOfId(actionId);
+		//アクションの存在チェック
+		if(action == null) {
+			throw new Exception("The action may not exist.");
+		}
+		//識別子オブジェクトの生成
+		WorkId workId = workRepository.nextIdentity();
+		//ワークの生成
+		Work work = action.defineWork(workId, workDto.getName(), workDto.getDescription(), workDto.getStartTime(), workDto.getEndTime());
+		work.changeStatus(workDto.getWorkStatus());
+		//work.addExpendedTime(workDto.getExpendedTime());
+		work.setExpendedTime(workDto.getExpendedTime());
+		workRepository.save(work);
+		
+		workDto.setId(work.workId().id());
+		workDto.setWorkId(work.workId().id());
+		workDto.setPersonId(work.personId().id());
+		return workDto;
 	}
 
 	

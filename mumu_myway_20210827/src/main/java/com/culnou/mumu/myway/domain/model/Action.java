@@ -1,5 +1,7 @@
 package com.culnou.mumu.myway.domain.model;
 
+import java.util.Date;
+
 public class Action {
 	
 	private PersonId personId;
@@ -97,7 +99,7 @@ public class Action {
 	}
 	
 	//ファクトリーメソッド
-	public Work defineWork(WorkId workId, String name, String description) throws Exception{
+	public Work defineWork(WorkId workId, String name, String description, Date startTime, Date endTime) throws Exception{
 		if(workId == null) {
 			throw new IllegalArgumentException("The workId may not be set to null.");
 		}
@@ -107,7 +109,13 @@ public class Action {
 		if(description == null) {
 			throw new IllegalArgumentException("The description may not be set to null.");
 		}
-		return new Work(this.personId, this.actionId, workId, name, description);
+		if(startTime == null) {
+			throw new IllegalArgumentException("The startTime may not be set to null.");
+		}
+		if(endTime == null) {
+			throw new IllegalArgumentException("The endTime may not be set to null.");
+		}
+		return new Work(this.personId, this.actionId, workId, name, description, startTime, endTime);
 	}
 
 }

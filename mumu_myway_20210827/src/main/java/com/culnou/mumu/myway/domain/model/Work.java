@@ -1,5 +1,7 @@
 package com.culnou.mumu.myway.domain.model;
 
+import java.util.Date;
+
 public class Work {
 	
 	private PersonId personId;
@@ -7,15 +9,19 @@ public class Work {
 	private WorkId workId;
 	private String name;
 	private String description;
+	private Date startTime;
+	private Date endTime;
 	private WorkStatus workStatus;
 	private int expendedTime;
 	
-	protected Work(PersonId personId, ActionId actionId, WorkId workId, String name, String description) {
+	protected Work(PersonId personId, ActionId actionId, WorkId workId, String name, String description, Date startTime, Date endTime) {
 		this.setPersonId(personId);
 		this.setWorkId(workId);
 		this.setActionId(actionId);
 		this.setName(name);
 		this.setDescription(description);
+		this.setStartTime(startTime);
+		this.setEndTime(endTime);
 	}
 	
 	protected void setPersonId(PersonId personId) {
@@ -76,6 +82,28 @@ public class Work {
 		return this.description;
 	}
 	
+	public void setStartTime(Date startTime) {
+		if(startTime == null) {
+			throw new IllegalArgumentException("The startTime may not be set to null.");
+		}
+		this.startTime = startTime;
+	}
+	
+	public Date startTime() {
+		return this.startTime;
+	}
+	
+	public void setEndTime(Date endTime) {
+		if(endTime == null) {
+			throw new IllegalArgumentException("The endTime may not be set to null.");
+		}
+		this.endTime = endTime;
+	}
+	
+	public Date endTime() {
+		return this.endTime;
+	}
+	
 	public void changeStatus(WorkStatus workStatus) {
 		if(workStatus == null) {
 			throw new IllegalArgumentException("The workStatus may not be set to null.");
@@ -86,16 +114,19 @@ public class Work {
 	public WorkStatus status() {
 		return this.workStatus;
 	}
-	
+	//Workの場合、消費時間を加算することはないので、setExpendedTimeのみ必要。
+	//よって、本メソッドは削除する。2021/09/18
+	/*
 	public void addExpendedTime(int expendedTime) {
 		if((this.expendedTime +  expendedTime) < 0) {
 			throw new IllegalArgumentException("Total expendedTime may be negative.");
 		}
 		this.expendedTime += expendedTime;
 	}
-	
+	*/
 	//クエリオブジェクトからエンティティに変換するために設ける。
-	protected void setExpendedTime(int expendedTime) {
+	//addExpendedTimeの代わりに使用するのでprotectedからpublicに変更する。2021/09/18
+	public void setExpendedTime(int expendedTime) {
 		if(expendedTime < 0) {
 			throw new IllegalArgumentException("The expendedTime may be negative.");
 		}

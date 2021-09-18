@@ -2,10 +2,12 @@ package com.culnou.mumu.myway.application;
 
 import java.util.List;
 
+import com.culnou.mumu.myway.controller.ActionDto;
 import com.culnou.mumu.myway.controller.PersonDto;
 import com.culnou.mumu.myway.controller.ProjectDto;
 import com.culnou.mumu.myway.controller.UserDto;
 import com.culnou.mumu.myway.controller.VisionDto;
+import com.culnou.mumu.myway.controller.WorkDto;
 import com.culnou.mumu.myway.domain.model.ProjectType;
 
 
@@ -35,6 +37,22 @@ public interface PersonService {
 	
 	public List<ProjectDto> findProjectsByVisionIdAndProjectType(String visionId, ProjectType projectType) throws Exception;
 	
+	public void updateAction(ActionDto actionDto) throws Exception;
+	
+	public void deleteAction(String id) throws Exception;
+	
+	public ActionDto findActionById(String id) throws Exception;
+	
+	public List<ActionDto> findActionsByProjectId(String projectId) throws Exception;
+	
+	public void updateWork(WorkDto workDto) throws Exception;
+	
+	public void deleteWork(String id) throws Exception;
+	
+	public WorkDto findWorkById(String id) throws Exception;
+	
+	public List<WorkDto> findWorksByActionId(String actionId) throws Exception;
+	
 	//ファクトリーメソッド
 	public PersonDto createPerson(UserDto user) throws Exception;
 	
@@ -42,7 +60,9 @@ public interface PersonService {
 	
 	public ProjectDto addProject(ProjectDto projectDto) throws Exception;
 	
+	public ActionDto addAction(ActionDto actionDto) throws Exception;
 	
+	public WorkDto addWork(WorkDto workDto) throws Exception;
 	
 
 }

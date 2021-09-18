@@ -3,6 +3,7 @@ package com.culnou.mumu.myway.domain.model;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.junit.After;
@@ -45,8 +46,10 @@ public class WorkRepositoryTest {
 		ProjectId projectId = new ProjectId("111");
 		String name = "111";
 		String description = "111";
+		Date startTime = new Date();
+		Date endTime = new Date();
 		Action action = new Action(personId, projectId, actionId, name, description);
-		Work work = action.defineWork(new WorkId("work111"), "111", "111");
+		Work work = action.defineWork(new WorkId("work111"), "111", "111",startTime, endTime);
 		work.changeStatus(WorkStatus.DOING);
 		workRepository.save(work);
 		this.testWorks.add(work);
@@ -69,14 +72,16 @@ public class WorkRepositoryTest {
 		ProjectId projectId = new ProjectId("111");
 		String name = "111";
 		String description = "111";
+		Date startTime = new Date();
+		Date endTime = new Date();
 		Action action = new Action(personId, projectId, actionId, name, description);
 		WorkId workId = new WorkId("work001");
-		Work work = action.defineWork(workId, "111", "111");
+		Work work = action.defineWork(workId, "111", "111", startTime, endTime);
 		work.changeStatus(WorkStatus.DOING);
 		saveWorks.add(work);
 		this.testWorks.add(work);
 		WorkId workId2 = new WorkId("work002");
-		Work work2 = action.defineWork(workId2, "111", "111");
+		Work work2 = action.defineWork(workId2, "111", "111", startTime, endTime);
 		saveWorks.add(work2);
 		this.testWorks.add(work2);
 		workRepository.saveAll(saveWorks);

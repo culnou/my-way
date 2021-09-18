@@ -173,6 +173,7 @@ public class PersonServiceTest {
 		visionDto.setVisionType(VisionType.BUSINESS);
 		VisionDto vision = personService.addVision(visionDto);
 		ProjectDto project = new ProjectDto();
+		project.setPersonId(testPerson.getId());
 		project.setVisionId(vision.getVisionId());
 		project.setName("project01");
 		project.setDescription("project01");

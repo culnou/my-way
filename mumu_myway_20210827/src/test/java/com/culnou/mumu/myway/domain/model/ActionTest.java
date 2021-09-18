@@ -2,6 +2,8 @@ package com.culnou.mumu.myway.domain.model;
 
 import static org.junit.Assert.*;
 
+import java.util.Date;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -184,7 +186,9 @@ public class ActionTest {
 		String description = "111";
 		Action action = new Action(personId, projectId, actionId, name, description);
 		WorkId workId = new WorkId("111");
-		Work work = action.defineWork(workId, name, description);
+		Date startTime = new Date();
+		Date endTime = new Date();
+		Work work = action.defineWork(workId, name, description,startTime, endTime);
 		assertEquals(work.personId(), personId);
 		assertEquals(work.workId(), workId);
 		assertEquals(work.actionId(), actionId);

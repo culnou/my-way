@@ -9,7 +9,7 @@ public abstract class AbstractWorkRepository implements WorkRepository {
 
 		
 	protected Work convertFrom(WorkDocument doc) {
-		Work work = new Work(doc.getPersonId(), doc.getActionId(), doc.getWorkId(), doc.getName(), doc.getDescription());
+		Work work = new Work(doc.getPersonId(), doc.getActionId(), doc.getWorkId(), doc.getName(), doc.getDescription(), doc.getStartTime(), doc.getEndTime());
 		work.setExpendedTime(doc.getExpendedTime());
 		if(doc.getWorkStatus() != null) {
 			work.changeStatus(doc.getWorkStatus());

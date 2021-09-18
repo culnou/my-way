@@ -90,6 +90,8 @@ public class WorkMongoRepository extends AbstractWorkRepository {
 		doc.setWorkId(work.workId());
 		doc.setName(work.name());
 		doc.setDescription(work.description());
+		doc.setStartTime(work.startTime());
+		doc.setEndTime(work.endTime());
 		doc.setWorkStatus(work.status());
 		doc.setExpendedTime(work.expendedTime());
 		return doc;

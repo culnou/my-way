@@ -119,6 +119,64 @@ public class PersonRestController {
 		return HttpStatus.OK;
 	}
 	
+	/*
+	 * Action
+	 */
+	@GetMapping("/actions/project/{projectId}")
+	public ResponseEntity<List<ActionDto>> findActionsByProjectId(@PathVariable String projectId) throws Exception{
+		return ResponseEntity.ok().body((List<ActionDto>)this.personService.findActionsByProjectId(projectId));
+	}
 	
+	@GetMapping("/actions/{id}")
+	public ResponseEntity<ActionDto> findActionById(@PathVariable String id) throws Exception{
+		return ResponseEntity.ok().body((ActionDto)this.personService.findActionById(id));
+	}
+	
+	@PostMapping("/actions")
+	public ResponseEntity<ActionDto> addAction(@RequestBody ActionDto actionDto) throws Exception{
+		return ResponseEntity.ok().body((ActionDto)this.personService.addAction(actionDto));
+	}
+	
+	@PutMapping("/actions")
+	public HttpStatus updateAction(@RequestBody ActionDto actionDto) throws Exception{
+		this.personService.updateAction(actionDto);
+		return HttpStatus.OK;
+	}
+	
+	@DeleteMapping("/actions/{id}")
+	public HttpStatus deleteAction(@PathVariable String id) throws Exception{
+		this.personService.deleteAction(id);
+		return HttpStatus.OK;
+	}
+	
+	/*
+	 * Work
+	 */
+	@GetMapping("/works/action/{actionId}")
+	public ResponseEntity<List<WorkDto>> findWorksByActionId(@PathVariable String actionId) throws Exception{
+		return ResponseEntity.ok().body((List<WorkDto>)this.personService.findWorksByActionId(actionId));
+	}
+	
+	@GetMapping("/works/{id}")
+	public ResponseEntity<WorkDto> findWorkById(@PathVariable String id) throws Exception{
+		return ResponseEntity.ok().body((WorkDto)this.personService.findWorkById(id));
+	}
+	
+	@PostMapping("/works")
+	public ResponseEntity<WorkDto> addWork(@RequestBody WorkDto workDto) throws Exception{
+		return ResponseEntity.ok().body((WorkDto)this.personService.addWork(workDto));
+	}
+	
+	@PutMapping("/works")
+	public HttpStatus updateWork(@RequestBody WorkDto workDto) throws Exception{
+		this.personService.updateWork(workDto);
+		return HttpStatus.OK;
+	}
+	
+	@DeleteMapping("/works/{id}")
+	public HttpStatus deleteWork(@PathVariable String id) throws Exception{
+		this.personService.deleteWork(id);
+		return HttpStatus.OK;
+	}
 
 }

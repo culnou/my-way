@@ -1,5 +1,7 @@
 package com.culnou.mumu.myway.infrastructure.persistence;
 
+import java.util.Date;
+
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.culnou.mumu.myway.domain.model.ActionId;
@@ -17,6 +19,8 @@ public class WorkDocument {
 	private WorkId workId;
 	private String name;
 	private String description;
+	private Date startTime;
+	private Date endTime;
 	private WorkStatus workStatus;
 	private int expendedTime;
 
