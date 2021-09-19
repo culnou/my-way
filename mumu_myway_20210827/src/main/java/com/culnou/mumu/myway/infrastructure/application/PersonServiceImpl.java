@@ -35,7 +35,8 @@ import com.culnou.mumu.myway.domain.model.Work;
 import com.culnou.mumu.myway.domain.model.WorkId;
 import com.culnou.mumu.myway.domain.model.WorkRepository;
 import com.culnou.mumu.myway.domain.model.WorkSaved;
-import com.culnou.mumu.myway.domain.model.WorkSavedSender;
+import com.culnou.mumu.myway.domain.model.WorkSender;
+
 
 
 @Service("personServiceImpl")
@@ -58,7 +59,8 @@ public class PersonServiceImpl implements PersonService {
 	@Autowired
 	private WorkRepository workRepository;
 	@Autowired
-	private WorkSavedSender workSavedSender;
+	@Qualifier("workJmsSender")
+	private WorkSender workSender;
 
 	@Override
 	public void assignPerson(UserDto user) throws Exception {
@@ -518,8 +520,7 @@ public class PersonServiceImpl implements PersonService {
 		workSaved.setPersonId(work.personId().id());
 		workSaved.setProjectId(action.projectId().id());
 		workSaved.setExpendedTime(work.expendedTime());
-		System.out.println("***** PersonService send WorkSaved *****");		
-		workSavedSender.sendWorkSaved(workSaved);
+		workSender.sendWork(workSaved);
 		
 		
 		workDto.setId(work.workId().id());
