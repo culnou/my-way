@@ -23,6 +23,7 @@ import com.culnou.mumu.myway.controller.VisionDto;
 import com.culnou.mumu.myway.controller.WorkDto;
 import com.culnou.mumu.myway.domain.model.ProjectType;
 import com.culnou.mumu.myway.domain.model.VisionType;
+import com.culnou.mumu.myway.domain.model.WorkRepository;
 import com.culnou.mumu.myway.domain.model.WorkStatus;
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -198,7 +199,7 @@ public class PersonServiceTest {
 		List<ProjectDto> projects = personService.findProjectsByVisionIdAndProjectType(readProject.getVisionId(), readProject.getProjectType());
 		assertEquals(projects.size(), 1);
 		//personService.deleteProject(foudProject.getId());
-		personService.deleteVision(visionDto.getId());
+		//personService.deleteVision(visionDto.getId());
 	}
 	
 	@Test
@@ -222,7 +223,7 @@ public class PersonServiceTest {
 		project.setCriteria("project01");
 		project.setIndicator("project01");
 		project.setDeadline(new Date());
-		project.setExpendedTime(13);
+		project.setExpendedTime(10);
 		project.setTerm(10);
 		project.setProjectType(ProjectType.EXPERIMENT);
 		ProjectDto readProject = personService.addProject(project);
@@ -231,7 +232,7 @@ public class PersonServiceTest {
 		action.setProjectId(readProject.getProjectId());
 		action.setName("action01");
 		action.setDescription("action01");
-		action.setExpendedTime(24);
+		action.setExpendedTime(10);
 		ActionDto readAction = personService.addAction(action);
 		WorkDto work = new WorkDto();
 		work.setPersonId(testPerson1.getId());
@@ -241,8 +242,56 @@ public class PersonServiceTest {
 		work.setStartTime(new Date());
 		work.setEndTime(new Date());
 		work.setWorkStatus(WorkStatus.DOING);
-		work.setExpendedTime(112);
+		work.setExpendedTime(20);
 		personService.addWork(work);
+		
+		
+	}
+	
+	@Test
+	public void testDeleteAction() throws Exception{
+		UUID uuid = UUID.randomUUID();
+        String id = uuid.toString();
+        UserDto userDto = new UserDto(id, "personTest001","personTest001","personTest001","ss@ss.com");
+		personService.assignPerson(userDto);
+		PersonDto testPerson1 = (PersonDto)personService.findPersonById(id);
+		VisionDto visionDto = new VisionDto();
+		visionDto.setContent("vision001");
+		visionDto.setTitle("vision001");
+		visionDto.setPersonId(testPerson1.getId());
+		visionDto.setVisionType(VisionType.BUSINESS);
+		VisionDto vision = personService.addVision(visionDto);
+		ProjectDto project = new ProjectDto();
+		project.setPersonId(testPerson1.getId());
+		project.setVisionId(vision.getVisionId());
+		project.setName("project01");
+		project.setDescription("project01");
+		project.setCriteria("project01");
+		project.setIndicator("project01");
+		project.setDeadline(new Date());
+		project.setExpendedTime(10);
+		project.setTerm(10);
+		project.setProjectType(ProjectType.EXPERIMENT);
+		ProjectDto readProject = personService.addProject(project);
+		ActionDto action = new ActionDto();
+		action.setPersonId(testPerson1.getId());
+		action.setProjectId(readProject.getProjectId());
+		action.setName("action01");
+		action.setDescription("action01");
+		action.setExpendedTime(10);
+		ActionDto readAction = personService.addAction(action);
+		WorkDto work = new WorkDto();
+		work.setPersonId(testPerson1.getId());
+		work.setActionId(readAction.getActionId());
+		work.setName("work01");
+		work.setDescription("work01");
+		work.setStartTime(new Date());
+		work.setEndTime(new Date());
+		work.setWorkStatus(WorkStatus.DOING);
+		work.setExpendedTime(20);
+		personService.addWork(work);
+		personService.deleteAction(readAction.getActionId());
+		
 	}
 
 }

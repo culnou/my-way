@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 import com.culnou.mumu.myway.application.PersonService;
+import com.culnou.mumu.myway.domain.model.ProjectExistException;
 import com.culnou.mumu.myway.domain.model.ProjectType;
 
 @RestController
@@ -85,8 +86,14 @@ public class PersonRestController {
 	
 	@DeleteMapping("/visions/{id}")
 	public HttpStatus deleteVision(@PathVariable String id) throws Exception{
-		this.personService.deleteVision(id);
-		return HttpStatus.OK;
+		try {
+			System.out.println("@@@@@@@ controller vision " + id);
+			this.personService.deleteVision(id);
+			return HttpStatus.OK;
+		//プロジェクトが存在した場合、406エラーを返す。
+		}catch(ProjectExistException ex) {
+			return HttpStatus.NOT_ACCEPTABLE;
+		}
 	}
 	
 	/*

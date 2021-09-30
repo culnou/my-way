@@ -17,7 +17,9 @@ import com.culnou.mumu.myway.controller.VisionDto;
 import com.culnou.mumu.myway.controller.WorkDto;
 import com.culnou.mumu.myway.domain.model.Action;
 import com.culnou.mumu.myway.domain.model.ActionId;
+
 import com.culnou.mumu.myway.domain.model.ActionRepository;
+import com.culnou.mumu.myway.domain.model.ActionService;
 import com.culnou.mumu.myway.domain.model.Person;
 import com.culnou.mumu.myway.domain.model.PersonFactory;
 import com.culnou.mumu.myway.domain.model.PersonId;
@@ -31,6 +33,7 @@ import com.culnou.mumu.myway.domain.model.User;
 import com.culnou.mumu.myway.domain.model.Vision;
 import com.culnou.mumu.myway.domain.model.VisionId;
 import com.culnou.mumu.myway.domain.model.VisionRepository;
+import com.culnou.mumu.myway.domain.model.VisionService;
 import com.culnou.mumu.myway.domain.model.Work;
 import com.culnou.mumu.myway.domain.model.WorkId;
 import com.culnou.mumu.myway.domain.model.WorkRepository;
@@ -61,6 +64,10 @@ public class PersonServiceImpl implements PersonService {
 	@Autowired
 	@Qualifier("workJmsSender")
 	private WorkSender workSender;
+	@Autowired
+	private ActionService actionService;
+	@Autowired
+	private VisionService visionService;
 
 	@Override
 	public void assignPerson(UserDto user) throws Exception {
@@ -200,13 +207,16 @@ public class PersonServiceImpl implements PersonService {
 	@Override
 	public void deleteVision(String id) throws Exception {
 		// TODO Auto-generated method stub
+		/*
 		VisionId visionId = new VisionId(id);
 		Vision readVision = visionRepository.visionOfId(visionId);
 		if(readVision == null) {
 			throw new Exception("The vision may not exist.");
 		}
 		visionRepository.remove(readVision);
-		
+		*/
+		VisionId visionId = new VisionId(id);
+		visionService.removeVison(visionId);
 	}
 
 	@Override
@@ -342,12 +352,17 @@ public class PersonServiceImpl implements PersonService {
 	@Override
 	public void deleteAction(String id) throws Exception {
 		// TODO Auto-generated method stub
+		/*
 		ActionId actionId = new ActionId(id);
 		Action action = actionRepository.actionOfId(actionId);
 		if(action == null) {
 			throw new Exception("The action may not exist.");
 		}
 		actionRepository.remove(action);
+		*/
+		//ドメインサービスで実施する。
+		ActionId actionId = new ActionId(id);
+		actionService.removeAction(actionId);
 	}
 
 	@Override
@@ -413,6 +428,17 @@ public class PersonServiceImpl implements PersonService {
 		if(work == null) {
 			throw new Exception("The work may not exist.");
 		}
+		//アクションの取得
+		ActionId actionId = new ActionId(work.actionId().id());
+		Action action = actionRepository.actionOfId(actionId);
+		//メッセージングによって消費時間を減算する。
+		WorkSaved workSaved = new WorkSaved();
+		workSaved.setActionId(work.actionId().id());
+		workSaved.setPersonId(work.personId().id());
+		workSaved.setProjectId(action.projectId().id());
+		workSaved.setExpendedTime(-(work.expendedTime()));
+		workSender.sendWork(workSaved);
+		
 		workRepository.remove(work);
 	}
 
@@ -491,6 +517,7 @@ public class PersonServiceImpl implements PersonService {
 
 	@Override
 	public WorkDto addWork(WorkDto workDto) throws Exception {
+		
 		// TODO Auto-generated method stub
 		//個人の取得
 		PersonId personId = new PersonId(workDto.getPersonId());
@@ -514,7 +541,7 @@ public class PersonServiceImpl implements PersonService {
 		work.setExpendedTime(workDto.getExpendedTime());
 		workRepository.save(work);
 		
-		//JMS
+		//メッセージングによって消費時間を加算する。
 		WorkSaved workSaved = new WorkSaved();
 		workSaved.setActionId(work.actionId().id());
 		workSaved.setPersonId(work.personId().id());

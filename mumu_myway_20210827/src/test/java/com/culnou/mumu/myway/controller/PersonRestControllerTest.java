@@ -19,6 +19,7 @@ import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -218,12 +219,36 @@ public class PersonRestControllerTest {
 			System.out.println("*** person vision" + dto.getId());
 		}
 		
+		//プロジェクトの作成
+		String addProjectUrl = "http://localhost:" + port + "/projects/";
+		JSONObject prj = new JSONObject();
+		prj.put("personId", str);
+		prj.put("visionId", visionDto2.getVisionId());
+		prj.put("projectType", "EXPERIMENT");
+		prj.put("name", "111");
+		prj.put("description", "111");
+		prj.put("criteria", "111");
+		prj.put("indicator", "111");
+		prj.put("deadline", "2021/10/01 11:33:33");
+		prj.put("term", 0);
+		HttpEntity<String> prjreq = 
+			      new HttpEntity<String>(prj.toString(), httpHeaders);
+		ProjectDto projectDto = template.postForObject(addProjectUrl, prjreq, ProjectDto.class);
+		assertEquals(projectDto.getVisionId(), visionDto2.getVisionId());
+		
 		//ビジョンの削除
 		String deleteVisionUrl = "http://localhost:" + port + "/visions/"  + visionDto.getId();
 		template.delete(deleteVisionUrl, String.class);
 		String deleteVisionUrl2 = "http://localhost:" + port + "/visions/"  + visionDto2.getId();
-		template.delete(deleteVisionUrl2, String.class);
-		
+		//template.delete(deleteVisionUrl2, String.class);
+		ResponseEntity<HttpStatus> responseEntity2 = template.exchange(
+				deleteVisionUrl2,
+				    HttpMethod.DELETE,
+				    null,
+				    HttpStatus.class
+				  );
+		//$$$$$$$$$ 406 NOT_ACCEPTABLEが返ります。
+		System.out.println("$$$$$$$$$ " + responseEntity2.getBody());
 		//個人の削除
 		String deleteUrl = "http://localhost:" + port + "/persons/"  + str;
 		template.delete(deleteUrl, String.class);
