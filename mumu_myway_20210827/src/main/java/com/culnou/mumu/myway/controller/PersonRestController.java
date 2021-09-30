@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+
 import org.springframework.web.bind.annotation.RestController;
 
 
@@ -87,12 +88,10 @@ public class PersonRestController {
 	@DeleteMapping("/visions/{id}")
 	public HttpStatus deleteVision(@PathVariable String id) throws Exception{
 		try {
-			System.out.println("@@@@@@@ controller vision " + id);
 			this.personService.deleteVision(id);
 			return HttpStatus.OK;
-		//プロジェクトが存在した場合、406エラーを返す。
-		}catch(ProjectExistException ex) {
-			return HttpStatus.NOT_ACCEPTABLE;
+		}catch(ProjectExistException e) {
+			throw e;
 		}
 	}
 	

@@ -25,16 +25,16 @@ public class VisionService {
 		//Visionの存在チェック
 		Vision vision = visionRepository.visionOfId(visionId);
 		if(vision == null) {
-			throw new IllegalArgumentException("The visiion may not be set to null.");
+			throw new IllegalArgumentException("The visiion may not exist.");
 		}
 		//Visionに対するProjectの存在チェック（ビジネスロジック）
 		List<Project> projects = projectRepository.projectsOfVision(visionId);
 		if(projects.size() > 0) {
-			throw new ProjectExistException("Some projects of the visiion already exist.");
+			throw new ProjectExistException("Some associated projects of the visiion exist.");
 		}
-		
 		//Visionの削除
 		visionRepository.remove(vision);
 	}
 
+	
 }
