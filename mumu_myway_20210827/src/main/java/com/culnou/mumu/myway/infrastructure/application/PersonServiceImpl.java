@@ -28,6 +28,7 @@ import com.culnou.mumu.myway.domain.model.PersonRepository;
 import com.culnou.mumu.myway.domain.model.Project;
 import com.culnou.mumu.myway.domain.model.ProjectId;
 import com.culnou.mumu.myway.domain.model.ProjectRepository;
+import com.culnou.mumu.myway.domain.model.ProjectService;
 import com.culnou.mumu.myway.domain.model.ProjectType;
 import com.culnou.mumu.myway.domain.model.User;
 import com.culnou.mumu.myway.domain.model.Vision;
@@ -68,6 +69,8 @@ public class PersonServiceImpl implements PersonService {
 	private ActionService actionService;
 	@Autowired
 	private VisionService visionService;
+	@Autowired
+	private ProjectService projectService;
 
 	@Override
 	public void assignPerson(UserDto user) throws Exception {
@@ -215,6 +218,7 @@ public class PersonServiceImpl implements PersonService {
 		}
 		visionRepository.remove(readVision);
 		*/
+		//ドメインサービスの実行。2021/09/30
 		VisionId visionId = new VisionId(id);
 		visionService.removeVison(visionId);
 	}
@@ -239,6 +243,7 @@ public class PersonServiceImpl implements PersonService {
 
 	@Override
 	public void deleteProject(String id) throws Exception {
+		/*
 		// TODO Auto-generated method stub
 		ProjectId projectId = new ProjectId(id);
 		Project readProject = projectRepository.projectOfId(projectId);
@@ -246,6 +251,10 @@ public class PersonServiceImpl implements PersonService {
 			throw new Exception("The project may not exist.");
 		}
 		projectRepository.remove(readProject);
+		*/
+		//ドメインサービスの実行。2021/10/01
+		ProjectId projectId = new ProjectId(id);
+		projectService.removeProject(projectId);
 	}
 
 	@Override

@@ -19,7 +19,7 @@ import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
+
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -240,7 +240,8 @@ public class PersonRestControllerTest {
 		String deleteVisionUrl = "http://localhost:" + port + "/visions/"  + visionDto.getId();
 		template.delete(deleteVisionUrl, String.class);
 		String deleteVisionUrl2 = "http://localhost:" + port + "/visions/"  + visionDto2.getId();
-		//template.delete(deleteVisionUrl2, String.class);
+		template.delete(deleteVisionUrl2, String.class);
+		/*
 		ResponseEntity<HttpStatus> responseEntity2 = template.exchange(
 				deleteVisionUrl2,
 				    HttpMethod.DELETE,
@@ -249,6 +250,7 @@ public class PersonRestControllerTest {
 				  );
 		//$$$$$$$$$ 406 NOT_ACCEPTABLEが返ります。
 		System.out.println("$$$$$$$$$ " + responseEntity2.getBody());
+		*/
 		//個人の削除
 		String deleteUrl = "http://localhost:" + port + "/persons/"  + str;
 		template.delete(deleteUrl, String.class);
