@@ -23,7 +23,7 @@ import com.culnou.mumu.myway.controller.VisionDto;
 import com.culnou.mumu.myway.controller.WorkDto;
 import com.culnou.mumu.myway.domain.model.ProjectType;
 import com.culnou.mumu.myway.domain.model.VisionType;
-import com.culnou.mumu.myway.domain.model.WorkRepository;
+
 import com.culnou.mumu.myway.domain.model.WorkStatus;
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -196,6 +196,8 @@ public class PersonServiceTest {
 		personService.updateProject(readProject);
 		ProjectDto foudProject = personService.findProjectById(project.getId());
 		assertEquals(foudProject.getName(), "project02");
+		//addExpendedTimeだと、更新する都度、消費時間が倍に増えるのでsetExpendedTimeに変更する。テスト。2021/10/24
+		assertEquals(foudProject.getExpendedTime(), readProject.getExpendedTime());
 		List<ProjectDto> projects = personService.findProjectsByVisionIdAndProjectType(readProject.getVisionId(), readProject.getProjectType());
 		assertEquals(projects.size(), 1);
 		//personService.deleteProject(foudProject.getId());
@@ -290,6 +292,9 @@ public class PersonServiceTest {
 		work.setWorkStatus(WorkStatus.DOING);
 		work.setExpendedTime(20);
 		personService.addWork(work);
+		//addExpendedTimeだと、更新する都度、消費時間が倍に増えるのでsetExpendedTimeに変更する。テスト。2021/10/24
+		ActionDto foundAction = personService.findActionById(readAction.getId());
+		assertEquals(readAction.getExpendedTime(), foundAction.getExpendedTime());
 		personService.deleteAction(readAction.getActionId());
 		
 	}

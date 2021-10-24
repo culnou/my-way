@@ -237,7 +237,9 @@ public class PersonServiceImpl implements PersonService {
 		readProject.setDeadline(projectDto.getDeadline());
 		readProject.setIndicator(projectDto.getIndicator());
 		readProject.setTerm(projectDto.getTerm());
-		readProject.addExpendedTime(projectDto.getExpendedTime());
+		//addExpendedTimeだと、更新する都度、消費時間が倍に増えるのでsetExpendedTimeに変更する。2021/10/24
+		//readProject.addExpendedTime(projectDto.getExpendedTime());
+		readProject.setExpendedTime(projectDto.getExpendedTime());
 		projectRepository.save(readProject);
 	}
 
@@ -354,7 +356,9 @@ public class PersonServiceImpl implements PersonService {
 		}
 		action.setName(actionDto.getName());
 		action.setDescription(actionDto.getDescription());
-		action.addExpendedTime(actionDto.getExpendedTime());
+		//addExpendedTimeだと、更新する都度、消費時間が倍に増えるのでsetExpendedTimeに変更する。2021/10/24
+		//action.addExpendedTime(actionDto.getExpendedTime());
+		action.setExpendedTime(actionDto.getExpendedTime());
 		actionRepository.save(action);
 	}
 

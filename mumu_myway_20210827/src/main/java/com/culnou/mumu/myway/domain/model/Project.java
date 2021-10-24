@@ -148,7 +148,8 @@ public class Project {
 	}
 	
 	//クエリオブジェクトからエンティティに変換するために設ける。
-	protected void setExpendedTime(int expendedTime) {
+	//PersonalServiceのupdateで使用できるようにprotectedからpublicに変更する。2021/10/24
+	public void setExpendedTime(int expendedTime) {
 		if(expendedTime < 0) {
 			throw new IllegalArgumentException("The expendedTime may be negative.");
 		}
