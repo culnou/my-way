@@ -133,6 +133,11 @@ public class PersonRestController {
 		return ResponseEntity.ok().body((List<ActionDto>)this.personService.findActionsByProjectId(projectId));
 	}
 	
+	@GetMapping("/actions/routine/{personId}")
+	public ResponseEntity<List<ActionDto>> findRoutineActions(@PathVariable String personId) throws Exception{
+		return ResponseEntity.ok().body((List<ActionDto>)this.personService.findRoutineActions(personId));
+	}
+	
 	@GetMapping("/actions/{id}")
 	public ResponseEntity<ActionDto> findActionById(@PathVariable String id) throws Exception{
 		return ResponseEntity.ok().body((ActionDto)this.personService.findActionById(id));

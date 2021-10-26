@@ -10,6 +10,8 @@ public class Action {
 	private String name;
 	private String description;
 	private int expendedTime;
+	//アクションのルーティン化のため追加。2021/10/26
+	private boolean routine;
 	
 	
 	protected Action(PersonId personId, ProjectId projectId, ActionId actionId, String name, String description) {
@@ -18,6 +20,8 @@ public class Action {
 		this.setActionId(actionId);
 		this.setName(name);
 		this.setDescription(description);
+		//ルーティンはデフォルトでFalseにする。2021/10/26
+		this.setRoutine(false);
 	}
 	
 	protected void setPersonId(PersonId personId) {
@@ -99,6 +103,13 @@ public class Action {
 		return this.expendedTime;
 	}
 	
+	public void setRoutine(boolean routine) {
+		this.routine = routine;
+	}
+	
+	public boolean isRoutine() {
+		return this.routine;
+	}
 	//ファクトリーメソッド
 	public Work defineWork(WorkId workId, String name, String description, Date startTime, Date endTime) throws Exception{
 		if(workId == null) {

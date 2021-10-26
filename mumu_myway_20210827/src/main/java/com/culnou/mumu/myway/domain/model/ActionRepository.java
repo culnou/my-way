@@ -18,5 +18,8 @@ public interface ActionRepository {
 	public Action actionOfId(ActionId actionId) throws Exception;
 		
 	public List<Action> actionsOfProject(ProjectId projectId) throws Exception;
+	
+	//アクションのルーティン化のため追加。2021/10/26
+	public List<Action> actionsOfRoutine(PersonId personId) throws Exception;
 
 }

@@ -17,5 +17,7 @@ public class ActionDocument {
 	private String name;
 	private String description;
 	private int expendedTime;
+	//アクションのルーティン化のため追加。2021/10/26
+	private boolean routine;
 
 }

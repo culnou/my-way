@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.culnou.mumu.myway.domain.model.AbstractActionRepository;
 import com.culnou.mumu.myway.domain.model.Action;
 import com.culnou.mumu.myway.domain.model.ActionId;
-
+import com.culnou.mumu.myway.domain.model.PersonId;
 import com.culnou.mumu.myway.domain.model.ProjectId;
 
 
@@ -89,6 +89,13 @@ public class ActionMongoRepository extends AbstractActionRepository {
 		return convertActionDocumentsToActions(docs);
 	}
 	
+	//アクションのルーティン化のため追加。2021/10/26
+	@Override
+	public List<Action> actionsOfRoutine(PersonId personId) throws Exception {
+		// TODO Auto-generated method stub
+		List<ActionDocument> docs = actionRepository.findActionsByPersonIdAndRoutine(personId, true);
+		return convertActionDocumentsToActions(docs);
+	}
 	private ActionDocument convertActionToActionDocument(Action action) {
 		ActionDocument doc = new ActionDocument();
 		doc.setId(action.actionId().id());
@@ -98,6 +105,8 @@ public class ActionMongoRepository extends AbstractActionRepository {
 		doc.setName(action.name());
 		doc.setDescription(action.description());
 		doc.setExpendedTime(action.expendedTime());
+		//アクションのルーティン化のため追加。2021/10/26
+		doc.setRoutine(action.isRoutine());
 		return doc;
 	}
 	
@@ -115,5 +124,7 @@ public class ActionMongoRepository extends AbstractActionRepository {
 		}
 		return actions;
 	}
+
+	
 
 }

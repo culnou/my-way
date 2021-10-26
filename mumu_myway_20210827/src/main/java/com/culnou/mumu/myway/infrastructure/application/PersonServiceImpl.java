@@ -359,6 +359,8 @@ public class PersonServiceImpl implements PersonService {
 		//addExpendedTimeだと、更新する都度、消費時間が倍に増えるのでsetExpendedTimeに変更する。2021/10/24
 		//action.addExpendedTime(actionDto.getExpendedTime());
 		action.setExpendedTime(actionDto.getExpendedTime());
+		//アクションのルーティン化のため追加。2021/10/26
+		action.setRoutine(actionDto.isRoutine());
 		actionRepository.save(action);
 	}
 
@@ -394,6 +396,7 @@ public class PersonServiceImpl implements PersonService {
 		doc.setName(action.name());
 		doc.setDescription(action.description());
 		doc.setExpendedTime(action.expendedTime());
+		doc.setRoutine(action.isRoutine());
 		return doc;
 	}
 
@@ -411,10 +414,32 @@ public class PersonServiceImpl implements PersonService {
 			doc.setName(action.name());
 			doc.setDescription(action.description());
 			doc.setExpendedTime(action.expendedTime());
+			doc.setRoutine(action.isRoutine());
 			docs.add(doc);
 		}
 		return docs;
 	}
+	
+	@Override
+	public List<ActionDto> findRoutineActions(String personId) throws Exception {
+		// TODO Auto-generated method stub
+		List<Action> actions = actionRepository.actionsOfRoutine(new PersonId(personId));
+		List<ActionDto> docs = new ArrayList<>();
+		for(Action action: actions) {
+			ActionDto doc = new ActionDto();
+			doc.setId(action.actionId().id());
+			doc.setActionId(action.actionId().id());
+			doc.setPersonId(action.personId().id());
+			doc.setProjectId(action.projectId().id());
+			doc.setName(action.name());
+			doc.setDescription(action.description());
+			doc.setExpendedTime(action.expendedTime());
+			doc.setRoutine(action.isRoutine());
+			docs.add(doc);
+		}
+		return docs;
+	}
+	
 
 	@Override
 	public void updateWork(WorkDto workDto) throws Exception {
@@ -520,6 +545,8 @@ public class PersonServiceImpl implements PersonService {
 		//アクションの生成
 		Action action = project.defineAction(actionId, actionDto.getName(), actionDto.getDescription());
 		action.addExpendedTime(actionDto.getExpendedTime());
+		//アクションのルーティン化のため追加。2021/10/26
+		action.setRoutine(actionDto.isRoutine());
 		actionRepository.save(action);
 		
 		actionDto.setId(action.actionId().id());
@@ -568,6 +595,8 @@ public class PersonServiceImpl implements PersonService {
 		workDto.setPersonId(work.personId().id());
 		return workDto;
 	}
+
+	
 
 	
 

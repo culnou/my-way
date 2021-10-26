@@ -195,5 +195,17 @@ public class ActionTest {
 		assertEquals(work.name(), name);
 		assertEquals(work.description(), description);
     }
+    
+    //ルーティンがFalseで初期化されるかテストする。2021/10/26
+    @Test
+    public void testIsRoutine() throws Exception{
+    	PersonId personId = new PersonId("111");
+		ActionId actionId = new ActionId("111");
+		ProjectId projectId = new ProjectId("111");
+		String name = "111";
+		String description = "111";
+		Action action = new Action(personId, projectId, actionId, name, description);
+		assertEquals(action.isRoutine(), false);
+    }
 
 }

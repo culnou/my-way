@@ -35,7 +35,7 @@ public class ActionRepositoryTest {
 
 	@After
 	public void tearDown() throws Exception {
-		actionRepository.removeAll(this.testActions);
+		//actionRepository.removeAll(this.testActions);
 	}
 
 	@Test
@@ -80,6 +80,34 @@ public class ActionRepositoryTest {
 		List<Action> actions = actionRepository.actionsOfProject(projectId);
 		assertEquals(actions.size(), 2);
 		assertEquals(actions.get(0).actionId(), actionId);
+	}
+	
+	//アクションのルーティン化のため追加。2021/10/26
+	@Test
+	public void testActionsOfRoutine() throws Exception{
+		List<Action> saveActions = new ArrayList<>();
+		PersonId personId = new PersonId("111");
+		VisionId visionId = new VisionId("111");
+		ProjectId projectId = new ProjectId("Project001");
+		String name = "111";
+		String description = "111";
+		Project project = new Project(personId, visionId, projectId, name, description, ProjectType.EXPERIMENT);
+		ActionId actionId = new ActionId("action001");
+		Action action = project.defineAction(actionId, "111", "111");
+		//ルーティンをTrue
+		action.setRoutine(true);
+		saveActions.add(action);
+		this.testActions.add(action);
+		ActionId actionId2 = new ActionId("action002");
+		Action action2 = project.defineAction(actionId2, "111", "111");
+		//ルーティンをTrue
+		action2.setRoutine(true);
+		saveActions.add(action2);
+		this.testActions.add(action2);
+		actionRepository.saveAll(saveActions);
+		List<Action> actions = actionRepository.actionsOfRoutine(personId);
+		assertEquals(actions.size(), 2);
+		
 	}
 
 }

@@ -45,6 +45,8 @@ public interface PersonService {
 	
 	public List<ActionDto> findActionsByProjectId(String projectId) throws Exception;
 	
+	public List<ActionDto> findRoutineActions(String personId) throws Exception;
+	
 	public void updateWork(WorkDto workDto) throws Exception;
 	
 	public void deleteWork(String id) throws Exception;
