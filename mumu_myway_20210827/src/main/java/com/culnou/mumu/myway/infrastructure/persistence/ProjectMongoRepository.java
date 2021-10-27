@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.culnou.mumu.myway.domain.model.AbstractProjectRepository;
+import com.culnou.mumu.myway.domain.model.Achievement;
 import com.culnou.mumu.myway.domain.model.Project;
 import com.culnou.mumu.myway.domain.model.ProjectId;
 
@@ -112,6 +113,16 @@ public class ProjectMongoRepository extends AbstractProjectRepository {
 		doc.setIndicator(project.indicator());
 		doc.setCriteria(project.criteria());
 		doc.setExpendedTime(project.expendedTime());
+		List<AchievementDocument> achievementDocs = new ArrayList<>();
+		for(Achievement achievement: project.achievements()) {
+			AchievementDocument achievementDoc = new AchievementDocument();
+			achievementDoc.setId(achievement.id());
+			achievementDoc.setExecTime(achievement.execTime());
+			achievementDoc.setResult(achievement.result());
+			achievementDoc.setAwareness(achievement.awareness());
+			achievementDocs.add(achievementDoc);
+		}
+		doc.setAchievements(achievementDocs);
 		return doc;
 	}
 	

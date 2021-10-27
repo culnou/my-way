@@ -9,12 +9,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.culnou.mumu.myway.application.PersonService;
+import com.culnou.mumu.myway.controller.AchievementDto;
 import com.culnou.mumu.myway.controller.ActionDto;
 import com.culnou.mumu.myway.controller.PersonDto;
 import com.culnou.mumu.myway.controller.ProjectDto;
 import com.culnou.mumu.myway.controller.UserDto;
 import com.culnou.mumu.myway.controller.VisionDto;
 import com.culnou.mumu.myway.controller.WorkDto;
+import com.culnou.mumu.myway.domain.model.Achievement;
 import com.culnou.mumu.myway.domain.model.Action;
 import com.culnou.mumu.myway.domain.model.ActionId;
 
@@ -40,6 +42,8 @@ import com.culnou.mumu.myway.domain.model.WorkId;
 import com.culnou.mumu.myway.domain.model.WorkRepository;
 import com.culnou.mumu.myway.domain.model.WorkSaved;
 import com.culnou.mumu.myway.domain.model.WorkSender;
+import com.culnou.mumu.myway.infrastructure.persistence.AchievementDocument;
+
 
 
 
@@ -240,6 +244,13 @@ public class PersonServiceImpl implements PersonService {
 		//addExpendedTimeだと、更新する都度、消費時間が倍に増えるのでsetExpendedTimeに変更する。2021/10/24
 		//readProject.addExpendedTime(projectDto.getExpendedTime());
 		readProject.setExpendedTime(projectDto.getExpendedTime());
+		List<Achievement> achievements = new ArrayList<>();
+		for(AchievementDto doc : projectDto.getAchievements()) {
+			Achievement a = new Achievement(doc.getId(), doc.getExecTime(), doc.getResult());
+			a.setAwareness(doc.getAwareness());
+			achievements.add(a);
+		}
+		readProject.setAchievements(achievements);
 		projectRepository.save(readProject);
 	}
 
@@ -288,6 +299,13 @@ public class PersonServiceImpl implements PersonService {
 		project.setIndicator(projectDto.getIndicator());
 		project.setTerm(projectDto.getTerm());
 		project.addExpendedTime(projectDto.getExpendedTime());
+		List<Achievement> achievements = new ArrayList<>();
+		for(AchievementDto doc : projectDto.getAchievements()) {
+			Achievement a = new Achievement(doc.getId(), doc.getExecTime(), doc.getResult());
+			a.setAwareness(doc.getAwareness());
+			achievements.add(a);
+		}
+		project.setAchievements(achievements);
 		//プロジェクトの保存
 		projectRepository.save(project);
 		
@@ -318,6 +336,17 @@ public class PersonServiceImpl implements PersonService {
 		doc.setTerm(readProject.term());
 		doc.setExpendedTime(readProject.expendedTime());
 		doc.setCriteria(readProject.criteria());
+		List<AchievementDto> docs = new ArrayList<>();
+		System.out.println("*** ssssssss" + readProject.achievements().size());
+		for(Achievement a: readProject.achievements()) {
+			AchievementDto d = new AchievementDto();
+			d.setId(a.id());
+			d.setExecTime(a.execTime());
+			d.setResult(a.result());
+			d.setAwareness(a.awareness());
+			docs.add(d);
+		}
+		doc.setAchievements(docs);
 		return doc;
 	}
 
@@ -341,6 +370,16 @@ public class PersonServiceImpl implements PersonService {
 			doc.setTerm(readProject.term());
 			doc.setExpendedTime(readProject.expendedTime());
 			doc.setCriteria(readProject.criteria());
+			List<AchievementDto> acs = new ArrayList<>();
+			for(Achievement a: readProject.achievements()) {
+				AchievementDto d = new AchievementDto();
+				d.setId(a.id());
+				d.setExecTime(a.execTime());
+				d.setResult(a.result());
+				d.setAwareness(a.awareness());
+				acs.add(d);
+			}
+			doc.setAchievements(acs);
 			docs.add(doc);
 		}
 		return docs;

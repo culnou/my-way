@@ -1,6 +1,8 @@
 package com.culnou.mumu.myway.infrastructure.persistence;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -26,5 +28,6 @@ public class ProjectDocument {
 	private String indicator;
 	private String criteria;
 	private int expendedTime;
+	private List<AchievementDocument> achievements = new ArrayList<>();
 
 }

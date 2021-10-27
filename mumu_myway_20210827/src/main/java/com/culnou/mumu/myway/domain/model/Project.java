@@ -1,6 +1,8 @@
 package com.culnou.mumu.myway.domain.model;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class Project {
 	
@@ -15,6 +17,7 @@ public class Project {
 	private String indicator;
 	private String criteria;
 	private int expendedTime;
+	private List<Achievement> achivements = new ArrayList<>();
 	
 	//ファクトリーメソッドのみ生成することができるようプロテクトする。
 	protected Project(PersonId personId, VisionId visionId, ProjectId experimentId, String name, String description, ProjectType projectType) {
@@ -160,6 +163,23 @@ public class Project {
 		return this.expendedTime;
 	}
 	
+	public void setAchievement(Achievement achievement) {
+		if(achievement == null) {
+			throw new IllegalArgumentException("The achievement may not be set to null.");
+		}
+		this.achivements.add(achievement);
+	}
+	
+	public void setAchievements(List<Achievement> achievements) {
+		if(achievements == null) {
+			throw new IllegalArgumentException("The achievements may not be set to null.");
+		}
+		this.achivements = achievements;
+	}
+	
+	public List<Achievement> achievements(){
+		return this.achivements;
+	}
 	//ファクトリーメソッド
 	public Action defineAction(ActionId actionId, String name, String description) throws Exception{
 		if(actionId == null) {

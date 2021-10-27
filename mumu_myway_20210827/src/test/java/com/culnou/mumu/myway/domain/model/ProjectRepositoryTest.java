@@ -3,6 +3,7 @@ package com.culnou.mumu.myway.domain.model;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.junit.After;
@@ -59,6 +60,18 @@ public class ProjectRepositoryTest {
 		String projectName = "111";
 		String description = "111";
 		Project project = vision.launchProject(projectId, projectName, description, ProjectType.EXPERIMENT);
+		
+		
+		Achievement a3 = new Achievement("333", new Date(), "111");
+		Achievement a4 = new Achievement("444", new Date(), "222");
+		List<Achievement> as = new ArrayList<>();
+		as.add(a3);
+		as.add(a4);
+		project.setAchievements(as);
+		Achievement a1 = new Achievement("111", new Date(), "111");
+		Achievement a2 = new Achievement("222", new Date(), "222");
+		project.setAchievement(a1);
+		project.setAchievement(a2);
 		
 		projectRepository.save(project);
 		testProjects.add(project);

@@ -1,8 +1,11 @@
 package com.culnou.mumu.myway.controller;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import com.culnou.mumu.myway.domain.model.ProjectType;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.Data;
@@ -22,4 +25,5 @@ public class ProjectDto {
 	private String indicator;
 	private String criteria;
 	private int expendedTime;
+	private List<AchievementDto> achievements = new ArrayList<>();
 }
