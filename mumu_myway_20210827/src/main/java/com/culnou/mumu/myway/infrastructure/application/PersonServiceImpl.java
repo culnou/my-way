@@ -3,6 +3,7 @@ package com.culnou.mumu.myway.infrastructure.application;
 import java.util.ArrayList;
 import java.util.List;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -42,7 +43,7 @@ import com.culnou.mumu.myway.domain.model.WorkId;
 import com.culnou.mumu.myway.domain.model.WorkRepository;
 import com.culnou.mumu.myway.domain.model.WorkSaved;
 import com.culnou.mumu.myway.domain.model.WorkSender;
-import com.culnou.mumu.myway.infrastructure.persistence.AchievementDocument;
+
 
 
 
@@ -243,10 +244,11 @@ public class PersonServiceImpl implements PersonService {
 		readProject.setTerm(projectDto.getTerm());
 		//addExpendedTimeだと、更新する都度、消費時間が倍に増えるのでsetExpendedTimeに変更する。2021/10/24
 		//readProject.addExpendedTime(projectDto.getExpendedTime());
-		readProject.setExpendedTime(projectDto.getExpendedTime());
+		//更新のタイミングで消費時間が変更されるこはないので、不測の更新を避けるために以下を削除する。2021/10/28
+		//readProject.setExpendedTime(projectDto.getExpendedTime());
 		List<Achievement> achievements = new ArrayList<>();
 		for(AchievementDto doc : projectDto.getAchievements()) {
-			Achievement a = new Achievement(doc.getId(), doc.getExecTime(), doc.getResult());
+			Achievement a = new Achievement(doc.getExecTime(), doc.getResult());
 			a.setAwareness(doc.getAwareness());
 			achievements.add(a);
 		}
@@ -301,7 +303,7 @@ public class PersonServiceImpl implements PersonService {
 		project.addExpendedTime(projectDto.getExpendedTime());
 		List<Achievement> achievements = new ArrayList<>();
 		for(AchievementDto doc : projectDto.getAchievements()) {
-			Achievement a = new Achievement(doc.getId(), doc.getExecTime(), doc.getResult());
+			Achievement a = new Achievement(doc.getExecTime(), doc.getResult());
 			a.setAwareness(doc.getAwareness());
 			achievements.add(a);
 		}
@@ -337,7 +339,6 @@ public class PersonServiceImpl implements PersonService {
 		doc.setExpendedTime(readProject.expendedTime());
 		doc.setCriteria(readProject.criteria());
 		List<AchievementDto> docs = new ArrayList<>();
-		System.out.println("*** ssssssss" + readProject.achievements().size());
 		for(Achievement a: readProject.achievements()) {
 			AchievementDto d = new AchievementDto();
 			d.setId(a.id());

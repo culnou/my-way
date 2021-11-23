@@ -7,8 +7,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 
 import com.culnou.mumu.myway.domain.model.PersonId;
 import com.culnou.mumu.myway.domain.model.ProjectId;
-import com.culnou.mumu.myway.domain.model.ProjectType;
-import com.culnou.mumu.myway.domain.model.VisionId;
+
 
 
 public interface ActionMongoDataRepository extends MongoRepository<ActionDocument, String> {

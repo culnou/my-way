@@ -3,7 +3,6 @@ package com.culnou.mumu.myway.infrastructure.persistence;
 import java.util.Date;
 
 
-
 import lombok.Data;
 @Data
 public class AchievementDocument {

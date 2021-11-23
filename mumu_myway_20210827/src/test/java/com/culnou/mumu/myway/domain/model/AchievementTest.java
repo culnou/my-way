@@ -18,24 +18,19 @@ public class AchievementTest {
 	public void tearDown() throws Exception {
 	}
 
-	@Test(expected = IllegalArgumentException.class)
-	public void testInitializeByNullId(){
-		String result = "111";
-		Achievement achivement = new Achievement(null, new Date(), result);
-		achivement.result();
-	}
+	
 	
 	@Test(expected = IllegalArgumentException.class)
 	public void testInitializeByNullExecTime(){
 		String result = "111";
-		Achievement achivement = new Achievement("", null, result);
+		Achievement achivement = new Achievement(null, result);
 		achivement.result();
 	}
 	
 	@Test(expected = IllegalArgumentException.class)
 	public void testInitializeByNullResult() {
 		Date execTime = new Date();
-		Achievement achivement = new Achievement("", execTime, null);
+		Achievement achivement = new Achievement(execTime, null);
 		achivement.result();
 	}
 

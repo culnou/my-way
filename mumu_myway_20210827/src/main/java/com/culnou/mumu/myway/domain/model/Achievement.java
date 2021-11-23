@@ -1,6 +1,7 @@
 package com.culnou.mumu.myway.domain.model;
 
 import java.util.Date;
+import java.util.UUID;
 
 public class Achievement {
 	private String id;
@@ -8,8 +9,9 @@ public class Achievement {
 	private String result;
 	private String awareness;
 	
-	public Achievement(String id, Date execTime, String result) {
-		this.setId(id);
+	public Achievement(Date execTime, String result) {
+		//IDは自己生成することにした。2021/10/28
+		this.setId(UUID.randomUUID().toString());
 		this.setExecTime(execTime);
 		this.setResult(result);
 	}
@@ -36,9 +38,6 @@ public class Achievement {
 	}
 	
 	public void setAwareness(String awareness) {
-		if(awareness == null) {
-			throw new IllegalArgumentException("The awareness may not be set to null.");
-		}
 		this.awareness = awareness;
 	}
 	

@@ -116,6 +116,7 @@ public class ProjectMongoRepository extends AbstractProjectRepository {
 		List<AchievementDocument> achievementDocs = new ArrayList<>();
 		for(Achievement achievement: project.achievements()) {
 			AchievementDocument achievementDoc = new AchievementDocument();
+			//自己生成したIDがDoccumentに設定される。2021/10/28
 			achievementDoc.setId(achievement.id());
 			achievementDoc.setExecTime(achievement.execTime());
 			achievementDoc.setResult(achievement.result());

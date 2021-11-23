@@ -28,7 +28,7 @@ public abstract class AbstractProjectRepository implements ProjectRepository {
 		if(doc.getAchievements() != null) {
 			List<Achievement> acvs = new ArrayList<>();
 			for(AchievementDocument a : doc.getAchievements()) {
-				Achievement ac = new Achievement(a.getId(), a.getExecTime(), a.getResult());
+				Achievement ac = new Achievement(a.getExecTime(), a.getResult());
 				if(a.getAwareness() != null) {
 					ac.setAwareness(a.getAwareness());
 				}

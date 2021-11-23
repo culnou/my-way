@@ -2,6 +2,7 @@ package com.culnou.mumu.myway.application;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -15,12 +16,14 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import com.culnou.mumu.myway.controller.AchievementDto;
 import com.culnou.mumu.myway.controller.ActionDto;
 import com.culnou.mumu.myway.controller.PersonDto;
 import com.culnou.mumu.myway.controller.ProjectDto;
 import com.culnou.mumu.myway.controller.UserDto;
 import com.culnou.mumu.myway.controller.VisionDto;
 import com.culnou.mumu.myway.controller.WorkDto;
+
 import com.culnou.mumu.myway.domain.model.ProjectType;
 import com.culnou.mumu.myway.domain.model.VisionType;
 
@@ -193,11 +196,24 @@ public class PersonServiceTest {
 		assertEquals(readProject.getProjectType(), ProjectType.EXPERIMENT);
 		assertEquals(readProject.getName(), "project01");
 		readProject.setName("project02");
+		//更新のタイミングで消費時間が変更されるこはないので、不測の更新を避けるために以下を削除する。
+		//10が100000に更新されないか確認する。
+		readProject.setExpendedTime(10000000);
+		AchievementDto a3 = new AchievementDto();
+		//自己生成したAchievementのIDが設定されるか確認する。
+		a3.setId("111");
+		a3.setResult("Result1");
+		a3.setExecTime(new Date());
+		List<AchievementDto> as = new ArrayList<>();
+		as.add(a3);
+		readProject.setAchievements(as);
+		
 		personService.updateProject(readProject);
 		ProjectDto foudProject = personService.findProjectById(project.getId());
 		assertEquals(foudProject.getName(), "project02");
 		//addExpendedTimeだと、更新する都度、消費時間が倍に増えるのでsetExpendedTimeに変更する。テスト。2021/10/24
-		assertEquals(foudProject.getExpendedTime(), readProject.getExpendedTime());
+		//更新のタイミングで消費時間が変更されるこはないので、不測の更新を避けるために以下を削除する。→テストも削除。2021/10/28
+		//assertEquals(foudProject.getExpendedTime(), readProject.getExpendedTime());
 		List<ProjectDto> projects = personService.findProjectsByVisionIdAndProjectType(readProject.getVisionId(), readProject.getProjectType());
 		assertEquals(projects.size(), 1);
 		//personService.deleteProject(foudProject.getId());

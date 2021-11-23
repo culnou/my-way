@@ -62,14 +62,14 @@ public class ProjectRepositoryTest {
 		Project project = vision.launchProject(projectId, projectName, description, ProjectType.EXPERIMENT);
 		
 		
-		Achievement a3 = new Achievement("333", new Date(), "111");
-		Achievement a4 = new Achievement("444", new Date(), "222");
+		Achievement a3 = new Achievement(new Date(), "111");
+		Achievement a4 = new Achievement(new Date(), "222");
 		List<Achievement> as = new ArrayList<>();
 		as.add(a3);
 		as.add(a4);
 		project.setAchievements(as);
-		Achievement a1 = new Achievement("111", new Date(), "111");
-		Achievement a2 = new Achievement("222", new Date(), "222");
+		Achievement a1 = new Achievement(new Date(), "111");
+		Achievement a2 = new Achievement(new Date(), "222");
 		project.setAchievement(a1);
 		project.setAchievement(a2);
 		
